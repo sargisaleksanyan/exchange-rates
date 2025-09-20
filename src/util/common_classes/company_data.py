@@ -11,10 +11,10 @@ class BankName:
 
 
 class BankUrl:
-    FIRST_ABU_DHABI_BANK = 'bankfab.com',
-    EMIRATES_BANK = 'emiratesnbd.com',
+    FIRST_ABU_DHABI_BANK = 'bankfab.com'
+    EMIRATES_BANK = 'emiratesnbd.com'
     ABU_DHABI_COMMERCIAL_BANK = 'adcb.com'
-    EMIRATES_ISLAMIC_BANK = 'emiratesislamic.ae/'
+    EMIRATES_ISLAMIC_BANK = 'emiratesislamic.ae'
     DUBAI_ISLAMIC_BANK = 'dib.ae'
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'rakbank.ae'
     NATIONAL_BANK_OF_FUJARAH = 'nbf.ae'
@@ -30,5 +30,5 @@ class BankExchangeRateUrl:
     DUBAI_ISLAMIC_BANK = 'https://www.dib.ae/exchange-rates'
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'https://www.rakbank.ae/en/everyday-banking/send-pay/foreign-exchange-rates'
     NATIONAL_BANK_OF_FUJARAH = 'https://nbf.ae/business/treasury-and-trading/foreign-exchange-rates'
-    COMMERCIAL_BANK_OF_DUBAI = 'https://www.cbd.ae/islami/personal/investments-transfers/transfers',
-    SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list',
+    COMMERCIAL_BANK_OF_DUBAI = 'https://www.cbd.ae/islami/personal/investments-transfers/transfers'
+    SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list'
