@@ -7,6 +7,7 @@ class Currency(Enum):
     AUD = ("AUD", "Australian Dollar")
     BHD = ("BHD", "Bahraini Dinar")
     CAD = ("CAD", "Canadian Dollar")
+    CYP = ("CYP", "Cyprus Pound")
     CHF = ("CHF", "Swiss Franc")
     DKK = ("DKK", "Danish Kroner")
     EGP = ("EGP", "Egypt Pounds")
@@ -35,6 +36,7 @@ class Currency(Enum):
     BDT = ("BDT", "Bangladeshi Taka")
     BRL = ("BRL", "Brazilian Real")
     KHR = ("KHR", "Cambodian Riel")
+    CNH = ("CNH", "Chinese Yuan Renminbi")
     CNY = ("CNY", "Chinese Yuan Renminbi")
     ETB = ("ETB", "Ethiopian Birr")
     GEL = ("GEL", "Georgian Lari")
@@ -101,6 +103,8 @@ class Currency(Enum):
     SRD = ("SRD", "Surinamese Dollar")
     VES = ("VES", "Venezuelan Bolívar Soberano")
     VND = ("VND", "Vietnamese Dong")
+    XAG = ("XAG", "Silver Ounce")
+    XAU = ("XAU", "Gold")
     XAF = ("XAF", "Central African CFA Franc")
     XCD = ("XCD", "East Caribbean Dollar")
     XOF = ("XOF", "West African CFA Franc")
@@ -113,6 +117,16 @@ class Currency(Enum):
 
     def __str__(self):
         return f"{self.code} - {self.fullname}"
+
+    def get_currency(currency):
+        if isinstance(currency, Currency):
+            return Currency[currency]
+        if isinstance(currency, str) and currency in Currency._value2member_map_ or currency in (c.code for c in
+                                                                                                 Currency):
+            return Currency[currency]
+
+        print('Currency has not been found', currency)  # TODO print this
+        return None
 
 
 class ExchangeCompanyType(Enum):

@@ -25,7 +25,7 @@ UPDATED_DATE_TIME = 'UpdatedDateTime'
 
 def find_json_from_html(html_content: str):
     soup = BeautifulSoup(html_content, 'html.parser')
-    json_scripts = soup.find_all('script', type='application/json')
+    json_scripts = soup.find_all('script', id='application/json')
 
     for json_script in json_scripts:
         json_data = json.loads(json_script.string.strip())
@@ -69,13 +69,13 @@ def parse_currency_data(currency_json_data) -> List[ExchangeRate]:
             fields = currency_data[FIELDS]
             currency_code = extract_value_from_fields(fields, CODE)
             if (currency_code != None):
-                currency = Currency[currency_code]
+                currency = Currency.get_currency(currency_code)
                 if (currency != None):
                     selling = extract_value_from_fields(fields, SELLING)
                     buying = extract_value_from_fields(fields, BUYING)
 
                     if (selling != None and buying != None):
-                        exchangerate = ExchangeRate(currency, float(selling), float(buying))
+                        exchangerate = ExchangeRate(currency, float(buying), float(selling))
                         exchangerates.append(exchangerate)
 
             else:
@@ -105,11 +105,15 @@ def scrape_company_exchange_rates(json) -> CompanyExchangeRates:
     return company_exchange_rates
 
 
-def scrape_first_abu_dhabi_bank_data():
-    content = make_get_request_with_proxy(BankExchangeRateUrl.FIRST_ABU_DHABI_BANK)
-    json = find_json_from_html(content)
-    company_exchange_rates = scrape_company_exchange_rates(json)
-    exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
-                                       ExchangeCompanyType.NATIONAL_BANK)
-    exchange_company.set_exchange_rates(company_exchange_rates)
-    return exchange_company
+def scrape_first_abu_dhabi_bank_data() -> ExchangeCompany:
+    try:
+        content = make_get_request_with_proxy(BankExchangeRateUrl.FIRST_ABU_DHABI_BANK)
+        json = find_json_from_html(content)
+        company_exchange_rates = scrape_company_exchange_rates(json)
+        exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
+                                           ExchangeCompanyType.NATIONAL_BANK)
+        exchange_company.set_exchange_rates(company_exchange_rates)
+        return exchange_company
+    except Exception as err:
+        print('Error occured while scraping ', BankName.FIRST_ABU_DHABI_BANK, err)
+        return None

@@ -42,10 +42,12 @@ class DatabaseHandler:
     def update_exchange_rate(self, company_exchange_data: ExchangeCompany):
         try:
             # self.collection.insert_one(data)
-            self.collection.update_one({'url': company_exchange_data.url}, {
-                '$set': {'company_exchange_rates': company_exchange_data.company_exchange_rates}})
+            dict = to_dict(company_exchange_data)
+            result = self.collection.update_one({'url': dict['url']}, {
+                '$set': {'company_exchange_rates': dict['company_exchange_rates']}})
+            m = 5
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error: while updating exchange data {e}")
 
     def remove_by_id(self, id):
         try:
@@ -61,5 +63,5 @@ class DatabaseHandler:
             print(f"Error: {e}")
 
     def find_company_by_url(self, url):
-        company = self.collection.find_one({url: url})
+        company = self.collection.find_one({'url': url})
         return company
