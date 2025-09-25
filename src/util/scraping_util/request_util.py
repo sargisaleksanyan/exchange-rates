@@ -1,7 +1,8 @@
 import requests
 from fake_useragent import UserAgent
 
-from src.util.tool.proxy import get_random_proxy, get_random_proxy_for_request
+from src.util.tool.json_util import convert_dict_to_json
+from src.util.tool.proxy import get_random_proxy_for_request
 
 MAX_REQUEST = 5
 
@@ -37,6 +38,10 @@ def make_post_request_with_proxy(url: str, body, is_url_encoded=False, request_c
 
     if is_url_encoded == True:
         headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    else:
+        headers['Content-Type'] = 'application/json'
+        headers['accept'] = 'application/json'
+        body = convert_dict_to_json(body)
 
     try:
         proxies = get_random_proxy_for_request()

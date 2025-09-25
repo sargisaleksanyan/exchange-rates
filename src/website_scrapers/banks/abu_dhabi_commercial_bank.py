@@ -5,6 +5,7 @@ from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, 
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
     ExchangeCompanyType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
+from src.util.tool.string_util import convert_to_float
 
 CURRENCY_CODE = 'Currency Code'
 CURRENCY_SELL = 'Sell'
@@ -39,7 +40,7 @@ def extract_exchange_rate_from_html(page_element: PageElement):
             if (CURRENCY_CODE not in element_index_dict):
                 for i in range(0, len(td_elements)):
                     td = td_elements[i]
-                    if td is not None:
+                    if td is not None and td.get_text() is not None:
 
                         td_text = td.get_text().strip().lower()
 
@@ -59,7 +60,7 @@ def extract_exchange_rate_from_html(page_element: PageElement):
                     selling = get_element_text(td_elements, element_index_dict[CURRENCY_SELL])
                     buying = get_element_text(td_elements, element_index_dict[CURRENCY_BUY])
                     if (selling is not None and buying is not None):
-                        exchangerate = ExchangeRate(currency, float(buying), float(selling))
+                        exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
                         exchange_rates.append(exchangerate)
                     # exchange_rates.append(exchangerate)
                     # exchange_data =
@@ -118,6 +119,3 @@ def scrape_abu_dhabi_commercial_bank() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occured while scraping ', BankName.ABU_DHABI_COMMERCIAL_BANK, err)
         return None
-
-
-scrape_abu_dhabi_commercial_bank()

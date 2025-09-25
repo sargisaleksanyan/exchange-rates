@@ -119,6 +119,8 @@ class Currency(Enum):
         return f"{self.code} - {self.fullname}"
 
     def get_currency(currency):
+        if (currency is None):
+            return None
         if isinstance(currency, Currency):
             return Currency[currency]
         if isinstance(currency, str) and currency in Currency._value2member_map_ or currency in (c.code for c in

@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 from bs4 import BeautifulSoup
@@ -6,21 +5,25 @@ from bs4 import BeautifulSoup
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankExchangeRateApiUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeRate, Currency, ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType
+from src.util.tool.json_util import parse_string_to_json
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
+from src.util.tool.string_util import convert_to_float
 
 # https://www.emiratesnbd.com/en/foreign-exchange
 
 DATA_SETTINGSID = 'data-settingsid'
 
 
-def get_data_settingsid() -> str:
+def get_data_settingsid() -> str | None:
     content = make_get_request_with_proxy(BankExchangeRateUrl.EMIRATES_ISLAMIC_BANK)
-    soup = BeautifulSoup(content, 'html.parser')
-    convertcurrency_element = soup.select_one("#currency-rate")
-    # transfercurrency_element = soup.select_one("#transfercurrency") transferCountries,convertcurrency ,transfercurrency TODO add this
-    if convertcurrency_element is not None:
-        attr = convertcurrency_element.get(DATA_SETTINGSID)
-        return attr
+    if (content != None):
+        soup = BeautifulSoup(content, 'html.parser')
+        convertcurrency_element = soup.select_one("#currency-rate")
+        # transfercurrency_element = soup.select_one("#transfercurrency") transferCountries,convertcurrency ,transfercurrency TODO add this
+        if convertcurrency_element is not None:
+            attr = convertcurrency_element.get(DATA_SETTINGSID)
+            return attr
+    return None
 
 
 def get_rates_from_emirates_islamic_bank():
@@ -34,7 +37,7 @@ def get_rates_from_emirates_islamic_bank():
 
         content = make_post_request_with_proxy(BankExchangeRateApiUrl.EMIRATES_ISLAMIC_BANK, body, is_url_encoded=True)
         if (content is not None):
-            json_data = json.loads(content.strip())
+            json_data = parse_string_to_json(content.strip())
             return json_data
 
     return None
@@ -59,17 +62,17 @@ def get_last_update_date(last_update_date: str):
 
 def parse_rates(rates_raw_data) -> CompanyExchangeRates:
     exchange_rates = []
-    rates_data = rates_raw_data['Currencies']
-    last_update_date = get_last_update_date(rates_raw_data['LastUpdated'])
+    rates_data = get_data_from_json(rates_raw_data, 'Currencies')
+    last_update_date = get_last_update_date(get_data_from_json(rates_raw_data, 'LastUpdated'))
 
     for rate_data in rates_data:
-        currency_code = rate_data['CurrencyCode']
+        currency_code = get_data_from_json(rate_data, 'CurrencyCode')
         if (currency_code != None):
             currency = Currency.get_currency(currency_code)
-            buying = rate_data['CustomerBuy']
-            selling = rate_data['CustomerSell']
+            buying = get_data_from_json(rate_data, 'CustomerBuy')
+            selling = get_data_from_json(rate_data, 'CustomerSell')
             if (buying != None and selling != None):
-                exchangerate = ExchangeRate(currency, float(buying), float(selling))
+                exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
                 exchange_rates.append(exchangerate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
@@ -93,4 +96,3 @@ def scrape_emirates_islamic_bank_data() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping emirates islamic bank data', err)
     return None
-

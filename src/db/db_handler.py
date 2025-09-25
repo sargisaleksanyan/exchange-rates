@@ -42,10 +42,10 @@ class DatabaseHandler:
     def update_exchange_rate(self, company_exchange_data: ExchangeCompany):
         try:
             # self.collection.insert_one(data)
-            dict = to_dict(company_exchange_data)
-            result = self.collection.update_one({'url': dict['url']}, {
-                '$set': {'company_exchange_rates': dict['company_exchange_rates']}})
-            m = 5
+            if company_exchange_data.company_exchange_rates is not None:
+                dict = to_dict(company_exchange_data)
+                self.collection.update_one({'url': dict['url']},
+                                           {'$set': {'company_exchange_rates': dict['company_exchange_rates']}})
         except Exception as e:
             print(f"Error: while updating exchange data {e}")
 

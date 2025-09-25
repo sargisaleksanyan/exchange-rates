@@ -1,5 +1,4 @@
 # First Abu Dhabi Bank
-import json
 from datetime import datetime
 from typing import List
 
@@ -8,7 +7,9 @@ from bs4 import BeautifulSoup
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeRate, Currency, CompanyExchangeRates, ExchangeCompany, \
     ExchangeCompanyType
+from src.util.tool.json_util import parse_string_to_json
 from src.util.scraping_util.request_util import make_get_request_with_proxy
+from src.util.tool.string_util import convert_to_float
 
 SITECORE = 'sitecore'
 ROUTE = 'route'
@@ -25,11 +26,11 @@ UPDATED_DATE_TIME = 'UpdatedDateTime'
 
 def find_json_from_html(html_content: str):
     soup = BeautifulSoup(html_content, 'html.parser')
-    json_scripts = soup.find_all('script', id='application/json')
+    json_scripts = soup.find_all('script', type='application/json')
 
     for json_script in json_scripts:
-        json_data = json.loads(json_script.string.strip())
-        if SITECORE in json_data and ROUTE in json_data[SITECORE]:
+        json_data = parse_string_to_json(json_script.string.strip())
+        if json_data is not None and SITECORE in json_data and ROUTE in json_data[SITECORE]:
             return json_data
 
     return None
@@ -75,7 +76,7 @@ def parse_currency_data(currency_json_data) -> List[ExchangeRate]:
                     buying = extract_value_from_fields(fields, BUYING)
 
                     if (selling != None and buying != None):
-                        exchangerate = ExchangeRate(currency, float(buying), float(selling))
+                        exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
                         exchangerates.append(exchangerate)
 
             else:
@@ -108,12 +109,16 @@ def scrape_company_exchange_rates(json) -> CompanyExchangeRates:
 def scrape_first_abu_dhabi_bank_data() -> ExchangeCompany:
     try:
         content = make_get_request_with_proxy(BankExchangeRateUrl.FIRST_ABU_DHABI_BANK)
-        json = find_json_from_html(content)
-        company_exchange_rates = scrape_company_exchange_rates(json)
-        exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
-                                           ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
-        return exchange_company
+        if (content is not None):
+            json = find_json_from_html(content)
+            company_exchange_rates = scrape_company_exchange_rates(json)
+            exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
+                                               ExchangeCompanyType.NATIONAL_BANK)
+            exchange_company.set_exchange_rates(company_exchange_rates)
+            return exchange_company
     except Exception as err:
         print('Error occured while scraping ', BankName.FIRST_ABU_DHABI_BANK, err)
-        return None
+
+    return None
+
+

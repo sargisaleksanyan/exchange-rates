@@ -1,10 +1,10 @@
 class BankName:
-    FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank'
-    EMIRATES_BANK = 'Emirates NBD'
-    ABU_DHABI_COMMERCIAL_BANK = 'Abu Dhabi Commercial Bank'
-    EMIRATES_ISLAMIC_BANK = 'Emirates Islamic Bank'
+    FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank' #
+    EMIRATES_BANK = 'Emirates NBD' #
+    ABU_DHABI_COMMERCIAL_BANK = 'Abu Dhabi Commercial Bank'#
+    EMIRATES_ISLAMIC_BANK = 'Emirates Islamic Bank'#
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'
-    NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'National Bank of Ras Al-Khaimah'
+    NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'National Bank of Ras Al-Khaimah'#
     NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'
     COMMERCIAL_BANK_OF_DUBAI = 'Commercial Bank of Dubai'
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'
@@ -18,7 +18,7 @@ class BankUrl:
     DUBAI_ISLAMIC_BANK = 'dib.ae'
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'rakbank.ae'  # +
     NATIONAL_BANK_OF_FUJARAH = 'nbf.ae'
-    COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'
+    COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae' # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
 
 
@@ -38,3 +38,4 @@ class BankExchangeRateApiUrl:
     EMIRATES_BANK = 'https://www.emiratesnbd.com/enbdapi/v1/currency/getexchangerates'
     EMIRATES_ISLAMIC_BANK = 'https://www.emiratesislamic.ae/eiapi/v1/Currency/GetAllCurrencies'
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'https://www.rakbank.ae/api/forex/rate'
+    SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/classic/SIBCurrencyConvertor/GetCurrenciesData?currencyMarket=8&currencies='
