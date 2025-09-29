@@ -75,7 +75,6 @@ class Currency(Enum):
     ISK = ('ISK', "Icelandic Króna")
     CLP = ('CLP', "Chilean Peso")
     ###############################
-    ###############################
     AFN = ("AFN", "Afghan Afghani")
     ALL = ("ALL", "Albanian Lek")
     ANG = ("ANG", "Netherlands Antillean Guilder")
@@ -138,13 +137,13 @@ class ExchangeCompanyType(Enum):
 
 
 class ExchangeType(Enum):
-    CASH = 1
-    TRANSFER = 2
-    ONLINE = 3
+    CASH = 'Cash'
+    TRANSFER = 'Transfer'
+    ONLINE = 'Online'
 
 
 class ExchangeRate:
-    def __init__(self, currency: Currency, buy_rate, sell_rate):
+    def __init__(self, currency: str, buy_rate, sell_rate):
         self.currency = currency
         self.buy_rate = buy_rate
         self.sell_rate = sell_rate
@@ -202,5 +201,11 @@ class ExchangeCompany:
     def set_rank_in_category(self, rank):
         self.rank = rank
 
-    def set_exchange_rates(self, company_exchange_rates: CompanyExchangeRates):
+    def set_exchange_rates(self, company_exchange_rates: List[CompanyExchangeRates]):
         self.company_exchange_rates = company_exchange_rates
+
+    def add_exchange_rate(self, company_exchange_rate: CompanyExchangeRates):
+        if self.company_exchange_rates is None:
+            self.company_exchange_rates = []
+
+        self.company_exchange_rates.append(company_exchange_rate)

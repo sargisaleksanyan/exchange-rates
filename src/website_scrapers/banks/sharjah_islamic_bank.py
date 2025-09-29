@@ -24,7 +24,7 @@ def parse_exchange_date_data(exchange_rates_raw_data) -> List[ExchangeRate]:
 
                 if (sell_rate is not None and buy_rate is not None):
                     exchange_rates.append(
-                        ExchangeRate(currency, convert_to_float(buy_rate), convert_to_float(sell_rate)))
+                        ExchangeRate(currency.code, convert_to_float(buy_rate), convert_to_float(sell_rate)))
 
     return exchange_rates
 
@@ -54,7 +54,7 @@ def scrape_sharjah_islamic_bank() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(BankName.SHARJAH_ISLAMIC_BANK,
                                            BankUrl.SHARJAH_ISLAMIC_BANK,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
     except Exception as err:

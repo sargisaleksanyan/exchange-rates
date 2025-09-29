@@ -60,7 +60,7 @@ def extract_exchange_rate_from_html(page_element: PageElement):
                     selling = get_element_text(td_elements, element_index_dict[CURRENCY_SELL])
                     buying = get_element_text(td_elements, element_index_dict[CURRENCY_BUY])
                     if (selling is not None and buying is not None):
-                        exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
+                        exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                         exchange_rates.append(exchangerate)
                     # exchange_rates.append(exchangerate)
                     # exchange_data =
@@ -110,7 +110,7 @@ def scrape_abu_dhabi_commercial_bank() -> ExchangeCompany | None:
         company_exchange_rates = extract_company_exchange_rates(content)
         exchange_company = ExchangeCompany(BankName.ABU_DHABI_COMMERCIAL_BANK, BankUrl.ABU_DHABI_COMMERCIAL_BANK,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
 
         # exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
         #                                   ExchangeCompanyType.NATIONAL_BANK)

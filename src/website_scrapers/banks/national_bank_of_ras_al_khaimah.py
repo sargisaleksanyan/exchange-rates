@@ -73,7 +73,7 @@ def get_rates_from_national_bank_of_ras_al_khaimah() -> CompanyExchangeRates | N
                         if (currency is not None):
                             buying = get_value_from_json(currency_rate, BUY_RATE_KEY)
                             selling = get_value_from_json(currency_rate, SELL_RATE_KEY)
-                            exchange_rate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(
+                            exchange_rate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(
                                 selling))  # TODO it is not nessasry to have buying rate or sellin rate
                             exchange_rates.append(exchange_rate)
 
@@ -99,7 +99,7 @@ def scrape_national_bank_of_ras_al_khaimah() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(BankName.NATIONAL_BANK_OF_RAS_AL_KHAIMAH,
                                            BankUrl.NATIONAL_BANK_OF_RAS_AL_KHAIMAH,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
     except Exception as err:

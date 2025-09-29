@@ -36,7 +36,7 @@ def scrape_national_bank_of_fujairah() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(BankName.NATIONAL_BANK_OF_FUJARAH,
                                            BankUrl.NATIONAL_BANK_OF_FUJARAH,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
     except Exception as err:

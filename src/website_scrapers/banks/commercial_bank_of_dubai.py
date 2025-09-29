@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List
 
 from bs4 import BeautifulSoup, PageElement
-
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, Currency, ExchangeRate, \
     CompanyExchangeRates
@@ -14,7 +13,6 @@ CURRENCY_CODE = 'Currency'
 BUY_RATE = 'Buy Rate'
 SELL_RATE = 'Sell Rate'
 UPDATED_AT_STRING = 'Updated at:'
-
 
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
@@ -71,7 +69,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
             sell_rate = get_element_text(table_data_list, table_headers[SELL_RATE])
 
             if buy_rate is not None and sell_rate is not None:
-                exchange_rate = ExchangeRate(currency, convert_to_float(buy_rate),
+                exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_rate),
                                              convert_to_float(sell_rate))  # handle this case
                 return exchange_rate
 
@@ -79,9 +77,6 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
 
 
 def find_update_date(soup: BeautifulSoup):
-    # updated_at_element = soup.find(string=UPDATED_AT_STRING)
-    # updated_at_element = soup.find(string=UPDATED_AT_STRING)
-
     updated_at_element = soup.find("p", string=re.compile(r"Updated at:"))
 
     if updated_at_element is not None:
@@ -134,7 +129,7 @@ def scrape_commercial_bank_of_dubai() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(BankName.COMMERCIAL_BANK_OF_DUBAI,
                                            BankUrl.COMMERCIAL_BANK_OF_DUBAI,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
         return exchange_company
     except Exception as err:
         # TODO log this

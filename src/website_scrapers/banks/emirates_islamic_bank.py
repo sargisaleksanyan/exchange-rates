@@ -72,7 +72,7 @@ def parse_rates(rates_raw_data) -> CompanyExchangeRates:
             buying = get_data_from_json(rate_data, 'CustomerBuy')
             selling = get_data_from_json(rate_data, 'CustomerSell')
             if (buying != None and selling != None):
-                exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
+                exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                 exchange_rates.append(exchangerate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
@@ -90,7 +90,7 @@ def scrape_emirates_islamic_bank_data() -> ExchangeCompany | None:
         company_exchange_rates = parse_rates(raw_rates)
         exchange_company = ExchangeCompany(BankName.EMIRATES_ISLAMIC_BANK, BankUrl.EMIRATES_ISLAMIC_BANK,
                                            ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+        exchange_company.add_exchange_rate(company_exchange_rates)
         return exchange_company
     except Exception as err:
         # TODO log this

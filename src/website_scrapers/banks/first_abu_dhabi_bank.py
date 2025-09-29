@@ -76,7 +76,7 @@ def parse_currency_data(currency_json_data) -> List[ExchangeRate]:
                     buying = extract_value_from_fields(fields, BUYING)
 
                     if (selling != None and buying != None):
-                        exchangerate = ExchangeRate(currency, convert_to_float(buying), convert_to_float(selling))
+                        exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                         exchangerates.append(exchangerate)
 
             else:
@@ -114,7 +114,7 @@ def scrape_first_abu_dhabi_bank_data() -> ExchangeCompany:
             company_exchange_rates = scrape_company_exchange_rates(json)
             exchange_company = ExchangeCompany(BankName.FIRST_ABU_DHABI_BANK, BankUrl.FIRST_ABU_DHABI_BANK,
                                                ExchangeCompanyType.NATIONAL_BANK)
-            exchange_company.set_exchange_rates(company_exchange_rates)
+            exchange_company.add_exchange_rate(company_exchange_rates)
             return exchange_company
     except Exception as err:
         print('Error occured while scraping ', BankName.FIRST_ABU_DHABI_BANK, err)
