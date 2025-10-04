@@ -8,12 +8,15 @@ class BankName:
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'  # +
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'  # +
     AJMAN_BANK = 'AJMAN BANK'  # +
-    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'
+    ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
 
+    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'
     MASHREQ_BANK = 'Mashreq Bank'  # No currency data was found
-    ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # No currency data was found https://www.adib.ae/en/pages/currency-rates
     AL_HILAL_BANK = 'AL_HILAL_BANK'  # No info was found
     UNITED_ARAB_BANK = 'United Arab Bank'  # No information was found
+
+    # International
+    BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'BNP Paribas Middle East and; Africa UAE'
     # 7 = 14
 
 
@@ -28,9 +31,14 @@ class BankUrl:
     COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'  # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
     AJMAN_BANK = 'ajmanbank.ae'
+    ABU_DHABI_ISLAMIC_BANK = 'adib.com'
+
+    # International
+    BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'bnpparibas.com'
 
 
 class BankExchangeRateUrl:
+    ABU_DHABI_ISLAMIC_BANK = 'https://www.adib.com/en/pages/currency-rates.aspx'
     FIRST_ABU_DHABI_BANK = 'https://www.bankfab.com/en-ae/personal/fx-rate'
     EMIRATES_BANK = 'https://www.emiratesnbd.com/en/foreign-exchange'
     ABU_DHABI_COMMERCIAL_BANK = 'https://www.adcb.com/en/personal/accounts/money-transfer/fx-rate'
@@ -39,8 +47,12 @@ class BankExchangeRateUrl:
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'https://www.rakbank.ae/en/everyday-banking/send-pay/foreign-exchange-rates'
     NATIONAL_BANK_OF_FUJARAH = 'https://nbf.ae/business/treasury-and-trading/foreign-exchange-rates'
     COMMERCIAL_BANK_OF_DUBAI = 'https://www.cbd.ae/islami/personal/investments-transfers/transfers'
+    # https://www.cbd.ae/islami/personal/investments-transfers/international-transfers-swift
     SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list'
     AJMAN_BANK = 'https://digitalbanking.ajmanbank.ae/ib-retail-web/user/exchangeRatesAndCurrencyConverter'
+
+    # International
+    BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'https://mea.bnpparibas.com/en/live-fx-rates/live-fx-rates-auh'
 
 
 class BankExchangeRateApiUrl:
@@ -73,13 +85,20 @@ class ExchangeBusinessUrl:
     DINAR_EXCHANGE = 'dinarexchange.ae'
     REEMS_EXCHANGE = 'reems.ae'
     DESERT_EXCHANGE = 'desert-exchange.com'
+    ONYX_EXCHANGE = 'onyx-exchange.com'  # Onyx Exchange
+    DAR_EXCHANGE = 'Dar Exchange'
+    OMDA_EXCHANGE = 'Omda Exchange'
+    SEND_EXCHANGE = 'Send Exchange'
+
+
+# https://capitalexchange.ae/
 
 
 class ExchangeBusinessNames:
     AL_ANSARI_EXCHANGE = 'Al Ansari Exchange'  # Diffcult have to scrape each currency one by one https://alansariexchange.com/service/foreign-exchange/
-    AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  have to scrape on by one
+    AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  https://alfardanexchange.com/foreign-exchange
     AL_ROSTAMANI_EXCHANGE = 'Al Rostamani Exchange'  # does not work at this moment
-    JOYALUKKAS_EXCHANGE = 'Joyalukkas_Exchange'  # Seems to be working https://admin.joyalukkasexchange.com/api/country-currency-code https://admin.joyalukkasexchange.com/api/country-currency-code
+    JOYALUKKAS_EXCHANGE = 'Joyalukkas Exchange'  # Seems to be working https://admin.joyalukkasexchange.com/api/country-currency-code https://admin.joyalukkasexchange.com/api/country-currency-code
     #                     https://admin.joyalukkasexchange.com/api/currency-converter?region=2&amount=1&currency_code=USD&rate_type=TT&amount_type=LCY for more detailed need to request one by one
     LULU_EXCHANGE = 'Lulu Exchange'  # Does not work
     WALL_STREET_EXCHANGE = 'Wall Street Exchange'  # https://www.wallstreet.ae/personal/foreign-exchange api https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true
@@ -93,17 +112,46 @@ class ExchangeBusinessNames:
     NATIONAL_EXCHANGE_CO = 'National Exchange Co'  # 'https://nationalexc.com/how-it-works/' have only send money data
     INDEX_EXCHANGE = 'Index Exchange'  # https://www.indexexchange.ae/exchange_rates
     AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
-    LARI_EXCHANGE = 'Lari Exchange'  # https://www.lariexchange.com/Forex
-    MESRKANLOO_INTERNATIONAL_EXCHANGE = 'Mesrkanloo International Exchange'  # https://mesrkanlooexchange.com/exchange-rate/ works !
+    LARI_EXCHANGE = 'Lari Exchange'  # https://www.lariexchange.com/Forex not easy to scrape , Only provides transfer rates in bulk
+    MESRKANLOO_INTERNATIONAL_EXCHANGE = 'Mesrkanloo International Exchange'  # https://mesrkanlooexchange.com/exchange-rate/ takes rates from https://efastlive.com Do not think need it
     DINAR_EXCHANGE = 'Dinar Exchange'  # https: // dinarexchange.ae /
     REEMS_EXCHANGE = 'Reems Exchange'  # https://reems.ae/exchange-rates/
     DESERT_EXCHANGE = 'Desert Exchange'  # https://desert-exchange.com/services/foreign-currency-exchange/
-    # https://unimoni.ae/ ??
+    ##################################
+    ONYX_EXCHANGE = 'Onyx Exchange'
+    DAR_EXCHANGE = 'Dar Exchange'
+    OMDA_EXCHANGE = 'Omda exchange'
+    SEND_EXCHANGE = 'Send Exchange'
 
-    # https://www.goodwillexchange.ae/our-services did not understand if its own api
+
+# 'https://sendexchange.com/'
+
+
+# https://unimoni.ae/ ??
+
+# https://www.goodwillexchange.ae/our-services did not understand if its own api
 
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
-    def __init__(self):
-        self.name = ''
+    JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1
+    WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2
+    ORIENT_EXCHANGE = 'orientexchange.com/Orient/CurrencyRates'  # 3
+    AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order
+    AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # 5 https://3-214-76-133.nip.io/fc/0
+    INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly
+    AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
+    DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange/'  # 6 but transfer seems to show incorrect info
+    REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7
+    DESERT_EXCHANGE = 'https://desert-exchange.com/currency-buy-sell'  # 8
+    GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
+    OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'
+    SEND_EXCHANGE = 'https://sendexchange.com'
+
+
+class ExchangeBusinessApiUrl:
+    JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'
+    WALL_STREET_EXCHANGE = 'https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true'
+    SHARAF_EXCHANGE = 'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
+    ORIENT_EXCHANGE_SELL_RATES = 'https://www.orientexchange.com/Orient/GetSellRates'
+    ORIENT_EXCHANGE_BUY_RATES = 'https://www.orientexchange.com/Orient/GetBuyRates'

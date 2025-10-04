@@ -19,7 +19,6 @@ def get_data_settingsid() -> str | None:
     if (content != None):
         soup = BeautifulSoup(content, 'html.parser')
         convertcurrency_element = soup.select_one("#currency-rate")
-        # transfercurrency_element = soup.select_one("#transfercurrency") transferCountries,convertcurrency ,transfercurrency TODO add this
         if convertcurrency_element is not None:
             attr = convertcurrency_element.get(DATA_SETTINGSID)
             return attr

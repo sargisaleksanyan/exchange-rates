@@ -48,10 +48,10 @@ def extract_exchange_rate_from_html(page_element: PageElement):
                             element_index_dict[CURRENCY_CODE] = i
 
                         elif (td_text == BUY_RATE_HEADER or 'buy rate' in td_text.lower()):
-                            element_index_dict[CURRENCY_SELL] = i
+                            element_index_dict[CURRENCY_BUY] = i
 
                         elif (td_text == SELL_RATE_HEADER or 'sell rate' in td_text.lower()):
-                            element_index_dict[CURRENCY_BUY] = i
+                            element_index_dict[CURRENCY_SELL] = i
             else:
                 currency_code = get_element_text(td_elements, element_index_dict[CURRENCY_CODE])
 
@@ -119,3 +119,5 @@ def scrape_abu_dhabi_commercial_bank() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occured while scraping ', BankName.ABU_DHABI_COMMERCIAL_BANK, err)
         return None
+
+scrape_abu_dhabi_commercial_bank()

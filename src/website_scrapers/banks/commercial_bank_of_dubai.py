@@ -5,7 +5,7 @@ from typing import List
 from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, Currency, ExchangeRate, \
-    CompanyExchangeRates
+    CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.tool.string_util import convert_to_float
 
@@ -114,6 +114,7 @@ def get_rates_from_commercial_bank_of_dubai():
                                 exchange_rates.append(exchange_rate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
+    company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
     company_exchange_rates.set_current_scrape_date()
     update_date = find_update_date(soup)
 

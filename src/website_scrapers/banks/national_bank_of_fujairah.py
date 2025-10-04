@@ -7,7 +7,7 @@ from src.util.tool.json_util import parse_string_to_json
 
 WINDOWS_CURRENCY_DATA = 'window.currencyData ='
 
-
+# TODO
 def get_rates_from_national_bank_of_fujairah() -> CompanyExchangeRates | None:
     content = get_website_content_by_browser(BankExchangeRateUrl.NATIONAL_BANK_OF_FUJARAH, wait_time=10)
 
