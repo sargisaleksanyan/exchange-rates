@@ -1,5 +1,5 @@
-from src.util.common_classes.company_data import ExchangeBusinessNames
-from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates
+from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl
+from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeCompanyType
 
 
 def get_rates_from_joyalukkas():CompanyExchangeRates | None
@@ -9,8 +9,8 @@ def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
         company_exchange_rates = get_rates_from_joyalukkas()
         # company_exchange_rates = parse_rates(raw_rates)
         exchange_company = ExchangeCompany(ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
-                                           Ex.NATIONAL_BANK_OF_FUJARAH,
-                                           ExchangeCompanyType.NATIONAL_BANK)
+                                           ExchangeBusinessExchangeUrl.JOYALUKKAS_EXCHANGE,
+                                           ExchangeCompanyType.EXCHANGE_BUSINESS)
         exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company

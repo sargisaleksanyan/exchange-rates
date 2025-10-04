@@ -1,4 +1,7 @@
 class BankName:
+    AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com
+    AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
+    BANK_OF_SHARJAH = 'Bank of Sharjah' # can be scraped
     FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank'  # +
     EMIRATES_BANK = 'Emirates NBD'  # +
     ABU_DHABI_COMMERCIAL_BANK = 'Abu Dhabi Commercial Bank'  # +
@@ -8,12 +11,18 @@ class BankName:
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'  # +
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'  # +
     AJMAN_BANK = 'AJMAN BANK'  # +
+    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'# +
     ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='NATIONAL BANK OF UMM AL-QAIWAIN' #https://nbq.ae/general/fcy-rate-list can scrape it
 
-    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'
+
+    RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank' # Did not find any data
+    EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank' #  investment bank , does mot have exchage data
+    COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International' # no info was found
     MASHREQ_BANK = 'Mashreq Bank'  # No currency data was found
-    AL_HILAL_BANK = 'AL_HILAL_BANK'  # No info was found
     UNITED_ARAB_BANK = 'United Arab Bank'  # No information was found
+    AL_HILAL_BANK = 'AL_HILAL_BANK'  # No info was found
+
 
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'BNP Paribas Middle East and; Africa UAE'
@@ -22,6 +31,10 @@ class BankName:
 
 class BankUrl:
     ABU_DHABI_COMMERCIAL_BANK = 'adcb.com'  # +
+    ABU_DHABI_ISLAMIC_BANK = 'adib.com'  # +
+    AJMAN_BANK = 'ajmanbank.ae'  # +
+    BANK_OF_SHARJAH = 'bankofsharjah.com'
+    AL_MARYAH_COMMUNITY_BANK = 'mbank.ae'  # No data is shown
     FIRST_ABU_DHABI_BANK = 'bankfab.com'  # +
     EMIRATES_BANK = 'emiratesnbd.com'  # +
     EMIRATES_ISLAMIC_BANK = 'emiratesislamic.ae'  # +
@@ -30,9 +43,7 @@ class BankUrl:
     NATIONAL_BANK_OF_FUJARAH = 'nbf.ae'
     COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'  # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
-    AJMAN_BANK = 'ajmanbank.ae'
-    ABU_DHABI_ISLAMIC_BANK = 'adib.com'
-
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='nbq.ae'
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'bnpparibas.com'
 
@@ -41,6 +52,7 @@ class BankExchangeRateUrl:
     ABU_DHABI_ISLAMIC_BANK = 'https://www.adib.com/en/pages/currency-rates.aspx'
     FIRST_ABU_DHABI_BANK = 'https://www.bankfab.com/en-ae/personal/fx-rate'
     EMIRATES_BANK = 'https://www.emiratesnbd.com/en/foreign-exchange'
+    BANK_OF_SHARJAH = 'www.bankofsharjah.com/en/rates'
     ABU_DHABI_COMMERCIAL_BANK = 'https://www.adcb.com/en/personal/accounts/money-transfer/fx-rate'
     EMIRATES_ISLAMIC_BANK = 'https://www.emiratesislamic.ae/en/personal-banking/foreign-currency/fx'
     DUBAI_ISLAMIC_BANK = 'https://www.dib.ae/exchange-rates'
@@ -50,6 +62,8 @@ class BankExchangeRateUrl:
     # https://www.cbd.ae/islami/personal/investments-transfers/international-transfers-swift
     SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list'
     AJMAN_BANK = 'https://digitalbanking.ajmanbank.ae/ib-retail-web/user/exchangeRatesAndCurrencyConverter'
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='https://nbq.ae/general/fcy-rate-list'
+
 
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'https://mea.bnpparibas.com/en/live-fx-rates/live-fx-rates-auh'
@@ -155,3 +169,4 @@ class ExchangeBusinessApiUrl:
     SHARAF_EXCHANGE = 'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
     ORIENT_EXCHANGE_SELL_RATES = 'https://www.orientexchange.com/Orient/GetSellRates'
     ORIENT_EXCHANGE_BUY_RATES = 'https://www.orientexchange.com/Orient/GetBuyRates'
+    ORIENT_EXCHANGE_TRANSFER = 'https://www.orientexchange.com/Orient/GetExchangeRates'

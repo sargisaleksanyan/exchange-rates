@@ -15,13 +15,14 @@ def init_browser(url, wait_time=5, count=0) -> WebDriver | None:
     try:
         chrome_options = webdriver.ChromeOptions()
         # TODO add proxy
-
         chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+
+        chrome_options.add_argument('--window-size=1920,1080')
         chrome_options.add_argument(f'--user-agent={ua.chrome}')
         proxy = get_random_proxy()
 
         if (proxy is not None):
-            #print()
             chrome_options.add_argument('--proxy-server={}'.format(proxy.ip + ":" + proxy.port))
         browser = webdriver.Chrome(chrome_options)
         browser.get(url)
@@ -49,6 +50,7 @@ def get_website_content_by_browser(url, wait_time=5, count=0) -> str | None:
             count = count + 1
             get_website_content_by_browser(url, wait_time, count)
         return None
+
 
 # TODO handle this function
 def get_website_content_by_browser_by_visibilty_of_element(url, count=0) -> str | None:
