@@ -1,7 +1,4 @@
 class BankName:
-    AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com
-    AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
-    BANK_OF_SHARJAH = 'Bank of Sharjah' # can be scraped
     FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank'  # +
     EMIRATES_BANK = 'Emirates NBD'  # +
     ABU_DHABI_COMMERCIAL_BANK = 'Abu Dhabi Commercial Bank'  # +
@@ -14,8 +11,10 @@ class BankName:
     NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'# +
     ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='NATIONAL BANK OF UMM AL-QAIWAIN' #https://nbq.ae/general/fcy-rate-list can scrape it
+    BANK_OF_SHARJAH = 'Bank of Sharjah' # can be scraped
 
-
+    AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com
+    AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
     RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank' # Did not find any data
     EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank' #  investment bank , does mot have exchage data
     COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International' # no info was found
