@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
     ExchangeCompanyType, ExchangeType
-from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
 

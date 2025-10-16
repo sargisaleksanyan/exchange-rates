@@ -80,4 +80,4 @@ def scrape_national_bank_of_fujairah() -> ExchangeCompany | None:
     return None
 
 
-scrape_national_bank_of_fujairah()
+#scrape_national_bank_of_fujairah()

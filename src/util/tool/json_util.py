@@ -3,10 +3,12 @@ from typing import List
 
 
 def get_value_from_json(data, key):
-    if data is not None and key in data:
-        return data[key]
-
-    return None
+    try:
+        if data is not None and key in data:
+            return data[key]
+        return None
+    except Exception as error:
+        print('Error occurred while parsing json', error)  # TODO add logger
 
 
 # this function retrives deeply nested object and array is array of keys

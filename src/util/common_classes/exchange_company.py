@@ -33,6 +33,8 @@ class Currency(Enum):
     AMD = ("AMD", "Armenian Dram")
     ARS = ("ARS", "Argentine Peso")
     AZN = ("AZN", "Azerbaijani Manat")
+    #AZM = ("AZM", "Azerbaijani Manat") # TODO real name is AZN , need to convert AZM to AZN the old one
+    MVR = ("MVR","Maldivian Rufiyaa")
     BDT = ("BDT", "Bangladeshi Taka")
     BRL = ("BRL", "Brazilian Real")
     KHR = ("KHR", "Cambodian Riel")
@@ -82,6 +84,7 @@ class Currency(Enum):
     BGN = ("BGN", "Bulgarian Lev")
     BND = ("BND", "Brunei Dollar")
     BOB = ("BOB", "Bolivian Boliviano")
+    BAM = ("BAM","Bosnia and Herzegovina convertible mark")
     BSD = ("BSD", "Bahamian Dollar")
     CRC = ("CRC", "Costa Rican Colón")
     CUP = ("CUP", "Cuban Peso")
@@ -143,10 +146,11 @@ class ExchangeType(Enum):
 
 
 class ExchangeRate:
-    def __init__(self, currency: str, buy_rate, sell_rate):
+    def __init__(self, currency: str, buy_rate=None, sell_rate=None, rate=None):
         self.currency = currency
         self.buy_rate = buy_rate
         self.sell_rate = sell_rate
+        self.rate = rate
         self.exchange_type = None
         self.update_date = None
 

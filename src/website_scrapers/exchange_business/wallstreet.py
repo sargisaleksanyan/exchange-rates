@@ -7,6 +7,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCo
     CompanyExchangeRates
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
+from src.util.tool.string_util import convert_to_float
 
 
 def convert_update_date(update_date: str):
@@ -40,7 +41,7 @@ def get_rates_from_wall_street() -> CompanyExchangeRates | None:
                     if currency is not None:
                         buy = get_value_from_json(exchange_rate_data, 'buyRate')
                         sell = get_value_from_json(exchange_rate_data, 'sellRate')
-                        exchange_rate = ExchangeRate(currency, buy, sell)
+                        exchange_rate = ExchangeRate(currency.code, convert_to_float(buy), convert_to_float(sell))
                         exchange_rates.append(exchange_rate)
 
                 company_exchange_rate = CompanyExchangeRates(exchange_rates)

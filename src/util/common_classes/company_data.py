@@ -8,20 +8,20 @@ class BankName:
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'  # +
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'  # +
     AJMAN_BANK = 'AJMAN BANK'  # +
-    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'# +
+    NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'  # +
     ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
-    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='NATIONAL BANK OF UMM AL-QAIWAIN' #https://nbq.ae/general/fcy-rate-list can scrape it
-    BANK_OF_SHARJAH = 'Bank of Sharjah' # can be scraped
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'National Bank of Umm Al-Qaiwain'  # + https://nbq.ae/general/fcy-rate-list can scrape it
+
+    BANK_OF_SHARJAH = 'Bank of Sharjah'  # can be scraped  Have anti scraping system
 
     AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com
     AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
-    RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank' # Did not find any data
-    EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank' #  investment bank , does mot have exchage data
-    COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International' # no info was found
+    RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank'  # Did not find any data
+    EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank'  # investment bank , does mot have exchage data
+    COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International'  # no info was found
     MASHREQ_BANK = 'Mashreq Bank'  # No currency data was found
     UNITED_ARAB_BANK = 'United Arab Bank'  # No information was found
     AL_HILAL_BANK = 'AL_HILAL_BANK'  # No info was found
-
 
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'BNP Paribas Middle East and; Africa UAE'
@@ -42,7 +42,7 @@ class BankUrl:
     NATIONAL_BANK_OF_FUJARAH = 'nbf.ae'
     COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'  # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
-    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='nbq.ae'
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'nbq.ae'
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'bnpparibas.com'
 
@@ -51,7 +51,7 @@ class BankExchangeRateUrl:
     ABU_DHABI_ISLAMIC_BANK = 'https://www.adib.com/en/pages/currency-rates.aspx'
     FIRST_ABU_DHABI_BANK = 'https://www.bankfab.com/en-ae/personal/fx-rate'
     EMIRATES_BANK = 'https://www.emiratesnbd.com/en/foreign-exchange'
-    BANK_OF_SHARJAH = 'www.bankofsharjah.com/en/rates'
+    BANK_OF_SHARJAH = 'https://www.bankofsharjah.com/en/rates'
     ABU_DHABI_COMMERCIAL_BANK = 'https://www.adcb.com/en/personal/accounts/money-transfer/fx-rate'
     EMIRATES_ISLAMIC_BANK = 'https://www.emiratesislamic.ae/en/personal-banking/foreign-currency/fx'
     DUBAI_ISLAMIC_BANK = 'https://www.dib.ae/exchange-rates'
@@ -61,8 +61,7 @@ class BankExchangeRateUrl:
     # https://www.cbd.ae/islami/personal/investments-transfers/international-transfers-swift
     SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list'
     AJMAN_BANK = 'https://digitalbanking.ajmanbank.ae/ib-retail-web/user/exchangeRatesAndCurrencyConverter'
-    NATIONAL_BANK_OF_UMM_AL_QAIWAIN ='https://nbq.ae/general/fcy-rate-list'
-
+    NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'https://nbq.ae/general/fcy-rate-list'
 
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'https://mea.bnpparibas.com/en/live-fx-rates/live-fx-rates-auh'
@@ -147,19 +146,20 @@ class ExchangeBusinessNames:
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
-    JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1
-    WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2
-    ORIENT_EXCHANGE = 'orientexchange.com/Orient/CurrencyRates'  # 3
-    AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order
-    AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # 5 https://3-214-76-133.nip.io/fc/0
-    INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly
-    AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
-    DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange/'  # 6 but transfer seems to show incorrect info
-    REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7
-    DESERT_EXCHANGE = 'https://desert-exchange.com/currency-buy-sell'  # 8
+    JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1 +
+    WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2 +
+    ORIENT_EXCHANGE = 'orientexchange.com/Orient/CurrencyRates'  # 3  +
+    AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # + 5 https://3-214-76-133.nip.io/fc/0
+    DESERT_EXCHANGE = 'https://desert-exchange.com/currency-buy-sell'  # 8 +
+    DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange'  # + 6 but transfer seems to show incorrect info
+    REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7 +
+    SEND_EXCHANGE = 'https://sendexchange.com'  # +
+
     GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
-    OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'
-    SEND_EXCHANGE = 'https://sendexchange.com'
+    OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
+    AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
+    INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly +
+    AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
 
 
 class ExchangeBusinessApiUrl:
@@ -169,3 +169,5 @@ class ExchangeBusinessApiUrl:
     ORIENT_EXCHANGE_SELL_RATES = 'https://www.orientexchange.com/Orient/GetSellRates'
     ORIENT_EXCHANGE_BUY_RATES = 'https://www.orientexchange.com/Orient/GetBuyRates'
     ORIENT_EXCHANGE_TRANSFER = 'https://www.orientexchange.com/Orient/GetExchangeRates'
+    AL_GHURAIR_EXCHANGE_CASH_RATES = 'https://3-214-76-133.nip.io/fc/0'  # https://3-214-76-133.nip.io/tt/0
+    AL_GHURAIR_EXCHANGE_TRANSFER_RATES = 'https://3-214-76-133.nip.io/tt/0'

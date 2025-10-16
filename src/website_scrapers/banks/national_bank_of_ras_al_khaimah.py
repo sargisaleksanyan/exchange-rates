@@ -106,3 +106,4 @@ def scrape_national_bank_of_ras_al_khaimah() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping emirates islamic bank data', err)
     return None
+
