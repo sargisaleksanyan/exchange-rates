@@ -95,7 +95,7 @@ def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', ExchangeBusinessNames.JOYALUKKAS_EXCHANGE, err)
     return None
 
 # Currency has not been found AFA
