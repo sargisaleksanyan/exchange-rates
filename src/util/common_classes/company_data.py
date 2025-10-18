@@ -159,7 +159,8 @@ class ExchangeBusinessExchangeUrl:
     OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
     AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
     INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly +
-    AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
+    #AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
+    AL_ANSARI_EXCHANGE = 'https://alansariexchange.com/service/foreign-exchange'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
 
 
 class ExchangeBusinessApiUrl:
