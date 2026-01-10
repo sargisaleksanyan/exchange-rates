@@ -2,6 +2,8 @@ from datetime import datetime
 from enum import Enum
 from typing import List
 
+import requests
+
 
 class Currency(Enum):
     AUD = ("AUD", "Australian Dollar")
@@ -33,8 +35,7 @@ class Currency(Enum):
     AMD = ("AMD", "Armenian Dram")
     ARS = ("ARS", "Argentine Peso")
     AZN = ("AZN", "Azerbaijani Manat")
-    #AZM = ("AZM", "Azerbaijani Manat") # TODO real name is AZN , need to convert AZM to AZN the old one
-    MVR = ("MVR","Maldivian Rufiyaa")
+    MVR = ("MVR", "Maldivian Rufiyaa")
     BDT = ("BDT", "Bangladeshi Taka")
     BRL = ("BRL", "Brazilian Real")
     KHR = ("KHR", "Cambodian Riel")
@@ -76,7 +77,6 @@ class Currency(Enum):
     KES = ('KES', "Kenyan Shilling")
     ISK = ('ISK', "Icelandic Króna")
     CLP = ('CLP', "Chilean Peso")
-    ###############################
     AFN = ("AFN", "Afghan Afghani")
     ALL = ("ALL", "Albanian Lek")
     ANG = ("ANG", "Netherlands Antillean Guilder")
@@ -84,7 +84,7 @@ class Currency(Enum):
     BGN = ("BGN", "Bulgarian Lev")
     BND = ("BND", "Brunei Dollar")
     BOB = ("BOB", "Bolivian Boliviano")
-    BAM = ("BAM","Bosnia and Herzegovina convertible mark")
+    BAM = ("BAM", "Bosnia and Herzegovina convertible mark")
     BSD = ("BSD", "Bahamian Dollar")
     CRC = ("CRC", "Costa Rican Colón")
     CUP = ("CUP", "Cuban Peso")
@@ -213,3 +213,21 @@ class ExchangeCompany:
             self.company_exchange_rates = []
 
         self.company_exchange_rates.append(company_exchange_rate)
+
+
+def download_image(currency_code: str):
+    url = "https://www.xe.com/svgs/flags/" + currency_code + ".static.svg"
+    filename = '/home/sargis/Desktop/currency/' + currency_code+".svg"
+    r = requests.get(url, allow_redirects=True)
+    open(filename, 'wb').write(r.content)
+    return "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/"+currency_code+".svg"
+
+
+def print_currenies():
+    currencies = Currency._member_names_
+    for currency in currencies:
+        url = download_image(currency.lower())
+        print(currency + "," + Currency.get_currency(currency).fullname + "," + url)
+
+
+#print_currenies()

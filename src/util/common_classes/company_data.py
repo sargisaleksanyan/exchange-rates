@@ -7,7 +7,7 @@ class BankName:
     COMMERCIAL_BANK_OF_DUBAI = 'Commercial Bank of Dubai'  # +
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'  # +
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'  # +
-    AJMAN_BANK = 'AJMAN BANK'  # +
+    AJMAN_BANK = 'Ajman Bank'  # +
     NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'  # +
     ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'National Bank of Umm Al-Qaiwain'  # + https://nbq.ae/general/fcy-rate-list can scrape it
@@ -100,7 +100,7 @@ class ExchangeBusinessUrl:
     ONYX_EXCHANGE = 'onyx-exchange.com'  # Onyx Exchange
     DAR_EXCHANGE = 'Dar Exchange'
     OMDA_EXCHANGE = 'Omda Exchange'
-    SEND_EXCHANGE = 'Send Exchange'
+    SEND_EXCHANGE = 'sendexchange.com'
 
 
 # https://capitalexchange.ae/

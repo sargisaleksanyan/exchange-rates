@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl
+    ExchangeBusinessApiUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, Currency, ExchangeRate, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
@@ -97,7 +97,7 @@ def get_rates_from_orient_exchange() -> List[CompanyExchangeRates]:
 def scrape_orient_exchange() -> ExchangeCompany | None:
     try:
         exchange_company = ExchangeCompany(ExchangeBusinessNames.ORIENT_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.ORIENT_EXCHANGE,
+                                           ExchangeBusinessUrl.ORIENT_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
         company_exchange_rates = get_rates_from_orient_exchange()

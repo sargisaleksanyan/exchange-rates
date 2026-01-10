@@ -3,7 +3,7 @@ import time
 
 from bs4 import BeautifulSoup
 
-from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl
+from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
@@ -149,11 +149,12 @@ def get_rates_from_al_ansari():
 def scrape_al_ansari_exchange() -> ExchangeCompany | None:
     try:
         company_exchange_rates = get_rates_from_al_ansari()
-        # company_exchange_rates = parse_rates
+
         if company_exchange_rates is None:
-            return None;
+            return None
+
         exchange_company = ExchangeCompany(ExchangeBusinessNames.AL_ANSARI_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.JOYALUKKAS_EXCHANGE,
+                                           ExchangeBusinessUrl.AL_ANSARI_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
         exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)

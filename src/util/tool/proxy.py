@@ -1,4 +1,5 @@
 from random import randrange
+from urllib.parse import quote
 
 from src.util.common_classes import filename_holder
 
@@ -6,11 +7,17 @@ proxies = []
 
 
 class Proxy:
-    def __init__(self, ip, port, user_name, password):
+    def __init__(self, ip, port, user_name=None, password=None):
         self.ip = ip
         self.port = port
         self.user_name = user_name
         self.password = password
+
+
+def clean_string(string: str):
+    if string == None:
+        return string
+    return string.replace("\n", "").strip()
 
 
 def getProxies():
@@ -20,8 +27,12 @@ def getProxies():
     proxyData = open(filename_holder.FileNames.proxyFileName, 'r+')
     for proxyText in proxyData:
         values = proxyText.split(':')
-        proxy = Proxy(values[0], values[1], values[2], values[3])
-        proxies.append(proxy)
+        if (len(values) > 3):
+            proxy = Proxy(clean_string(values[0]), clean_string(values[1]), quote(clean_string(values[2])),
+                          quote(clean_string(values[3])))
+            proxies.append(proxy)
+        elif len(values) == 2:
+            proxies.append(Proxy(clean_string(values[0]), clean_string(values[1])))
 
     proxyData.close()
     return proxies
@@ -49,11 +60,15 @@ def get_random_proxy_for_request():
         if (len(proxy_list) > 1):
             proxy = proxy_list[randrange(0, len(proxy_list) - 1)]
 
-        return {
-            # "https": 'https://' + proxy.userName + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port,
-            # "http": 'http://' + proxy.userName + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port
-            "http": proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port,
-            "https": proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port
-        }
+        if (proxy.user_name is not None and proxy.password is not None):
+            return {
+                "https": "socks5://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port,
+                "http": "socks5://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port
+            }
+        else:
+            return {
+                "https": "socks5://" + proxy.ip + ":" + proxy.port,
+                "http": "socks5://" + proxy.ip + ":" + proxy.port
+            }
 
     return None

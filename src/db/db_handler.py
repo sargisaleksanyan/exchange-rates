@@ -31,6 +31,9 @@ class DatabaseHandler:
         self.db = self.client[DB_NAME]
         self.collection = self.db[collection_name]
 
+    def make_unique_index(self, index_name):
+        self.collection.create_index(index_name, unique=True)
+
     def insert_data(self, data):
         try:
             # self.collection.insert_one(data)
@@ -65,3 +68,6 @@ class DatabaseHandler:
     def find_company_by_url(self, url):
         company = self.collection.find_one({'url': url})
         return company
+
+    def close_connection(self):
+        self.client.close()

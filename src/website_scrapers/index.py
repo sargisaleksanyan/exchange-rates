@@ -8,7 +8,6 @@ from src.website_scrapers.exchange_business.index import frequent_currency_excha
 
 dbHandler = DatabaseHandler()
 
-
 def update_company_exchange_data(company_exchange_data: ExchangeCompany):
     company = dbHandler.find_company_by_url(company_exchange_data.url)
     if company == None:
@@ -43,6 +42,7 @@ def init_frequent_data_update():
                 update_company_exchange_data(exchange_data)
         except Exception as err:
             print('Error while updating frequent data ', err)
+
 
 
 init_non_frequent_data_update()

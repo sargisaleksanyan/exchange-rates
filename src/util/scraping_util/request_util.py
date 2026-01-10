@@ -19,7 +19,8 @@ def make_get_request_with_proxy(url: str, request_count=0, given_headers=None):
 
     try:
         proxies = get_random_proxy_for_request()
-        response = requests.get(url, headers=headers, proxies=proxies, timeout=10)
+
+        response = requests.get(url, headers=headers, proxies=proxies, timeout=20)
         content = response.content
         response.close()
         return content
@@ -51,7 +52,7 @@ def make_get_request(url: str, request_count=0, given_headers=None):
         print('Error', err, ' Url', url)
         if (request_count < MAX_REQUEST):
             request_count = request_count + 1
-            return make_get_request_with_proxy(url, request_count, given_headers)
+            return make_get_request(url, request_count, given_headers)
         else:
             return None
 

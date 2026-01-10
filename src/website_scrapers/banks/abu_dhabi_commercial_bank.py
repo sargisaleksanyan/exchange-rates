@@ -120,4 +120,4 @@ def scrape_abu_dhabi_commercial_bank() -> ExchangeCompany | None:
         print('Error occured while scraping ', BankName.ABU_DHABI_COMMERCIAL_BANK, err)
         return None
 
-scrape_abu_dhabi_commercial_bank()
+#scrape_abu_dhabi_commercial_bank()
