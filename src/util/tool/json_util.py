@@ -8,7 +8,7 @@ def get_value_from_json(data, key):
             return data[key]
         return None
     except Exception as error:
-        print('Error occurred while parsing json', error)  # TODO add logger
+        print('Error occurred while parsing json', error)  # TODO add logs
 
 
 # this function retrives deeply nested object and array is array of keys
@@ -65,7 +65,7 @@ def parse_string_to_json(json_string: str):
         json_object = json.loads(json_string)
         return json_object
     except Exception as error:
-        print('Error occurred while parsing json', error)  # TODO add logger
+        print('Error occurred while parsing json', error)  # TODO add logs
     return None
 
 
@@ -74,5 +74,5 @@ def convert_dict_to_json(json_string: dict):
         json_dump = json.dumps(json_string)
         return json_dump
     except Exception as error:
-        print('Error occurred while dumping json', error)  # TODO add logger
+        print('Error occurred while dumping json', error)  # TODO add logs
     return None

@@ -62,13 +62,17 @@ def get_random_proxy_for_request():
 
         if (proxy.user_name is not None and proxy.password is not None):
             return {
-                "https": "socks5://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port,
-                "http": "socks5://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port
+                "https": f"http://{proxy.user_name}:{proxy.password}@{proxy.ip}:{proxy.port}",
+                "http": f"http://{proxy.user_name}:{proxy.password}@{proxy.ip}:{proxy.port}",
+                # "socks5": "socks5://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port,
+                #"http": "https://" + proxy.user_name + ":" + proxy.password + "@" + proxy.ip + ":" + proxy.port
             }
         else:
             return {
-                "https": "socks5://" + proxy.ip + ":" + proxy.port,
-                "http": "socks5://" + proxy.ip + ":" + proxy.port
+                "https": "https://" + proxy.ip + ":" + proxy.port,
+                # "socks5": "socks5://" + proxy.ip + ":" + proxy.port,
+                # "http": "socks5://" + proxy.ip + ":" + proxy.port
+                "http": "http://" + proxy.ip + ":" + proxy.port
             }
 
     return None

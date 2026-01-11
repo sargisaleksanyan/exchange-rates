@@ -23,8 +23,8 @@ def init_browser(url, wait_time=5, count=0) -> WebDriver | None:
         proxy = get_random_proxy()
 
         if (proxy is not None):
-            #chrome_options.add_argument('--proxy-server={}'.format(proxy.ip + ":" + proxy.port))
-            chrome_options.add_argument('--proxy-server=socks5://{}'.format(proxy.ip + ":" + proxy.port))
+            chrome_options.add_argument('--proxy-server={}'.format(proxy.ip + ":" + proxy.port))
+            #chrome_options.add_argument('--proxy-server=socks5://{}'.format(proxy.ip + ":" + proxy.port))
         browser = webdriver.Chrome(chrome_options)
         browser.get(url)
 
