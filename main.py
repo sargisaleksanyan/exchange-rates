@@ -47,5 +47,5 @@ def init_frequent_data_update():
             print('Error while updating frequent data ', err)
 
 
-# init_non_frequent_data_update()
-# init_frequent_data_update()
+init_non_frequent_data_update()
+init_frequent_data_update()

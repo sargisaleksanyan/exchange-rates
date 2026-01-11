@@ -74,5 +74,5 @@ def get_website_content_by_browser_by_visibilty_of_element(url, count=0) -> str 
         close_browser(browser)
         if (count < 5):
             count = count + 1
-            return get_website_content_by_browser(url, count)
+            return get_website_content_by_browser_by_visibilty_of_element(url, count)
         return None
