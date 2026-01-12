@@ -18,4 +18,4 @@ def insert_business_logos():
     db_handler.close_connection()
 
 
-insert_business_logos()
+

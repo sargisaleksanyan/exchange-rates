@@ -1,0 +1,5 @@
+from src.data_inserter.business_logos import insert_business_logos
+from src.data_inserter.currency_codes import insert_currency_codes
+
+insert_currency_codes()
+insert_business_logos()

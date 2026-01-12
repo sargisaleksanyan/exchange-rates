@@ -15,4 +15,3 @@ def insert_currency_codes():
     db_handler.close_connection()
 
 
-insert_currency_codes()
