@@ -12,10 +12,9 @@ def insert_business_logos():
         logo_text = business_logo['logos']
         logos = logo_text.split(',')
         business_logo['logos'] = logos
-        db_handler.insert_data(business_logo)
+        db_handler.replace_data({'url': business_logo['url']}, business_logo)
 
     print('Inserted business logos successfully')
     db_handler.close_connection()
 
-
-
+insert_business_logos()

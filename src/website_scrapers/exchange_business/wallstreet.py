@@ -2,7 +2,7 @@ from datetime import datetime
 from locale import currency
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl
+    ExchangeBusinessApiUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates
 from src.util.scraping_util.request_util import make_get_request_with_proxy
@@ -58,7 +58,7 @@ def scrape_wall_street() -> ExchangeCompany | None:
     try:
         company_exchange_rates = get_rates_from_wall_street()
         exchange_company = ExchangeCompany(ExchangeBusinessNames.WALL_STREET_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.WALL_STREET_EXCHANGE,
+                                           ExchangeBusinessUrl.WALL_STREET_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
         exchange_company.add_exchange_rate(company_exchange_rates)

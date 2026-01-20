@@ -34,6 +34,14 @@ class DatabaseHandler:
     def make_unique_index(self, index_name):
         self.collection.create_index(index_name, unique=True)
 
+    def replace_data(self, query, data):
+        try:
+            # self.collection.insert_one(data)
+            dict = to_dict(data)
+            self.collection.replace_one(filter=query, replacement=dict, upsert=True)
+        except Exception as e:
+            print(f"Error: while inserting data {e}")
+
     def insert_data(self, data):
         try:
             # self.collection.insert_one(data)
@@ -59,11 +67,6 @@ class DatabaseHandler:
         except Exception as e:
             print(f"Error: {e}")
 
-    def replace_data(self, data):
-        try:
-            result = self.collection.replace_one({"id": data.id}, to_dict(data), True)
-        except Exception as e:
-            print(f"Error: {e}")
 
     def find_company_by_url(self, url):
         company = self.collection.find_one({'url': url})

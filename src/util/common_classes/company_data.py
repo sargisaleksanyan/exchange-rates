@@ -98,7 +98,7 @@ class ExchangeBusinessUrl:
     REEMS_EXCHANGE = 'reems.ae'
     DESERT_EXCHANGE = 'desert-exchange.com'
     ONYX_EXCHANGE = 'onyx-exchange.com'  # Onyx Exchange
-    DAR_EXCHANGE = 'Dar Exchange'
+    DAR_EXCHANGE = 'darexchange.com'
     OMDA_EXCHANGE = 'Omda Exchange'
     SEND_EXCHANGE = 'sendexchange.com'
 

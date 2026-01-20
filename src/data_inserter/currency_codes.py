@@ -9,9 +9,11 @@ def insert_currency_codes():
     db_handler.make_unique_index('url')
 
     for currency_code in currency_codes:
-        db_handler.insert_data(currency_code)
+        filter = {"code": currency_code['code']}
+        db_handler.replace_data(query=filter ,data= currency_code)
 
     print('Inserted currency codes successfully')
     db_handler.close_connection()
 
 
+insert_currency_codes()

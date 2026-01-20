@@ -7,17 +7,18 @@ business_logos = [
     {
         "url": "adib.com",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg"
+        #"logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg"
     },
     {
         "url": "ajmanbank.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/ajmanbank_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/ajmanbank_ae.jpg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/ajmanbank_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/ajmanbank_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/ajmanbank_ae.jpg"
     },
     {
         "url": "bankofsharjah.com",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com2.png,"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofsharjah_com2.png,"
     },
     {
         "url": "bankfab.com",
@@ -32,17 +33,17 @@ business_logos = [
     {
         "url": "emiratesislamic.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/emiratesislamic_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/emiratesislamic_ae.svg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/emiratesislamic_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/emiratesislamic_ae.png"
     },
     {
         "url": "dib.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/dib_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/dib_ae_50.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/dib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/dib_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/dib_ae_50.png"
     },
     {
         "url": "rakbank.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.jpg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.jpg"
     },
     {
         "url": "nbf.ae",
@@ -57,7 +58,7 @@ business_logos = [
     {
         "url": "sib.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/sib_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/sib_ae.jpg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/sib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/sib_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/sib_ae.jpg"
     },
     {
         "url": "nbq.ae",
@@ -87,26 +88,31 @@ business_logos = [
     {
         "url": "alansariexchange.com",
         "business_type": "exchange business",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com2.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com3.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com2.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alansariexchange_com3.png"
     },
     {
         "url": "indexexchange.ae",
         "business_type": "exchange business",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/indexexchange_ae.jpg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/indexexchange_ae.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/indexexchange_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/indexexchange_ae.jpg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/indexexchange_ae.png"
     },
     {
         "url": "orientexchange.com",
         "business_type": "exchange business",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/orientexchange_com.jpg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/orientexchange_com.svg"
     },
     {
         "url": "reems.ae",
         "business_type": "exchange business",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/reems_ae.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/reems_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/reems_ae.png"
     },
     {
         "url": "sendexchange.com",
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/sendexchange_com.svg"
+    },
+    {
+        "url": "desert-exchange.com",
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/desert-exchange_com.svg"
     }
 ]
