@@ -14,6 +14,3 @@ def insert_currency_codes():
 
     print('Inserted currency codes successfully')
     db_handler.close_connection()
-
-
-insert_currency_codes()

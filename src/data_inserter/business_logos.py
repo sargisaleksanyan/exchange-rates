@@ -16,5 +16,3 @@ def insert_business_logos():
 
     print('Inserted business logos successfully')
     db_handler.close_connection()
-
-insert_business_logos()
