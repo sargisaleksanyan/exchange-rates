@@ -2,7 +2,7 @@ import random
 import time
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl
+    ExchangeBusinessApiUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeCompanyType, \
     Currency, ExchangeRate
 from src.util.scraping_util.request_util import make_get_request_with_proxy
@@ -88,7 +88,7 @@ def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
         company_exchange_rates = get_rates_from_joyalukkas()
         # company_exchange_rates = parse_rates(raw_rates)
         exchange_company = ExchangeCompany(ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.JOYALUKKAS_EXCHANGE,
+                                           ExchangeBusinessUrl.JOYALUKKAS_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
         exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
