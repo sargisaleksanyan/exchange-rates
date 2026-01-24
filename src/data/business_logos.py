@@ -53,7 +53,7 @@ business_logos = [
     {
         "url": "cbd.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae2.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae.png"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae2.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae.png"
     },
     {
         "url": "sib.ae",
@@ -63,7 +63,7 @@ business_logos = [
     {
         "url": "nbq.ae",
         "business_type": "bank",
-        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.gif"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.png"
     },
     {
         "url": "joyalukkasexchange.com",

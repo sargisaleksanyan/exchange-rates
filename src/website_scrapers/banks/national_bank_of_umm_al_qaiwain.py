@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup, PageElement
 
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
-    CompanyExchangeRates
+    CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
 
@@ -126,10 +126,12 @@ def get_rates_from_national_bank_of_umm_al_qaiwain():
                 exchange_rates = extract_exchange_rates_from_table(table)
                 company_exchange_rates = CompanyExchangeRates(exchange_rates)
                 company_exchange_rates.set_current_scrape_date()
+
                 update_date = find_update_date(soup)
 
                 if (update_date is not None):
                     company_exchange_rates.set_update_date(update_date)
+                company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
                 return company_exchange_rates
 
     return None

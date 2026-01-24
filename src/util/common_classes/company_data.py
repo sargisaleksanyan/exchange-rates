@@ -73,7 +73,7 @@ class BankExchangeRateApiUrl:
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'https://www.rakbank.ae/api/forex/rate'
     SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/classic/SIBCurrencyConvertor/GetCurrenciesData?currencyMarket=8&currencies='
 
-
+# https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
     AL_FARDAN_EXCHANGE = 'alfardanexchange.com'
@@ -99,7 +99,7 @@ class ExchangeBusinessUrl:
     DESERT_EXCHANGE = 'desert-exchange.com'
     ONYX_EXCHANGE = 'onyx-exchange.com'  # Onyx Exchange
     DAR_EXCHANGE = 'darexchange.com'
-    OMDA_EXCHANGE = 'Omda Exchange'
+    OMDA_EXCHANGE = 'Omda Exchange' # No longer is active  https://www.centralbank.ae/media/hy2pknz3/cbuae-revokes-the-licence-of-omda-exchange-en.pdf
     SEND_EXCHANGE = 'sendexchange.com'
 
 

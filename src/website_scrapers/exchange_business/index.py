@@ -11,7 +11,9 @@ from src.website_scrapers.exchange_business.wallstreet import scrape_wall_street
 
 very_rearly_update = [scrape_joyalukkas_exchange,scrape_al_ansari_exchange]
 non_frequent_currency_exchange_update = [scrape_orient_exchange, scrape_al_ghurair]
-frequent_currency_exchange_update = [scrape_wall_street, scrape_desert_exchange, scrape_index_exchange,
+frequent_currency_exchange_update = [#scrape_wall_street,removed wall street   
+                                     scrape_desert_exchange, scrape_index_exchange,
                                      scrape_dar_exchange,
                                      scrape_send_exchange,
                                      scrape_reems_exchange]
+

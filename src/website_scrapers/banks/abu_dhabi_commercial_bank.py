@@ -3,7 +3,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
-    ExchangeCompanyType
+    ExchangeCompanyType, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.tool.string_util import convert_to_float
 
@@ -99,6 +99,8 @@ def extract_company_exchange_rates(content: str) -> CompanyExchangeRates | None:
                         company_exchange_rates.set_update_date(update_date)
 
                     company_exchange_rates.set_current_scrape_date()
+                    company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+                    # =========================================
                     return company_exchange_rates
 
     return None

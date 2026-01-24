@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankExchangeRateApiUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeRate, Currency, ExchangeCompany, CompanyExchangeRates, \
-    ExchangeCompanyType
+    ExchangeCompanyType, ExchangeType
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
 from src.util.tool.string_util import convert_to_float
@@ -68,6 +68,7 @@ def parse_rates(rates_raw_data) -> CompanyExchangeRates:
                 exchange_rates.append(exchangerate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
+    company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER) # TODO based on website I wrote for transfer
 
     if last_update_date is not None:
         company_exchange_rates.set_update_date(last_update_date)
