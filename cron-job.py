@@ -6,17 +6,38 @@ from datetime import datetime
 from src.db.db_handler import DatabaseHandler
 from src.util.common_classes.exchange_company import ExchangeCompany
 from src.website_scrapers.banks.index import frequent_banks_update, non_frequent_banks_update
+from src.website_scrapers.cb.uae_central_bank import scrape_central_bank
 from src.website_scrapers.exchange_business.index import frequent_currency_exchange_update, \
-    non_frequent_currency_exchange_update
+    non_frequent_currency_exchange_update, very_rearly_exchange_update
 
 dbHandler = DatabaseHandler()
 
 #logger = logging.getLogger(__name__)
 logger = logging.getLogger()
 
+from datetime import datetime, time
+from zoneinfo import ZoneInfo
+
+# UAE timezone
+
+
+# TODO test this logic
+def is_working_hours() -> bool:
+    uae_tz = ZoneInfo("Asia/Dubai")
+
+    # Current time in UAE
+    now_uae = datetime.now(uae_tz).time()
+
+    # Quiet hours
+    start_quiet = time(22, 30)  # 23:00
+    end_quiet = time(6, 30)  # 06:00
+    # Quiet period crosses midnight
+    return (now_uae < start_quiet and now_uae > end_quiet)
+
 
 def init_logger():
     logging.basicConfig(filename='logs/info.log', level=logging.INFO)
+
 
 
 def update_company_exchange_data(company_exchange_data: ExchangeCompany):
@@ -29,6 +50,8 @@ def update_company_exchange_data(company_exchange_data: ExchangeCompany):
 
 
 def init_non_frequent_data_update():
+    if (is_working_hours() == False):
+        return
     non_frequent_update = non_frequent_banks_update + non_frequent_currency_exchange_update
 
     for update in non_frequent_update:
@@ -45,6 +68,8 @@ def init_non_frequent_data_update():
 
 
 def init_frequent_data_update():
+    if (is_working_hours() == False):
+        return
     frequent_updates = frequent_banks_update + frequent_currency_exchange_update
 
     for update in frequent_updates:
@@ -57,12 +82,32 @@ def init_frequent_data_update():
             print('Error while updating frequent data ', err)
     logger.info('Scraped frequent data update ' + datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
 
+def init_very_rare_data_update():
+    if (is_working_hours() == False):
+        return
+    very_rear_updates = very_rearly_exchange_update
+
+    for update in very_rear_updates:
+        try:
+            exchange_data = update()
+            time.sleep(2)
+            print(update)
+            if exchange_data is not None:
+                update_company_exchange_data(exchange_data)
+        except Exception as err:
+            print('Error while updating very rear data ', err)
+
+def init_central_bank_update():
+    scrape_central_bank()
 
 init_logger()
 # schedule.every(5).hour.do(init_non_frequent_data_update())
 schedule.every(3).hours.do(init_non_frequent_data_update)
 # schedule.every(3).hour.do(init_frequent_data_update())
+schedule.every(4).hours.do(init_very_rare_data_update)
+schedule.every(3).hours.do(init_central_bank_update())
 schedule.every(2).hours.do(init_frequent_data_update)
+
 
 while 1:
     # print('IIIII')

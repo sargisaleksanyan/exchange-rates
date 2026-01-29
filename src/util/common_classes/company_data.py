@@ -6,6 +6,7 @@ class BankName:
     NATIONAL_BANK_OF_RAS_AL_KHAIMAH = 'National Bank of Ras Al-Khaimah'  # +
     COMMERCIAL_BANK_OF_DUBAI = 'Commercial Bank of Dubai'  # +
     SHARJAH_ISLAMIC_BANK = 'Sharjah Islamic Bank'  # +
+    CENTRAL_BANK ='Central Bank'
     DUBAI_ISLAMIC_BANK = 'Dubai Islamic Bank'  # +
     AJMAN_BANK = 'Ajman Bank'  # +
     NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'  # +
@@ -43,11 +44,13 @@ class BankUrl:
     COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'  # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'nbq.ae'
+    CENTRAL_BANK='https://www.centralbank.ae'
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'bnpparibas.com'
 
 
 class BankExchangeRateUrl:
+    CENTRAL_BANK = 'https://www.centralbank.ae/en/forex-eibor/exchange-rates'
     ABU_DHABI_ISLAMIC_BANK = 'https://www.adib.com/en/pages/currency-rates.aspx'
     FIRST_ABU_DHABI_BANK = 'https://www.bankfab.com/en-ae/personal/fx-rate'
     EMIRATES_BANK = 'https://www.emiratesnbd.com/en/foreign-exchange'

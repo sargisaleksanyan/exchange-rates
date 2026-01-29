@@ -165,4 +165,4 @@ def scrape_al_ansari_exchange() -> ExchangeCompany | None:
     return None
 
 
-scrape_al_ansari_exchange()
+#scrape_al_ansari_exchange()

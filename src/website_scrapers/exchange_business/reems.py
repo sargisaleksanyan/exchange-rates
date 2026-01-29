@@ -2,52 +2,13 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import ExchangeBusinessNames, \
     ExchangeBusinessUrl, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
-    ExchangeCompanyType, Currency, ExchangeRate
+    ExchangeCompanyType, Currency, ExchangeRate, get_currency_code_by_name
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
 
 CURRENCY_HEAD = 'Currency'
 BUY_RATE_HEAD = 'Buy'
 SELL_RATE_HEAD = 'Sell'
-
-currency_data = {
-    'Australian Dollor': 'AUD',
-    'Swiss Franc': 'CHF',
-    'Singapore Dollar': 'SGD',
-    'Phillipines Peso': 'PHP',
-    'US Dollar': 'USD',
-    'Euro': 'EUR',
-    'UK Pound': 'GBP',
-    'Canadian Dollar': 'CAD',
-    'New Zealand DOLLAR': 'NZD',
-    'Japanese Yen': 'JPY',
-    'Swedish Krona': 'SEK',
-    'Norwegian Krone': 'NOK',
-    'Danish Krone': 'DKK',
-    'Labenese Pound': 'LBP',
-    'Egypt Pound': 'EGP',
-    'Turkey Lira': 'TRY',
-    'Jordan Dinar': 'JOD',
-    'Saudi Riyal': 'SAR',
-    'Bahrain Dinar': 'BHD',
-    'Oman Rial': 'OMR',
-    'Yemen Riyal': 'YER',
-    'Scotland Pound': 'SCO',  # Not official, using 'SCO' as placeholder
-    'S. Africa': 'ZAR',
-    'Tunis Dinar': 'TND',
-    'Ethiopian Birr': 'ETB',
-    'Kuwait Dinar': 'KWD',
-    'Algerian Dinar': 'DZD',
-    'Morocco Dirham': 'MAD',
-    'Indonesian Rupiah': 'IDR',
-    'Mauritius Rupee': 'MUR',
-    'Thailand Bhat': 'THB',
-    'Chinese Yuan': 'CNY',
-    'Taiwan Dollar': 'TWD',
-    'Brunei Dollar': 'BND',
-    'Malaysian Ringgit': 'MYR',
-    'Indian Ruppee': 'INR'
-}
 
 
 def get_table_headers(page_element: PageElement) -> dict:
@@ -77,12 +38,7 @@ def get_table_headers(page_element: PageElement) -> dict:
 
 def get_currency(td_elements, index: int) -> Currency | None:
     currency_name = get_element_text(td_elements, index)
-    if currency_name in currency_data:
-        currency_code = currency_data[currency_name]
-        return Currency.get_currency(currency_code)
-    else:
-        print(currency_name, ' has not been found')
-    return None
+    return get_currency_code_by_name(currency_name=currency_name)
 
 
 def get_element_text(td_elements, index: int):
@@ -144,3 +100,6 @@ def scrape_reems_exchange() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.REEMS_EXCHANGE, err)
     return None
+
+
+scrape_reems_exchange()

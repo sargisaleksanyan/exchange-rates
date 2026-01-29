@@ -4,6 +4,8 @@ from typing import List
 
 import requests
 
+from src.util.common_classes.currency import currency_name_to_code
+
 
 class Currency(Enum):
     AUD = ("AUD", "Australian Dollar")
@@ -132,8 +134,15 @@ class Currency(Enum):
         print('Currency has not been found', currency)  # TODO print this
         return None
 
+def get_currency_code_by_name(currency_name):
+    if currency_name is not None and currency_name.lower() in currency_name_to_code:
+        currency_code = currency_name_to_code[currency_name.lower()]
+        return Currency.get_currency(currency_code)
+    return None
+
 
 class ExchangeCompanyType(Enum):
+    CENTRAL_BANK = 'Central bank'
     NATIONAL_BANK = 'National bank'
     FOREIGN_BANK = 'Foreign bank'
     EXCHANGE_BUSINESS = 'Exchange business'
@@ -213,21 +222,3 @@ class ExchangeCompany:
             self.company_exchange_rates = []
 
         self.company_exchange_rates.append(company_exchange_rate)
-
-
-def download_image(currency_code: str):
-    url = "https://www.xe.com/svgs/flags/" + currency_code + ".static.svg"
-    filename = '/home/sargis/Desktop/currency/' + currency_code+".svg"
-    r = requests.get(url, allow_redirects=True)
-    open(filename, 'wb').write(r.content)
-    return "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/"+currency_code+".svg"
-
-
-def print_currenies():
-    currencies = Currency._member_names_
-    for currency in currencies:
-        url = download_image(currency.lower())
-        print(currency + "," + Currency.get_currency(currency).fullname + "," + url)
-
-
-#print_currenies()
