@@ -34,7 +34,8 @@ def get_rates_from_emirates_islamic_bank():
             'DecimalPlaces': '6'
         }
 
-        content = make_post_request_with_proxy(BankExchangeRateApiUrl.EMIRATES_ISLAMIC_BANK, body, is_url_encoded=True)
+        content = make_post_request_with_proxy(BankExchangeRateApiUrl.EMIRATES_ISLAMIC_BANK, body=body,
+                                               is_url_encoded=True)
         if (content is not None):
             json_data = parse_string_to_json(content.strip())
             return json_data
