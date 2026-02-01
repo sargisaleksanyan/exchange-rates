@@ -1,5 +1,7 @@
 import schedule
 import time
+from datetime import  time as date_time
+from zoneinfo import ZoneInfo
 import logging
 from datetime import datetime
 
@@ -15,8 +17,7 @@ dbHandler = DatabaseHandler()
 #logger = logging.getLogger(__name__)
 logger = logging.getLogger()
 
-from datetime import datetime, time
-from zoneinfo import ZoneInfo
+
 
 # UAE timezone
 
@@ -29,8 +30,8 @@ def is_working_hours() -> bool:
     now_uae = datetime.now(uae_tz).time()
 
     # Quiet hours
-    start_quiet = time(22, 30)  # 23:00
-    end_quiet = time(6, 30)  # 06:00
+    start_quiet = date_time(22, 30)  # 23:00
+    end_quiet = date_time(6, 30)  # 06:00
     # Quiet period crosses midnight
     return (now_uae < start_quiet and now_uae > end_quiet)
 
@@ -105,7 +106,7 @@ init_logger()
 schedule.every(3).hours.do(init_non_frequent_data_update)
 # schedule.every(3).hour.do(init_frequent_data_update())
 schedule.every(4).hours.do(init_very_rare_data_update)
-schedule.every(3).hours.do(init_central_bank_update())
+schedule.every(3).hours.do(init_central_bank_update)
 schedule.every(2).hours.do(init_frequent_data_update)
 
 
