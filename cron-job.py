@@ -103,11 +103,11 @@ def init_central_bank_update():
 
 init_logger()
 # schedule.every(5).hour.do(init_non_frequent_data_update())
-schedule.every(3).hours.do(init_non_frequent_data_update)
+schedule.every(5).hours.do(init_non_frequent_data_update)
 # schedule.every(3).hour.do(init_frequent_data_update())
-schedule.every(4).hours.do(init_very_rare_data_update)
-schedule.every(3).hours.do(init_central_bank_update)
-schedule.every(2).hours.do(init_frequent_data_update)
+schedule.every(8).hours.do(init_very_rare_data_update)
+schedule.every(4).hours.do(init_central_bank_update)
+schedule.every(4).hours.do(init_frequent_data_update)
 
 
 while 1:

@@ -61,7 +61,11 @@ def init_frequent_data_update():
             print('Error while updating frequent data ', err)
 
 def init_central_bank_update():
-    scrape_central_bank()
+    try:
+       central_bank_data =  scrape_central_bank()
+       update_company_exchange_data(central_bank_data)
+    except Exception as err:
+        print('Error while updating central bank data ', err)
 
 init_central_bank_update()
 init_very_rare_data_update()

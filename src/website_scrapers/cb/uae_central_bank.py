@@ -4,7 +4,6 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
-from src.util.common_classes.currency import currency_name_to_code
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, CompanyExchangeRates, \
     ExchangeRate, get_currency_code_by_name
 from src.util.scraping_util.browser_util import get_website_content_by_browser
@@ -87,9 +86,6 @@ def get_rates_from_html(html: BeautifulSoup):
 
 
 def get_rates_from_central_bank() -> CompanyExchangeRates | None:
-    headers = {
-        'Referer': BankExchangeRateUrl.CENTRAL_BANK
-    }
 
     content = get_website_content_by_browser(BankExchangeRateUrl.CENTRAL_BANK)
     if content is not None:
@@ -117,3 +113,4 @@ def scrape_central_bank() -> ExchangeCompany | None:
     except Exception as err:
         # TODO log this
         print('Error while scraping emirates central bank data', err)
+

@@ -137,7 +137,10 @@ class Currency(Enum):
 def get_currency_code_by_name(currency_name):
     if currency_name is not None and currency_name.lower() in currency_name_to_code:
         currency_code = currency_name_to_code[currency_name.lower()]
-        return Currency.get_currency(currency_code)
+        currency = Currency.get_currency(currency_code)
+
+        if currency is not None:
+           return currency.code
     return None
 
 
