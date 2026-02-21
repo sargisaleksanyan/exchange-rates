@@ -46,7 +46,7 @@ def get_rates_from_sharjah_islamic_bank() -> CompanyExchangeRates | None:
 
     return None
 
-
+#TODO This company uses cloudflare and has good antiscraping system, manual fix
 def scrape_sharjah_islamic_bank() -> ExchangeCompany | None:
     try:
         company_exchange_rates = get_rates_from_sharjah_islamic_bank()
@@ -61,3 +61,4 @@ def scrape_sharjah_islamic_bank() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping emirates islamic bank data', err)
     return None
+

@@ -15,7 +15,7 @@ def init_browser(url, wait_time=5, count=0) -> WebDriver | None:
     try:
         chrome_options = webdriver.ChromeOptions()
         # TODO add proxy
-        chrome_options.add_argument('--headless')
+      #  chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
 
         chrome_options.add_argument('--window-size=1920,1080')
