@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates
-from src.util.scraping_util.request_util import make_get_request_with_proxy, make_get_request
+from src.util.scraping_util.request_util import  make_get_request
 from src.util.tool.string_util import convert_to_float
 
 CURRENCY_EXCHANGE_RATES = 'Currency'
@@ -49,11 +49,12 @@ def get_element_text(td_elements, index: int):
 
 
 def get_update_date(update_date: str) -> datetime | None:
-    if update_date != None:
-        date_obj = datetime.strptime(update_date, "%m/%d/%Y %I:%M %p")
-        return date_obj
-
-    return None
+   try:
+     if update_date != None:
+        return datetime.strptime(update_date.split(" GMT")[0], "%b %d, %Y %H:%M")
+   except Exception as err:
+           print('Error',err)
+   return None
 
 
 def find_update_date(soup: BeautifulSoup):
@@ -147,4 +148,3 @@ def scrape_bank_of_sharjah() -> ExchangeCompany | None:
     except Exception as err:
         # TODO log this
         print('Error while scraping emirates islamic bank data', err)
-
