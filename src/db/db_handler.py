@@ -55,8 +55,9 @@ class DatabaseHandler:
             # self.collection.insert_one(data)
             if company_exchange_data.company_exchange_rates is not None:
                 dict = to_dict(company_exchange_data)
-                self.collection.update_one({'url': dict['url']},
-                                           {'$set': {'company_exchange_rates': dict['company_exchange_rates']}})
+                if (dict is not None and 'company_exchange_rates' in dict):
+                    self.collection.update_one({'url': dict['url']},
+                                               {'$set': {'company_exchange_rates': dict['company_exchange_rates']}})
         except Exception as e:
             print(f"Error: while updating exchange data {e}")
 
@@ -66,7 +67,6 @@ class DatabaseHandler:
             self.collection.delete_one({"id": id})
         except Exception as e:
             print(f"Error: {e}")
-
 
     def find_company_by_url(self, url):
         company = self.collection.find_one({'url': url})

@@ -37,7 +37,7 @@ def init_browser(url, wait_time=5, count=0) -> WebDriver | None:
         close_browser(browser)
         if (count < MAX_BROWSER_ATTEMPTS):
             count = count + 1
-            return init_browser(url, count)
+            return init_browser(url,wait_time, count=count)
     return None
 
 
