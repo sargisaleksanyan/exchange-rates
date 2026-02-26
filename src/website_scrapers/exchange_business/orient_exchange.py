@@ -7,7 +7,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCo
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import get_value_from_json, parse_string_to_json
-from src.util.tool.string_util import convert_to_reverse_float
+from src.util.tool.string_util import convert_to_reverse_float, convert_to_float
 
 
 def get_rate_from_string(rate_data):
@@ -16,6 +16,15 @@ def get_rate_from_string(rate_data):
         if rate.startswith('.'):
             rate = '0' + rate
         return convert_to_reverse_float(rate)
+    return None
+
+
+def get_original_rate_from_string(rate_data):
+    if 'Rate' in rate_data:
+        rate = rate_data['Rate']
+        if rate.startswith('.'):
+            rate = '0' + rate
+        return convert_to_float(rate)
     return None
 
 
@@ -67,6 +76,8 @@ def get_rates_from_orient_exchange() -> List[CompanyExchangeRates]:
             if (cash_sell_data is not None and cash_buy_data is not None):
                 exchange_rate = ExchangeRate(currency.code, get_rate_from_string(cash_buy_data),
                                              get_rate_from_string(cash_sell_data))
+                exchange_rate.set_original_sell_rate(get_original_rate_from_string(cash_sell_data))
+                exchange_rate.set_original_buy_rate(get_original_rate_from_string(cash_buy_data))
                 exchange_rate.set_update_date(get_update_date(cash_buy_data))
                 cash_exchange_rates.append(exchange_rate)
 
@@ -79,6 +90,7 @@ def get_rates_from_orient_exchange() -> List[CompanyExchangeRates]:
         if currency_code is not None and Currency.get_currency(currency_code) is not None:
             currency = Currency.get_currency(currency_code)
             exchange_rate = ExchangeRate(currency.code, rate=get_rate_from_string(transfer_rate_raw_data))
+            exchange_rate.set_original_rate(get_original_rate_from_string(transfer_rate_raw_data))
             exchange_rate.set_update_date(get_update_date(transfer_rate_raw_data))
             transfer_rates.append(exchange_rate)
 

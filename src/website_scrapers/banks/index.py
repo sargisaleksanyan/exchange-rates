@@ -10,7 +10,6 @@ from src.website_scrapers.banks.emirates_islamic_bank import scrape_emirates_isl
 from src.website_scrapers.banks.national_bank_of_fujairah import scrape_national_bank_of_fujairah
 from src.website_scrapers.banks.national_bank_of_ras_al_khaimah import scrape_national_bank_of_ras_al_khaimah
 from src.website_scrapers.banks.national_bank_of_umm_al_qaiwain import scrape_national_bank_of_umm_al_qaiwain
-from src.website_scrapers.banks.sharjah_islamic_bank import scrape_sharjah_islamic_bank
 
 non_frequent_banks_update = [scrape_abu_dhabi_commercial_bank, scrape_commercial_bank_of_dubai, scrape_ajman_bank,
                              scrape_abu_dhabi_islamic_bank, scrape_national_bank_of_fujairah]

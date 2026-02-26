@@ -79,11 +79,12 @@ class BankExchangeRateApiUrl:
 
 # https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
+    MULTINET_TRUST_EXCHANGE = 'multinettrust.com'
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
     AL_FARDAN_EXCHANGE = 'alfardanexchange.com'
     AL_ROSTAMANI_EXCHANGE = 'alrostamaniexchange.com'  # ?
     JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'
-    #
+    AL_FUAD_EXCHANGE = 'alfuadexchange.com'
     LULU_EXCHANGE = 'luluexchange.com'  # Does not work
     WALL_STREET_EXCHANGE = 'wallstreet.ae'
     ORIENT_EXCHANGE = 'orientexchange.com'
@@ -111,6 +112,8 @@ class ExchangeBusinessUrl:
 
 
 class ExchangeBusinessNames:
+    MULTINET_TRUST_EXCHANGE = 'Multinet Trust Exchange'
+    AL_FUAD_EXCHANGE = 'Al Fuad Exchange'
     AL_ANSARI_EXCHANGE = 'Al Ansari Exchange'  # Diffcult have to scrape each currency one by one https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  https://alfardanexchange.com/foreign-exchange
     AL_ROSTAMANI_EXCHANGE = 'Al Rostamani Exchange'  # does not work at this moment
@@ -118,7 +121,7 @@ class ExchangeBusinessNames:
     #                     https://admin.joyalukkasexchange.com/api/currency-converter?region=2&amount=1&currency_code=USD&rate_type=TT&amount_type=LCY for more detailed need to request one by one
     LULU_EXCHANGE = 'Lulu Exchange'  # Does not work
     WALL_STREET_EXCHANGE = 'Wall Street Exchange'  # https://www.wallstreet.ae/personal/foreign-exchange api https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true
-    ORIENT_EXCHANGE = ' Orient Exchange'  # https://www.orientexchange.com/Orient/GetSellRates                                 # https: // www.orientexchange.com / Orient / CurrencyRates
+    ORIENT_EXCHANGE = 'Orient Exchange'  # https://www.orientexchange.com/Orient/GetSellRates                                 # https: // www.orientexchange.com / Orient / CurrencyRates
     AL_GHURAIR_EXCHANGE = 'Al Ghurair Exchange'  # https://3-214-76-133.nip.io/fc/0
     SHARAF_EXCHANGE = 'Sharaf Exchange'  # https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en
     GCC_EXCHANGE = 'GCC Exchange'  # https://www.gccexchange.com/media/index.php/exchangerate/getexchangerate - tansfers only
@@ -150,29 +153,36 @@ class ExchangeBusinessNames:
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
+    MULTINET_TRUST_EXCHANGE = 'https://www.multinettrust.com'
+
+    AL_FUAD_EXCHANGE = 'https://alfuadexchange.com/rates'
     JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1 +
     WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2 +
     ORIENT_EXCHANGE = 'orientexchange.com/Orient/CurrencyRates'  # 3  +
     AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # + 5 https://3-214-76-133.nip.io/fc/0
     DESERT_EXCHANGE = 'https://desert-exchange.com/currency-buy-sell'  # 8 +
+    DESERT_EXCHANGE_TRANSFER = 'https://desert-exchange.com/exchange-rates'  # 8 +
     DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange'  # + 6 but transfer seems to show incorrect info
     REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7 +
     SEND_EXCHANGE = 'https://sendexchange.com'  # +
 
     GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
     OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
-    AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
+    #AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
+    AL_FARDAN_EXCHANGE = 'https://alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
     INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly +
     #AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
     AL_ANSARI_EXCHANGE = 'https://alansariexchange.com/service/foreign-exchange'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
 
-
 class ExchangeBusinessApiUrl:
-    JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'
+    #JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'
+    JOYALUKKAS_EXCHANGE = 'https://jaapi.shahidrafi.online/api/country-currency-code'
     WALL_STREET_EXCHANGE = 'https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true'
     SHARAF_EXCHANGE = 'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
+    #                  'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
     ORIENT_EXCHANGE_SELL_RATES = 'https://www.orientexchange.com/Orient/GetSellRates'
     ORIENT_EXCHANGE_BUY_RATES = 'https://www.orientexchange.com/Orient/GetBuyRates'
     ORIENT_EXCHANGE_TRANSFER = 'https://www.orientexchange.com/Orient/GetExchangeRates'
     AL_GHURAIR_EXCHANGE_CASH_RATES = 'https://3-214-76-133.nip.io/fc/0'  # https://3-214-76-133.nip.io/tt/0
     AL_GHURAIR_EXCHANGE_TRANSFER_RATES = 'https://3-214-76-133.nip.io/tt/0'
+    AL_FARDANE_EXCHANGE = 'https://alfardanexchange.com/currency_rate_list'

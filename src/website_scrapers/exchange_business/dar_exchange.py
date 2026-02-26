@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
 
 TRANSFER_RATE = 'Remittance Transfer Rate'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_CODE_HEAD = 'Currency code'
@@ -88,28 +88,40 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
 
                 currency = Currency.get_currency(currency_code)
 
-                if buy_rate is not None and sell_rate is not None:
-                    buy = convert_to_float(buy_rate)
-                    sell = convert_to_float(sell_rate)
+                buy = convert_to_float(buy_rate)
+                sell = convert_to_float(sell_rate)
+
+                if buy is not None and sell is not None and buy > 0 and sell > 0 and sell >= buy:
+
                     try:
-                        if buy is not None and sell is not None and buy > 0 and sell > 0 and sell >= buy:
-                            exchange_rate = ExchangeRate(currency.code, buy_rate=buy, sell_rate=sell)
-                            exchange_rates.append(exchange_rate)
+                        exchange_rate = ExchangeRate(currency.code, buy_rate=buy, sell_rate=sell)
+                        exchange_rates.append(exchange_rate)
                     except Exception as err:
                         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
 
-                if transfer_rate is not None and convert_to_float(transfer_rate) is not None:
-                    exchange_rate = ExchangeRate(currency.code, rate=convert_to_float(transfer_rate))
-                    transfer_rates.append(exchange_rate)
+                if transfer_rate is not None and transfer_rate is not '-':
 
-    company_exchange_rates = CompanyExchangeRates(exchange_rates)
-    company_exchange_rates.set_current_scrape_date()
-    company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+                    original_rate = convert_to_float(transfer_rate)
+                    transfer_rate_object = None
 
-    company_transfer_rates = CompanyExchangeRates(transfer_rates)
-    company_transfer_rates.set_current_scrape_date()
-    company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
-    return [company_exchange_rates, company_transfer_rates]
+                    if original_rate is not None and buy is not None and sell is not None and buy < 1 and sell < 1 and original_rate / sell > 2:
+                        transfer_rate_object = ExchangeRate(currency.code, rate=convert_to_reverse_float(transfer_rate))
+                        transfer_rate_object.set_original_rate(original_rate)
+
+                    elif original_rate is not None:
+                        transfer_rate_object = ExchangeRate(currency.code, rate=original_rate)
+
+                    if (transfer_rate_object is not None):
+                        transfer_rates.append(transfer_rate_object)
+
+                company_exchange_rates = CompanyExchangeRates(exchange_rates)
+                company_exchange_rates.set_current_scrape_date()
+                company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
+                company_transfer_rates = CompanyExchangeRates(transfer_rates)
+                company_transfer_rates.set_current_scrape_date()
+                company_transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
+                return [company_exchange_rates, company_transfer_rates]
 
 
 def scrape_dar_exchange() -> ExchangeCompany | None:
@@ -124,5 +136,4 @@ def scrape_dar_exchange() -> ExchangeCompany | None:
         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
     return None
 
-
-scrape_dar_exchange()
+# TODO need to handle reverse tranfer rates for currenies that does not have sell and buy rates

@@ -5,11 +5,12 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import ExchangeBusinessNames, \
     ExchangeBusinessUrl, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
-    ExchangeCompanyType, Currency, ExchangeRate
+    ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
 
 CURRENCY_HEAD = 'Code'
+BANK_TRANSFER = 'Bank Transfer'
 BUY_RATE_HEAD = 'FC Buy'
 SELL_RATE_HEAD = 'Fc Sell'
 
@@ -76,8 +77,8 @@ def extract_update_date(soup: BeautifulSoup):
     return None
 
 
-def extract_desert_exchange_rates() -> CompanyExchangeRates:
-    content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE)
+def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
+    content = make_get_request_with_proxy(url)
 
     soup = BeautifulSoup(content, 'html.parser')
     table = soup.find(id='exchangerates')
@@ -97,30 +98,51 @@ def extract_desert_exchange_rates() -> CompanyExchangeRates:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
             currency_code = get_element_text(table_data_elements, table_headers[CURRENCY_HEAD])
-            buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-            sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+            currency = Currency.get_currency(currency_code)
 
             if currency_code is not None and Currency.get_currency(
-                    currency_code) is not None and buy_rate is not None and sell_rate is not None:
-                currency = Currency.get_currency(currency_code)
-                buy = convert_to_float(buy_rate)
-                sell = convert_to_float(sell_rate)
+                    currency_code) is not None:
 
-                if buy > 0 and sell > 0:
-                    exchange_rate = ExchangeRate(currency.code, buy, sell)
-                    exchange_rates.append(exchange_rate)
+                if (BANK_TRANSFER in table_headers):
+                    transfer_rate = get_element_text(table_data_elements, table_headers[BANK_TRANSFER])
+                    if (transfer_rate is not None):
+                        transfer_rate_number = convert_to_float(transfer_rate)
+                        if transfer_rate_number is not None and transfer_rate_number > 0:
+                            exchange_rate = ExchangeRate(currency.code, rate=convert_to_reverse_float(transfer_rate))
+                            exchange_rate.set_original_rate(transfer_rate_number)
+                            exchange_rates.append(exchange_rate)
+
+                elif BUY_RATE_HEAD in table_headers:
+                    buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
+                    sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+
+                    buy = convert_to_float(buy_rate)
+                    sell = convert_to_float(sell_rate)
+
+                    if buy > 0 and sell > 0:
+                        exchange_rate = ExchangeRate(currency.code, buy, sell)
+                        exchange_rates.append(exchange_rate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
     company_exchange_rates.set_current_scrape_date()
     return company_exchange_rates
 
 
+def extract_desert_exchange_all_rates() -> List[CompanyExchangeRates]:
+    cash_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE)
+    cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
+    transfer_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE_TRANSFER)
+    transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+    return [cash_exchange_rates, transfer_exchange_rates]
+
+
 def scrape_desert_exchange() -> ExchangeCompany | None:
     try:
-        company_exchange_rates = extract_desert_exchange_rates()
+        company_exchange_rates = extract_desert_exchange_all_rates()
         exchange_company = ExchangeCompany(ExchangeBusinessNames.DESERT_EXCHANGE, ExchangeBusinessUrl.DESERT_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
 
     except Exception as err:

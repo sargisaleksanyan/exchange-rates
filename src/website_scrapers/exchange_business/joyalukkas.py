@@ -58,6 +58,9 @@ def get_rates_from_joyalukkas() -> CompanyExchangeRates | None:
     contents = get_value_from_json(json_data, 'contents')
     exchange_rates = []
 
+    if (contents is None):
+        return
+
     for data in contents:
         currency_code = get_value_from_json(data, CURRENCY_CODE_HEADER)
         if currency_code is None or currency_code == 'AED' and Currency.get_currency(currency_code) is None:
@@ -84,7 +87,7 @@ def get_rates_from_joyalukkas() -> CompanyExchangeRates | None:
 
 
 def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
-    try:
+    #try:
         company_exchange_rates = get_rates_from_joyalukkas()
         # company_exchange_rates = parse_rates(raw_rates)
         exchange_company = ExchangeCompany(ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
@@ -93,10 +96,11 @@ def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
         exchange_company.add_exchange_rate(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
-    except Exception as err:
+    #except Exception as err:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.JOYALUKKAS_EXCHANGE, err)
-    return None
+        return None
+
 
 # Currency has not been found AFA
 # Currency has not been found BWP

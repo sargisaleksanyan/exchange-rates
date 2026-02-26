@@ -80,7 +80,7 @@ def extract_reems_exchange_rates() -> CompanyExchangeRates | None:
                 sell = convert_to_float(sell_rate)
 
                 if buy > 0 and sell > 0 and sell > buy:
-                    exchange_rate = ExchangeRate(currency.code, buy, sell)
+                    exchange_rate = ExchangeRate(currency, buy, sell)
                     exchange_rates.append(exchange_rate)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
@@ -102,4 +102,3 @@ def scrape_reems_exchange() -> ExchangeCompany | None:
     return None
 
 
-scrape_reems_exchange()

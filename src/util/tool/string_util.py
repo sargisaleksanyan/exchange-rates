@@ -4,6 +4,8 @@ decimal_points = 7
 
 
 def convert_to_float(value: str) -> float | str | None:
+    if value is None:
+        return None
     try:
         return float(value)
     except Exception as err:

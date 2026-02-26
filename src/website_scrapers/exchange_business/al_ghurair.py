@@ -51,18 +51,19 @@ def get_exchange_rates(url):
 
 
 def get_rates_from_al_ghurair() -> List[CompanyExchangeRates] | None:
-    cash_exchange_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_CASH_RATES)
+    # From API I can see that it is getting response but in website I do not see anything
+    #cash_exchange_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_CASH_RATES)
     transfer_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_TRANSFER_RATES)
 
-    cash_exchange_rate = CompanyExchangeRates(cash_exchange_rates)
-    cash_exchange_rate.set_exchange_type(ExchangeType.CASH)
-    cash_exchange_rate.set_current_scrape_date()
+    #cash_exchange_rate = CompanyExchangeRates(cash_exchange_rates)
+    #cash_exchange_rate.set_exchange_type(ExchangeType.CASH)
+    #cash_exchange_rate.set_current_scrape_date()
 
     transfer_exchange_rate = CompanyExchangeRates(transfer_rates)
     transfer_exchange_rate.set_exchange_type(ExchangeType.TRANSFER)
     transfer_exchange_rate.set_current_scrape_date()
 
-    return [cash_exchange_rate, transfer_exchange_rate]
+    return [ transfer_exchange_rate]
 
 
 def scrape_al_ghurair() -> ExchangeCompany | None:
@@ -81,4 +82,3 @@ def scrape_al_ghurair() -> ExchangeCompany | None:
     return None
 
 
-#scrape_al_ghurair()

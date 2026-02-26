@@ -130,9 +130,10 @@ class Currency(Enum):
         if isinstance(currency, str) and currency in Currency._value2member_map_ or currency in (c.code for c in
                                                                                                  Currency):
             return Currency[currency]
-
-        print('Currency has not been found', currency)  # TODO print this
+        if currency.strip() != '':
+            print('Currency has not been found', currency)  # TODO print this
         return None
+
 
 def get_currency_code_by_name(currency_name):
     if currency_name is not None and currency_name.lower() in currency_name_to_code:
@@ -140,7 +141,7 @@ def get_currency_code_by_name(currency_name):
         currency = Currency.get_currency(currency_code)
 
         if currency is not None:
-           return currency.code
+            return currency.code
     return None
 
 
@@ -165,12 +166,24 @@ class ExchangeRate:
         self.rate = rate
         self.exchange_type = None
         self.update_date = None
+        self.original_rate = None
+        self.original_sell_rate = None
+        self.original_buy_rate = None
 
     def set_exchange_type(self, exchange_type: ExchangeType):
         self.exchange_type = exchange_type
 
     def set_update_date(self, update_date):
         self.update_date = update_date
+
+    def set_original_rate(self, original_rate):
+        self.original_rate = original_rate
+
+    def set_original_buy_rate(self, original_buy_rate):
+        self.original_buy_rate = original_buy_rate
+
+    def set_original_sell_rate(self, original_sell_rate):
+        self.original_sell_rate = original_sell_rate
 
 
 class CompanyExchangeRates:
