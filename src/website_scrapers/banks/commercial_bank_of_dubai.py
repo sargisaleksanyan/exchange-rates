@@ -7,7 +7,7 @@ from src.util.common_classes.company_data import BankName, BankUrl, BankExchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, Currency, ExchangeRate, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY_CODE = 'Currency'
 BUY_RATE = 'Buy Rate'
@@ -21,15 +21,6 @@ def get_update_date(update_date: str) -> datetime | None:
 
     return None
 
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 
 def get_table_headers(table_headers: List[PageElement]) -> dict:
@@ -61,12 +52,12 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     table_data_list = table_row.find_all('td')
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers[CURRENCY_CODE])
+        currency_code = get_element_text(table_data_list, table_headers,CURRENCY_CODE)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            buy_rate = get_element_text(table_data_list, table_headers[BUY_RATE])
-            sell_rate = get_element_text(table_data_list, table_headers[SELL_RATE])
+            buy_rate = get_element_text(table_data_list, table_headers,BUY_RATE)
+            sell_rate = get_element_text(table_data_list, table_headers,SELL_RATE)
 
             if buy_rate is not None and sell_rate is not None:
                 exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_rate),

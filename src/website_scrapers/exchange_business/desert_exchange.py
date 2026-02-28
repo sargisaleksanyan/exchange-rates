@@ -7,7 +7,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, get_element_text
 
 CURRENCY_HEAD = 'Code'
 BANK_TRANSFER = 'Bank Transfer'
@@ -38,16 +38,6 @@ def get_table_headers(page_element: PageElement) -> dict:
                     element_index_dict[SELL_RATE_HEAD] = i
 
     return element_index_dict
-
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 
 def extract_update_date(update_date_element):
@@ -97,14 +87,14 @@ def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
     for table_row in table_rows:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
-            currency_code = get_element_text(table_data_elements, table_headers[CURRENCY_HEAD])
+            currency_code = get_element_text(table_data_elements, table_headers, CURRENCY_HEAD)
             currency = Currency.get_currency(currency_code)
 
             if currency_code is not None and Currency.get_currency(
                     currency_code) is not None:
 
                 if (BANK_TRANSFER in table_headers):
-                    transfer_rate = get_element_text(table_data_elements, table_headers[BANK_TRANSFER])
+                    transfer_rate = get_element_text(table_data_elements, table_headers, BANK_TRANSFER)
                     if (transfer_rate is not None):
                         transfer_rate_number = convert_to_float(transfer_rate)
                         if transfer_rate_number is not None and transfer_rate_number > 0:
@@ -113,8 +103,8 @@ def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
                             exchange_rates.append(exchange_rate)
 
                 elif BUY_RATE_HEAD in table_headers:
-                    buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-                    sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+                    buy_rate = get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD)
+                    sell_rate = get_element_text(table_data_elements, table_headers, SELL_RATE_HEAD)
 
                     buy = convert_to_float(buy_rate)
                     sell = convert_to_float(sell_rate)
@@ -130,9 +120,11 @@ def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
 
 def extract_desert_exchange_all_rates() -> List[CompanyExchangeRates]:
     cash_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE)
+    cash_exchange_rates.set_current_scrape_date()
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
 
     transfer_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE_TRANSFER)
+    cash_exchange_rates.set_current_scrape_date()
     transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
     return [cash_exchange_rates, transfer_exchange_rates]
 

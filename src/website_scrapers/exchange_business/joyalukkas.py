@@ -87,31 +87,17 @@ def get_rates_from_joyalukkas() -> CompanyExchangeRates | None:
 
 
 def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
-    #try:
+    try:
         company_exchange_rates = get_rates_from_joyalukkas()
         # company_exchange_rates = parse_rates(raw_rates)
         exchange_company = ExchangeCompany(ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
                                            ExchangeBusinessUrl.JOYALUKKAS_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
         exchange_company.add_exchange_rate(company_exchange_rates)
-        # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
-    #except Exception as err:
+    except Exception as err:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.JOYALUKKAS_EXCHANGE, err)
-        return None
+    return None
 
 
-# Currency has not been found AFA
-# Currency has not been found BWP
-# Currency has not been found CSD
-# Currency has not been found GHC
-# Currency has not been found HRK
-# Currency has not been found MOP
-# Currency has not been found SCP
-# Currency has not been found SCR
-# Currency has not been found SDP
-# Currency has not been found SUS
-# Currency has not been found TRL
-# Currency has not been found TUM
-# Currency has not been found YER

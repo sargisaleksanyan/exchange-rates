@@ -120,6 +120,6 @@ def scrape_orient_exchange() -> ExchangeCompany | None:
     except Exception as err:
         # TODO log this
         print('Error while scraping orient exchange business ', ExchangeBusinessNames.ORIENT_EXCHANGE, err)
-    # return None
+    return None
 
 # scrape_orient_exchange()

@@ -5,7 +5,7 @@ from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, 
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
     ExchangeCompanyType, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY_CODE = 'Currency Code'
 CURRENCY_SELL = 'Sell'
@@ -14,15 +14,6 @@ CURRENCY_BUY = 'Buy'
 BUY_RATE_HEADER = 'Buy Rate (AED)'
 SELL_RATE_HEADER = 'Sell Rate (AED)'
 
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 
 def extract_exchange_rate_from_html(page_element: PageElement):
@@ -53,12 +44,12 @@ def extract_exchange_rate_from_html(page_element: PageElement):
                         elif (td_text == SELL_RATE_HEADER or 'sell rate' in td_text.lower()):
                             element_index_dict[CURRENCY_SELL] = i
             else:
-                currency_code = get_element_text(td_elements, element_index_dict[CURRENCY_CODE])
+                currency_code = get_element_text(td_elements, element_index_dict, CURRENCY_CODE)
 
                 if currency_code is not None and Currency.get_currency(currency_code) is not None:
                     currency = Currency.get_currency(currency_code)
-                    selling = get_element_text(td_elements, element_index_dict[CURRENCY_SELL])
-                    buying = get_element_text(td_elements, element_index_dict[CURRENCY_BUY])
+                    selling = get_element_text(td_elements, element_index_dict,CURRENCY_SELL)
+                    buying = get_element_text(td_elements, element_index_dict,CURRENCY_BUY)
                     if (selling is not None and buying is not None):
                         exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                         exchange_rates.append(exchangerate)

@@ -9,7 +9,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY = 'CURRENCY'
 TRANSFER_RATE = 'TRANSFER'
@@ -18,15 +18,6 @@ CASH_SELL_RATE = 'SELL'
 CASH = 'Cash'
 TRANSFER = 'Transfer'
 
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 def extract_update_date(html):
    try:
@@ -85,14 +76,14 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     }
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers[CURRENCY])
+        currency_code = get_element_text(table_data_list, table_headers,CURRENCY)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            cash_buy_rate = get_element_text(table_data_list, table_headers[CASH_BUY_RATE])
-            cash_sell_rate = get_element_text(table_data_list, table_headers[CASH_SELL_RATE])
+            cash_buy_rate = get_element_text(table_data_list, table_headers,CASH_BUY_RATE)
+            cash_sell_rate = get_element_text(table_data_list, table_headers,CASH_SELL_RATE)
 
-            transfer_rate = get_element_text(table_data_list, table_headers[TRANSFER_RATE])
+            transfer_rate = get_element_text(table_data_list, table_headers,TRANSFER_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 cash_buy_rate = convert_to_float(cash_buy_rate)

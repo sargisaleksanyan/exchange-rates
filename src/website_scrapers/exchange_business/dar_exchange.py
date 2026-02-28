@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, get_element_text
 
 TRANSFER_RATE = 'Remittance Transfer Rate'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_CODE_HEAD = 'Currency code'
@@ -33,17 +33,6 @@ def get_table_headers(page_element: PageElement) -> dict:
         SELL_RATE_HEAD: 4,
         TRANSFER_RATE: 5
     }
-
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
-
 
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
@@ -78,10 +67,10 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
     for table_row in table_rows:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
-            currency_code = get_element_text(table_data_elements, table_headers[CURRENCY_CODE_HEAD])
-            buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-            sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
-            transfer_rate = get_element_text(table_data_elements, table_headers[TRANSFER_RATE])
+            currency_code = get_element_text(table_data_elements, table_headers,CURRENCY_CODE_HEAD)
+            buy_rate = get_element_text(table_data_elements, table_headers,BUY_RATE_HEAD)
+            sell_rate = get_element_text(table_data_elements, table_headers,SELL_RATE_HEAD)
+            transfer_rate = get_element_text(table_data_elements, table_headers,TRANSFER_RATE)
 
             if currency_code is not None and Currency.get_currency(
                     currency_code) is not None:

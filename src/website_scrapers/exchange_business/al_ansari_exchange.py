@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
-    CompanyExchangeRates
+    CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
 
 security_key = '7be9f96be0'
 currency_request_url = 'https://alansariexchange.com/wp-admin/admin-ajax.php'
@@ -17,6 +17,9 @@ CURRENCY_URL_HEADER_NAME = 'ajax_url'
 CURRENCY_HEADER_NAME = 'data-ccyname'
 CURRENCY_DATA_CNTCODE = 'data-cntcode'
 CURRENCY_TO_HEADER_NAME = 'data-toccy'
+TRANSFER_TYPE = 'BT'
+TRANSFER_ACTION_TYPE = 'convert_action'
+FOREIGN_ACTION_TYPE = 'foreign_action'
 
 
 class CurrencyRequestData:
@@ -25,6 +28,10 @@ class CurrencyRequestData:
         self.currency_from = currency_from
         self.currency_to = currency_to
         self.transaction_type = transaction_type
+        self.action_type = FOREIGN_ACTION_TYPE
+
+    def set_action_type(self, action_type=FOREIGN_ACTION_TYPE):
+        self.action_type = action_type
 
 
 class ApiRequestParameters:
@@ -72,12 +79,12 @@ def extract_aed_currency_data(html: BeautifulSoup):
     return None
 
 
-def get_currency_rate(currency_request_data: CurrencyRequestData,
-                      api_request_parameters: ApiRequestParameters) -> float | None:
+def get_currency_rate_text(currency_request_data: CurrencyRequestData,
+                           api_request_parameters: ApiRequestParameters) -> str | None:
     sleep_random_time()
 
     body = {
-        "action": "foreign_action",
+        "action": currency_request_data.action_type,
         "currfrom": currency_request_data.currency_from,
         "currto": currency_request_data.currency_to,
         "cntcode": currency_request_data.currency_from,
@@ -88,13 +95,60 @@ def get_currency_rate(currency_request_data: CurrencyRequestData,
     result = make_post_request_with_proxy(api_request_parameters.url, body, is_url_encoded=True)
     if result is not None:
         json_result = parse_string_to_json(result)
-        return convert_to_float(get_value_from_json(json_result, 'rate'))
+        return get_value_from_json(json_result, 'rate')
 
     return None
 
 
-def get_rates_from_al_ansari():
-    content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
+def get_currency_rate(currency_request_data: CurrencyRequestData,
+                      api_request_parameters: ApiRequestParameters) -> float | None:
+    currency_rate_text = get_currency_rate_text(currency_request_data, api_request_parameters)
+    if (currency_rate_text is None):
+        return None
+    return convert_to_float(currency_rate_text)
+
+
+def get_sell_and_buy_rate(currency_name, currency_code_number, aed_to_code, request_parameters):
+    request_sell_data = CurrencyRequestData(
+        currency_from=currency_code_number,
+        currency_to=aed_to_code, transaction_type='S')
+
+    request_buy_data = CurrencyRequestData(
+        currency_from=currency_code_number,
+        currency_to=aed_to_code, transaction_type='B')
+    sell_rate = get_currency_rate(request_sell_data, request_parameters)
+
+    buy_rate = get_currency_rate(request_buy_data, request_parameters)
+
+    if buy_rate is None and sell_rate is None or (sell_rate > buy_rate):
+        return None
+
+    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, sell_rate=sell_rate,
+                                 buy_rate=buy_rate)
+    return exchange_rate
+
+
+def get_transfer_rate(currency_name, currency_code_number, aed_to_code, request_parameters):
+    request_transfer_data = CurrencyRequestData(
+        currency_from=currency_code_number,
+        currency_to=aed_to_code, transaction_type=TRANSFER_TYPE)
+
+    request_transfer_data.set_action_type(TRANSFER_ACTION_TYPE)
+
+    transfer_rate_text = get_currency_rate_text(request_transfer_data, request_parameters)
+
+    if transfer_rate_text is None:
+        return None
+
+    reverse_rate = convert_to_reverse_float(transfer_rate_text)
+    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, rate=reverse_rate)
+    exchange_rate.set_original_rate(convert_to_float(transfer_rate_text))
+    return exchange_rate
+
+
+def get_rates_from_al_ansari(url, is_cash_request=True):
+    # content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
+    content = make_get_request_with_proxy(url)
 
     if content is not None:
         soup = BeautifulSoup(content, 'html.parser')
@@ -122,23 +176,18 @@ def get_rates_from_al_ansari():
 
                 if currency_name not in passed_currency_codes and Currency.get_currency(currency_name) is not None:
                     currency_code_number = currency_span.get(CURRENCY_DATA_CNTCODE)
-                    request_sell_data = CurrencyRequestData(
-                        currency_from=currency_code_number,
-                        currency_to=aed_to_code, transaction_type='S')
-                    request_buy_data = CurrencyRequestData(
-                        currency_from=currency_code_number,
-                        currency_to=aed_to_code, transaction_type='B')
-                    sell_rate = get_currency_rate(request_sell_data, request_parameters)
-                    if sell_rate is None:
-                        continue
+                    if (is_cash_request == True):
+                        exchange_rate = get_sell_and_buy_rate(currency_name, currency_code_number, aed_to_code,
+                                                              request_parameters)
+                        if exchange_rate is not None:
+                            exchange_rates.append(exchange_rate)
+                    else:
+                        exchange_rate = get_transfer_rate(currency_name, currency_code_number, aed_to_code,
+                                                          request_parameters)
+                        if exchange_rate is not None:
+                            exchange_rates.append(exchange_rate)
 
-                    buy_rate = get_currency_rate(request_buy_data, request_parameters)
-                    if buy_rate is None or sell_rate > buy_rate:
-                        continue
                     passed_currency_codes.add(currency_name)
-                    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, sell_rate=sell_rate,
-                                                 buy_rate=buy_rate)
-                    exchange_rates.append(exchange_rate)
 
             company_exchange_rates = CompanyExchangeRates(exchange_rates)
             company_exchange_rates.set_current_scrape_date()
@@ -146,9 +195,21 @@ def get_rates_from_al_ansari():
     return None
 
 
+def scrape_all_type_of_rates() -> list[CompanyExchangeRates]:
+    cash_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
+    cash_rates.set_current_scrape_date()
+    cash_rates.set_exchange_type(ExchangeType.CASH)
+
+    transfer_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE, False)
+    transfer_rates.set_current_scrape_date()
+    transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
+
+    return [cash_rates, transfer_rates]
+
+
 def scrape_al_ansari_exchange() -> ExchangeCompany | None:
     try:
-        company_exchange_rates = get_rates_from_al_ansari()
+        company_exchange_rates = scrape_all_type_of_rates()
 
         if company_exchange_rates is None:
             return None
@@ -156,7 +217,7 @@ def scrape_al_ansari_exchange() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(ExchangeBusinessNames.AL_ANSARI_EXCHANGE,
                                            ExchangeBusinessUrl.AL_ANSARI_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
         # exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
     except Exception as err:
@@ -164,5 +225,4 @@ def scrape_al_ansari_exchange() -> ExchangeCompany | None:
         print('Error while scraping emirates islamic bank data', err)
     return None
 
-
-#scrape_al_ansari_exchange()
+# scrape_al_ansari_exchange()

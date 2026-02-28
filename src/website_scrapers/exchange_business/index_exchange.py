@@ -1,18 +1,21 @@
 import re
 from datetime import datetime
+from typing import List
 
 from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import ExchangeBusinessNames, \
     ExchangeBusinessUrl, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
-    ExchangeCompanyType, Currency, ExchangeRate
+    ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
-REMITTANCES = 'Remittances'  # TODO Remittances is not taken as it contains incorrect data
+TRANSFER_HEAD = 'Remittances'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_HEAD = 'Code'
 BUY_RATE_HEAD = 'Buying'
+BUY_RATE_HEAD_CASH = 'Buying (Cash)'
 SELL_RATE_HEAD = 'Selling'
+SELL_RATE_HEAD_CASH = 'Selling (Cash)'
 UPDATED_AT_STRING = 'Last Updated / Time:'
 
 
@@ -37,23 +40,16 @@ def get_table_headers(page_element: PageElement) -> dict:
                 if (CURRENCY_HEAD.lower() in th_text):
                     element_index_dict[CURRENCY_HEAD] = i
 
-                elif (BUY_RATE_HEAD.lower() in th_text):
+                elif (BUY_RATE_HEAD.lower() in th_text or BUY_RATE_HEAD_CASH in th_text):
                     element_index_dict[BUY_RATE_HEAD] = i
 
-                elif (SELL_RATE_HEAD.lower() in th_text):
+                elif (SELL_RATE_HEAD.lower() in th_text or SELL_RATE_HEAD_CASH in th_text):
                     element_index_dict[SELL_RATE_HEAD] = i
 
+                elif (TRANSFER_HEAD.lower() in th_text):
+                    element_index_dict[TRANSFER_HEAD] = i
+
     return element_index_dict
-
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 
 def get_update_date(update_date: str) -> datetime | None:
@@ -80,7 +76,7 @@ def find_update_date(soup: BeautifulSoup):
     return
 
 
-def extract_index_exchange_rates() -> CompanyExchangeRates | None:
+def extract_index_exchange_rates() -> List[CompanyExchangeRates] | None:
     content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.INDEX_EXCHANGE)
 
     soup = BeautifulSoup(content, 'html.parser')
@@ -99,32 +95,46 @@ def extract_index_exchange_rates() -> CompanyExchangeRates | None:
     if table_rows is None or len(table_rows) == 0:
         return None
 
-    exchange_rates = []
+    cash_exchange_rates = []
+    transfer_exchange_rates = []
 
     for table_row in table_rows:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
-            currency_code = get_element_text(table_data_elements, table_headers[CURRENCY_HEAD])
-            buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-            sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+            currency_name = get_element_text(table_data_elements, table_headers, CURRENCY_HEAD)
+            currency = Currency.get_currency(
+                currency_name)
 
-            if currency_code is not None and Currency.get_currency(
-                    currency_code) is not None and buy_rate is not None and sell_rate is not None:
-                currency = Currency.get_currency(currency_code)
-                buy = convert_to_float(buy_rate)
-                sell = convert_to_float(sell_rate)
+            if (currency is None):
+                continue
 
-                if buy > 0 and sell > 0:
+            transfer_rate_value = convert_to_float(
+                    get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD))
+            if (transfer_rate_value is not None and transfer_rate_value > 0):
+                    transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_value)
+                    transfer_exchange_rates.append(transfer_rate)
+
+            buy = convert_to_float(get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD))
+            sell = convert_to_float(get_element_text(table_data_elements, table_headers, SELL_RATE_HEAD))
+
+            if buy is not None and sell is not None and buy > 0 and sell > 0: # TODO if buy is non but sell has value might accept it
                     exchange_rate = ExchangeRate(currency.code, buy, sell)
-                    exchange_rates.append(exchange_rate)
+                    cash_exchange_rates.append(exchange_rate)
 
-    company_exchange_rates = CompanyExchangeRates(exchange_rates)
-    company_exchange_rates.set_current_scrape_date()
+    company_cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
+    company_cash_exchange_rates.set_current_scrape_date()
+    company_cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
+    company_transfer_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
+    company_transfer_exchange_rates.set_current_scrape_date()
+    company_transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+
     update_date = find_update_date(soup)
 
     if update_date is not None:
-        company_exchange_rates.set_update_date(update_date)
-    return company_exchange_rates
+        company_cash_exchange_rates.set_update_date(update_date)
+        company_transfer_exchange_rates.set_update_date(update_date)
+    return [company_cash_exchange_rates,company_transfer_exchange_rates]
 
 
 def scrape_index_exchange() -> ExchangeCompany | None:
@@ -132,9 +142,10 @@ def scrape_index_exchange() -> ExchangeCompany | None:
         company_exchange_rates = extract_index_exchange_rates()
         exchange_company = ExchangeCompany(ExchangeBusinessNames.INDEX_EXCHANGE, ExchangeBusinessUrl.INDEX_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
 
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.INDEX_EXCHANGE, err)
     return None
+

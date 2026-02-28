@@ -56,15 +56,6 @@ def get_table_headers(page_element: PageElement) -> dict:
     return element_index_dict
 
 
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
-
 
 def extract_update_date(update_date_element):
     if update_date_element is not None:
@@ -91,15 +82,15 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     }
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers[CURRENCY_CODE])
+        currency_code = get_element_text(table_data_list, table_headers, CURRENCY_CODE)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            cash_buy_rate = get_element_text(table_data_list, table_headers[CASH_BUY_RATE])
-            cash_sell_rate = get_element_text(table_data_list, table_headers[CASH_SELL_RATE])
+            cash_buy_rate = get_element_text(table_data_list, table_headers, CASH_BUY_RATE)
+            cash_sell_rate = get_element_text(table_data_list, table_headers, CASH_SELL_RATE)
 
-            transfer_buy_rate = get_element_text(table_data_list, table_headers[TRANSFER_BUY_RATE])
-            transfer_sell_rate = get_element_text(table_data_list, table_headers[TRANSFER_SELL_RATE])
+            transfer_buy_rate = get_element_text(table_data_list, table_headers, TRANSFER_BUY_RATE)
+            transfer_sell_rate = get_element_text(table_data_list, table_headers, TRANSFER_SELL_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),

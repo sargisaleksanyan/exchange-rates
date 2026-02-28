@@ -1,10 +1,22 @@
 import requests
+from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 from src.util.tool.json_util import convert_dict_to_json
 from src.util.tool.proxy import get_random_proxy_for_request
 
 MAX_REQUEST = 5
+
+
+def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=None)-> BeautifulSoup|None:
+    content = make_get_request_with_proxy(url,request_count,given_headers)
+    if (content != None):
+         try:
+            return BeautifulSoup(content, 'html.parser')
+         except Exception as err:
+            print('Error while parsing html', err)
+
+    return None
 
 
 def make_get_request_with_proxy(url: str, request_count=0, given_headers=None):

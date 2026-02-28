@@ -4,7 +4,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, get_currency_code_by_name
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text_by_index, get_element_text
 
 CURRENCY_HEAD = 'Currency'
 BUY_RATE_HEAD = 'Buy'
@@ -37,18 +37,10 @@ def get_table_headers(page_element: PageElement) -> dict:
 
 
 def get_currency(td_elements, index: int) -> Currency | None:
-    currency_name = get_element_text(td_elements, index)
+    currency_name = get_element_text_by_index(td_elements, index)
     return get_currency_code_by_name(currency_name=currency_name)
 
 
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
 
 
 def extract_reems_exchange_rates() -> CompanyExchangeRates | None:
@@ -72,8 +64,8 @@ def extract_reems_exchange_rates() -> CompanyExchangeRates | None:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
             currency = get_currency(table_data_elements, table_headers[CURRENCY_HEAD])
-            buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-            sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+            buy_rate = get_element_text(table_data_elements, table_headers,BUY_RATE_HEAD)
+            sell_rate = get_element_text(table_data_elements, table_headers,SELL_RATE_HEAD)
 
             if currency is not None and buy_rate is not None and sell_rate is not None:
                 buy = convert_to_float(buy_rate)

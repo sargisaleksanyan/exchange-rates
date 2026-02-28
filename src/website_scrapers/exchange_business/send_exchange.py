@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import ExchangeBusinessNames, \
     ExchangeBusinessUrl, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
-    ExchangeCompanyType, Currency, ExchangeRate
+    ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 REMITTANCES = 'Remittances'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_HEAD = 'CODE'
@@ -47,16 +47,6 @@ def get_table_headers(page_element: PageElement) -> dict:
     return element_index_dict
 
 
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
-
-
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
         date_obj = datetime.strptime(update_date, "%d %B %Y %I:%M %p")
@@ -81,7 +71,29 @@ def find_update_date(soup: BeautifulSoup):
     return
 
 
-def extract_send_exchange_rates() -> CompanyExchangeRates | None:
+def extract_transfer_rates(soup: BeautifulSoup) -> List[ExchangeRate]:
+    items = soup.select('.currency-dropdown .item')
+    passed = set()
+
+    transfer_rates = []
+
+    for item in items:
+        rate = item.get('data-currency-rate')
+        currency_name = item.get('data-currency-code')
+
+        currency_code = Currency.get_currency(
+            currency_name)
+
+        if currency_code is not None and currency_code.code not in passed and rate is not None:
+            passed.add(currency_code.code)
+
+            transfer = ExchangeRate(currency_code, convert_to_float(rate))
+            transfer_rates.append(transfer)
+
+    return transfer_rates
+
+
+def extract_send_exchange_rates() -> list[CompanyExchangeRates] | None:
     content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.SEND_EXCHANGE)
 
     soup = BeautifulSoup(content, 'html.parser')
@@ -105,9 +117,9 @@ def extract_send_exchange_rates() -> CompanyExchangeRates | None:
     for table_row in table_rows:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
-            currency_code = get_element_text(table_data_elements, table_headers[CURRENCY_HEAD])
-            buy_rate = get_element_text(table_data_elements, table_headers[BUY_RATE_HEAD])
-            sell_rate = get_element_text(table_data_elements, table_headers[SELL_RATE_HEAD])
+            currency_code = get_element_text(table_data_elements, table_headers, CURRENCY_HEAD)
+            buy_rate = get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD)
+            sell_rate = get_element_text(table_data_elements, table_headers, SELL_RATE_HEAD)
 
             if currency_code is not None and Currency.get_currency(
                     currency_code) is not None and buy_rate is not None and sell_rate is not None:
@@ -121,11 +133,18 @@ def extract_send_exchange_rates() -> CompanyExchangeRates | None:
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
     company_exchange_rates.set_current_scrape_date()
+    company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
     update_date = find_update_date(soup)
 
     if update_date is not None:
         company_exchange_rates.set_update_date(update_date)
-    return company_exchange_rates
+
+    transfer_rates_list = extract_transfer_rates(soup)
+    transfer_rate = CompanyExchangeRates(transfer_rates_list)
+    transfer_rate.set_exchange_type(ExchangeType.TRANSFER)
+    transfer_rate.set_current_scrape_date()
+    return [company_exchange_rates, transfer_rate]
 
 
 def scrape_send_exchange() -> ExchangeCompany | None:
@@ -133,10 +152,9 @@ def scrape_send_exchange() -> ExchangeCompany | None:
         company_exchange_rates = extract_send_exchange_rates()
         exchange_company = ExchangeCompany(ExchangeBusinessNames.SEND_EXCHANGE, ExchangeBusinessUrl.SEND_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
 
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.SEND_EXCHANGE, err)
     return None
-

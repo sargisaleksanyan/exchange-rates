@@ -2,14 +2,13 @@ import re
 from typing import List
 
 from bs4 import BeautifulSoup, PageElement
-from datetime import datetime
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
     ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text, get_element_text_by_index
 
 CURRENCY = 'Currency'
 TRANSFER_RATE = 'Transfer'
@@ -18,16 +17,6 @@ CASH_SELL_RATE = 'Selling'
 CASH = 'Cash'
 TRANSFER = 'Transfer'
 
-
-def get_element_text(td_elements, index: int):
-    if (index > -1 and td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            value = value.replace('AED', '').strip()
-            return value
-
-    return None
 
 
 def get_table_headers(page_element: PageElement) -> dict:
@@ -71,10 +60,10 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            cash_buy_rate = get_element_text(table_data_list, table_headers[CASH_BUY_RATE] - 1)
-            cash_sell_rate = get_element_text(table_data_list, table_headers[CASH_SELL_RATE] - 1)
+            cash_buy_rate = get_element_text_by_index(table_data_list, table_headers[CASH_BUY_RATE] - 1)
+            cash_sell_rate = get_element_text_by_index(table_data_list, table_headers[CASH_SELL_RATE] - 1)
 
-            transfer_rate = get_element_text(table_data_list, table_headers[TRANSFER_RATE] - 1)
+            transfer_rate = get_element_text_by_index(table_data_list, table_headers[TRANSFER_RATE] - 1)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 cash_buy_rate = convert_to_float(cash_buy_rate)

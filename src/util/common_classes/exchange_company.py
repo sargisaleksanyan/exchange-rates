@@ -68,6 +68,8 @@ class Currency(Enum):
     TJS = ("TJS", "Tajikistani Somoni")
     TWD = ("TWD", "New Taiwan Dollar")
     SYP = ("SYP", "Syrian Pound")
+    SDG = ("SDG", "Sudanese Pound")
+    YER = ("YER", "Yemeni Rial")
     RSD = ("RSD", "Serbian Dinar")
     RWF = ("RWF", "Rwandan Franc")
     RON = ("RON", "Romanian Leu")
@@ -125,6 +127,7 @@ class Currency(Enum):
     def get_currency(currency):
         if (currency is None):
             return None
+        currency = currency.strip()
         if isinstance(currency, Currency):
             return Currency[currency]
         if isinstance(currency, str) and currency in Currency._value2member_map_ or currency in (c.code for c in

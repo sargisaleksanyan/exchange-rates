@@ -2,15 +2,12 @@ import re
 from typing import List
 
 from bs4 import BeautifulSoup, PageElement
-from datetime import datetime
 
-from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl
+from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
-from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY = 'CODE'
 TRANSFER_RATE = 'T.T RATE'
@@ -18,17 +15,6 @@ CASH_BUY_RATE = 'FC BUY'
 CASH_SELL_RATE = 'FC SELL'
 CASH = 'Cash'
 TRANSFER = 'Transfer'
-
-
-def get_element_text(td_elements, index: int):
-    if (td_elements is not None and len(td_elements) > index):
-        element = td_elements[index]
-        if (element is not None):
-            value = element.get_text().strip()
-            return value
-
-    return None
-
 
 
 def get_table_headers(page_element: PageElement) -> dict:
@@ -70,14 +56,14 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     }
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers[CURRENCY])
+        currency_code = get_element_text(table_data_list, table_headers, CURRENCY)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            cash_buy_rate = get_element_text(table_data_list, table_headers[CASH_BUY_RATE])
-            cash_sell_rate = get_element_text(table_data_list, table_headers[CASH_SELL_RATE])
+            cash_buy_rate = get_element_text(table_data_list, table_headers, CASH_BUY_RATE)
+            cash_sell_rate = get_element_text(table_data_list, table_headers, CASH_SELL_RATE)
 
-            transfer_rate = get_element_text(table_data_list, table_headers[TRANSFER_RATE])
+            transfer_rate = get_element_text(table_data_list, table_headers, TRANSFER_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 cash_buy_rate = convert_to_float(cash_buy_rate)
@@ -89,7 +75,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                     cash_buy_rate = None
 
                 cash_exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
-                                             convert_to_float(cash_sell_rate))
+                                                  convert_to_float(cash_sell_rate))
                 exchange_dict[CASH] = cash_exchange_rate
 
             if transfer_rate is not None:
@@ -99,6 +85,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                     exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
+
 
 def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
     content = make_get_request_with_proxy(ExchangeBusinessExchangeUrl.MULTINET_TRUST_EXCHANGE)
@@ -133,8 +120,6 @@ def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
                 if TRANSFER in exchange_rates_dict:
                     transfer_exchange_rates.append(exchange_rates_dict[TRANSFER])
 
-
-
                 # update_date = extract_update_date(soup)
 
                 # if update_date is not None:
@@ -145,15 +130,13 @@ def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
     cash_exchange_rates.set_current_scrape_date()
 
-
-
     transfer_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
     transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
     transfer_exchange_rates.set_current_scrape_date()
 
     exchange_rates = []
     exchange_rates.append(cash_exchange_rates)
-  #  exchange_rates.append(transfer_exchange_rates) TODO need to fix tranfer rates
+    #  exchange_rates.append(transfer_exchange_rates) TODO need to fix tranfer rates
     return exchange_rates
 
 
@@ -175,3 +158,4 @@ def scrape_multinet_trust() -> ExchangeCompany | None:
     return None
 
 
+scrape_multinet_trust()
