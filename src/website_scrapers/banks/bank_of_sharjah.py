@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates
-from src.util.scraping_util.request_util import  make_get_request
+from src.util.scraping_util.request_util import make_get_request
 from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY_EXCHANGE_RATES = 'Currency'
@@ -39,12 +39,12 @@ def get_table_headers(table_headers: List[PageElement]) -> dict:
 
 
 def get_update_date(update_date: str) -> datetime | None:
-   try:
-     if update_date != None:
-        return datetime.strptime(update_date.split(" GMT")[0], "%b %d, %Y %H:%M")
-   except Exception as err:
-           print('Error',err)
-   return None
+    try:
+        if update_date != None:
+            return datetime.strptime(update_date.split(" GMT")[0], "%b %d, %Y %H:%M")
+    except Exception as err:
+        print('Error', err)
+    return None
 
 
 def find_update_date(soup: BeautifulSoup):
@@ -70,7 +70,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     table_data_list = table_row.find_all('td')
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers,CURRENCY_EXCHANGE_RATES)
+        currency_code = get_element_text(table_data_list, table_headers, CURRENCY_EXCHANGE_RATES)
         if (currency_code is not None):
             currency_strings = currency_code.split('-')
             if len(currency_strings) > 0:
@@ -78,8 +78,8 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            buy_rate = get_element_text(table_data_list, table_headers,BUY_RATE)
-            sell_rate = get_element_text(table_data_list, table_headers,SELL_RATE)
+            buy_rate = get_element_text(table_data_list, table_headers, BUY_RATE)
+            sell_rate = get_element_text(table_data_list, table_headers, SELL_RATE)
 
             if buy_rate is not None and sell_rate is not None:
                 exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_rate),
@@ -137,6 +137,7 @@ def scrape_bank_of_sharjah() -> ExchangeCompany | None:
 
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.BANK_OF_SHARJAH, err)
+
 
 scrape_bank_of_sharjah()

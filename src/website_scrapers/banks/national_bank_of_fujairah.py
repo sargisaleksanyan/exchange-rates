@@ -76,8 +76,7 @@ def scrape_national_bank_of_fujairah() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.NATIONAL_BANK_OF_FUJARAH, err)
     return None
 
-
-#scrape_national_bank_of_fujairah()
+# scrape_national_bank_of_fujairah()

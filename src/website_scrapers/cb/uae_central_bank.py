@@ -112,5 +112,5 @@ def scrape_central_bank() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates central bank data', err)
+        print('Error while scraping central bank data', err)
 

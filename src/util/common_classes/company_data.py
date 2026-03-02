@@ -181,7 +181,8 @@ class ExchangeBusinessExchangeUrl:
 class ExchangeBusinessApiUrl:
     # JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'
     GCC_EXCHANGE = 'https://www.gccexchange.com/media/index.php/exchangerate/getexchangerate'
-    JOYALUKKAS_EXCHANGE = 'https://jaapi.shahidrafi.online/api/country-currency-code'
+    JOYALUKKAS_EXCHANGE_ROOT_API = 'https://jaapi.shahidrafi.online/api'
+    JOYALUKKAS_EXCHANGE = JOYALUKKAS_EXCHANGE_ROOT_API + '/country-currency-code'
     WALL_STREET_EXCHANGE = 'https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true'
     SHARAF_EXCHANGE = 'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
     #                  'https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en'
@@ -191,3 +192,5 @@ class ExchangeBusinessApiUrl:
     AL_GHURAIR_EXCHANGE_CASH_RATES = 'https://3-214-76-133.nip.io/fc/0'  # https://3-214-76-133.nip.io/tt/0
     AL_GHURAIR_EXCHANGE_TRANSFER_RATES = 'https://3-214-76-133.nip.io/tt/0'
     AL_FARDANE_EXCHANGE = 'https://alfardanexchange.com/currency_rate_list'
+    # MESRKANLOO_INTERNATIONAL_EXCHANGE https://efastlive.com/members/WebRatesV3.aspx?uid=mesrkanloo&cur=AED&manual=1&mode=0&take=28&hidett=1
+    MESRKANLOO_INTERNATIONAL_EXCHANGE = 'https://efastlive.com/members/WebRatesV3.aspx?uid=mesrkanloo&cur=AED&manual=1&mode=0&hidett=1'

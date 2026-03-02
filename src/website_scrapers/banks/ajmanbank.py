@@ -89,7 +89,5 @@ def scrape_ajman_bank() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping ajman bank data', err)
+        print('Error while scraping ', BankName.AJMAN_BANK, err)
     return None
-
-

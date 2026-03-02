@@ -138,4 +138,4 @@ def scrape_national_bank_of_umm_al_qaiwain() -> ExchangeCompany | None:
 
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.NATIONAL_BANK_OF_UMM_AL_QAIWAIN, err)

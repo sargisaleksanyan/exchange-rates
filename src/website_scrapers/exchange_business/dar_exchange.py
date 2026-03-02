@@ -88,7 +88,7 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
                     except Exception as err:
                         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
 
-                if transfer_rate is not None and transfer_rate is not '-':
+                if transfer_rate is not None and transfer_rate  != '-':
 
                     original_rate = convert_to_float(transfer_rate)
                     transfer_rate_object = None

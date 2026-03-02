@@ -154,8 +154,6 @@ def scrape_multinet_trust() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE, err)
+        print('Error while scraping ', ExchangeBusinessNames.MULTINET_TRUST_EXCHANGE, err)
     return None
 
-
-scrape_multinet_trust()

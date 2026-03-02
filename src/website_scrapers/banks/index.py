@@ -17,5 +17,6 @@ non_frequent_banks_update = [scrape_abu_dhabi_commercial_bank, scrape_commercial
 # scrape_national_bank_of_fujairah needs to be scraped very non frequently
 #scrape_sharjah_islamic_bank
 frequent_banks_update = [scrape_first_abu_dhabi_bank_data, scrape_emiratesnbd_bank_data, scrape_bank_of_sharjah,
-                         scrape_national_bank_of_ras_al_khaimah, scrape_national_bank_of_umm_al_qaiwain,
+                         #scrape_national_bank_of_ras_al_khaimah, seems not to work
+                         scrape_national_bank_of_umm_al_qaiwain,
                          scrape_emirates_islamic_bank_data, scrape_dubai_islamic_bank]

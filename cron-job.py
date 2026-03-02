@@ -59,7 +59,6 @@ def init_non_frequent_data_update():
         try:
             exchange_data = update()
             time.sleep(2)
-            print(update)
             if exchange_data is not None:
                 update_company_exchange_data(exchange_data)
         except Exception as err:
@@ -92,7 +91,6 @@ def init_very_rare_data_update():
         try:
             exchange_data = update()
             time.sleep(2)
-            print(update)
             if exchange_data is not None:
                 update_company_exchange_data(exchange_data)
         except Exception as err:

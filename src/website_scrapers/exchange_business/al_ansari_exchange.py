@@ -222,7 +222,7 @@ def scrape_al_ansari_exchange() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', ExchangeBusinessNames.AL_ANSARI_EXCHANGE, err)
     return None
 
 # scrape_al_ansari_exchange()

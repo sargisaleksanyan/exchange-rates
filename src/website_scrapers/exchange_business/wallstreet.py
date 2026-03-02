@@ -66,5 +66,5 @@ def scrape_wall_street() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', ExchangeBusinessNames.WALL_STREET_EXCHANGE, err)
     return None

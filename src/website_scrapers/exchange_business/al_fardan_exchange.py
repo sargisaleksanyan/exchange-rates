@@ -20,22 +20,23 @@ TRANSFER = 'Transfer'
 
 
 def extract_update_date(html):
-   try:
-      container = html.find("div", class_="table-box")
+    try:
+        container = html.find("div", class_="table-box")
 
-      # Get all text inside it
-      text = container.get_text(" ", strip=True)
+        # Get all text inside it
+        text = container.get_text(" ", strip=True)
 
-       # Extract the date part using regex
-      match = re.search(r'([A-Za-z]+\s+\d{1,2},\s+\d{4}\s*-\s*\d{2}:\d{2}\s*[AP]M)', text)
+        # Extract the date part using regex
+        match = re.search(r'([A-Za-z]+\s+\d{1,2},\s+\d{4}\s*-\s*\d{2}:\d{2}\s*[AP]M)', text)
 
-      if match:
-         date_string = match.group(1)
-         converted_date = datetime.strptime(date_string, "%B %d, %Y - %I:%M %p")
-         return converted_date
+        if match:
+            date_string = match.group(1)
+            converted_date = datetime.strptime(date_string, "%B %d, %Y - %I:%M %p")
+            return converted_date
 
-   except Exception as err:
-         print('Error while formatting date for ',ExchangeBusinessNames.AL_FARDAN_EXCHANGE)
+    except Exception as err:
+        print('Error while formatting date for ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE)
+
 
 def get_table_headers(page_element: PageElement) -> dict:
     element_index_dict = {
@@ -76,14 +77,14 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     }
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers,CURRENCY)
+        currency_code = get_element_text(table_data_list, table_headers, header=CURRENCY)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            cash_buy_rate = get_element_text(table_data_list, table_headers,CASH_BUY_RATE)
-            cash_sell_rate = get_element_text(table_data_list, table_headers,CASH_SELL_RATE)
+            cash_buy_rate = get_element_text(table_data_list, table_headers, header=CASH_BUY_RATE)
+            cash_sell_rate = get_element_text(table_data_list, table_headers, header=CASH_SELL_RATE)
 
-            transfer_rate = get_element_text(table_data_list, table_headers,TRANSFER_RATE)
+            transfer_rate = get_element_text(table_data_list, table_headers, header=TRANSFER_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 cash_buy_rate = convert_to_float(cash_buy_rate)
@@ -95,7 +96,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                     cash_buy_rate = None
 
                 cash_exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
-                                             convert_to_float(cash_sell_rate))
+                                                  convert_to_float(cash_sell_rate))
                 exchange_dict[CASH] = cash_exchange_rate
 
             if transfer_rate is not None:
@@ -105,6 +106,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                     exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
+
 
 def get_rates_from_al_fardan() -> List[CompanyExchangeRates] | None:
     content = get_website_content_by_browser(ExchangeBusinessExchangeUrl.AL_FARDAN_EXCHANGE, 10)
@@ -138,8 +140,6 @@ def get_rates_from_al_fardan() -> List[CompanyExchangeRates] | None:
 
                 if TRANSFER in exchange_rates_dict:
                     transfer_exchange_rates.append(exchange_rates_dict[TRANSFER])
-
-
 
                 # update_date = extract_update_date(soup)
 
@@ -184,5 +184,3 @@ def scrape_al_fardan() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE, err)
     return None
-
-

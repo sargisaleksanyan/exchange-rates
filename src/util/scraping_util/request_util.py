@@ -8,12 +8,12 @@ from src.util.tool.proxy import get_random_proxy_for_request
 MAX_REQUEST = 5
 
 
-def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=None)-> BeautifulSoup|None:
-    content = make_get_request_with_proxy(url,request_count,given_headers)
+def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=None) -> BeautifulSoup | None:
+    content = make_get_request_with_proxy(url, request_count, given_headers)
     if (content != None):
-         try:
+        try:
             return BeautifulSoup(content, 'html.parser')
-         except Exception as err:
+        except Exception as err:
             print('Error while parsing html', err)
 
     return None
@@ -93,6 +93,6 @@ def make_post_request_with_proxy(url: str, body, is_url_encoded=False, request_c
         print('Error', err, ' Url', url)
         if (request_count < MAX_REQUEST):
             request_count = request_count + 1
-            return make_post_request_with_proxy(url, request_count=request_count)
+            return make_post_request_with_proxy(url, body, is_url_encoded, request_count=request_count)
         else:
             return None

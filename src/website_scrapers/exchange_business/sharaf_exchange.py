@@ -40,7 +40,7 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
             if (exchange_rates_data is None):
                 return
 
-            if exchange_rates_data and len(exchange_rates_data) > 0:
+            if len(exchange_rates_data) > 0:
                 cash_exchange_rates = []
                 transfer_exchange_rates = []
 
@@ -59,20 +59,20 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
                         if (is_update_date_fresh(last_update) == False):
                             continue
 
-                        buy = get_value_from_json(exchange_rate_data, 'fc_buy')
-                        sell = get_value_from_json(exchange_rate_data, 'fc_sell')
-                        transfer_rate = get_value_from_json(exchange_rate_data, 'dd_tt')
+                        buy = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_buy'))
+                        sell = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_sell'))
+                        transfer_rate = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'dd_tt'))
 
                         if (buy is not None and sell is not None):
-                            exchange_rate = ExchangeRate(currency.code, convert_to_reverse_float(buy),
-                                                         convert_to_reverse_float(sell))
-                            exchange_rate.set_original_sell_rate(convert_to_float(sell))
-                            exchange_rate.set_original_buy_rate(convert_to_float(buy))
+                            exchange_rate = ExchangeRate(currency.code, buy,
+                                                         sell)
+                            exchange_rate.set_original_sell_rate(get_value_from_json(exchange_rate_data, 'fc_sell'))
+                            exchange_rate.set_original_buy_rate(get_value_from_json(exchange_rate_data, 'fc_buy'))
                             cash_exchange_rates.append(exchange_rate)
 
                         if (transfer_rate is not None):
-                            exchange_rate = ExchangeRate(currency.code, rate=convert_to_reverse_float(transfer_rate))
-                            exchange_rate.set_original_rate(convert_to_float(transfer_rate))
+                            exchange_rate = ExchangeRate(currency.code, rate=transfer_rate)
+                            exchange_rate.set_original_rate(get_value_from_json(exchange_rate_data, 'dd_tt'))
                             transfer_exchange_rates.append(exchange_rate)
 
                 company_cash_exchange_rate = CompanyExchangeRates(cash_exchange_rates)
@@ -97,10 +97,10 @@ def scrape_sharaf_exchange() -> ExchangeCompany | None:
                                            ExchangeBusinessUrl.SHARAF_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
 
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', ExchangeBusinessNames.SHARAF_EXCHANGE, err)
     return None

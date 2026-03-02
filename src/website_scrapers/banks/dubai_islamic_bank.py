@@ -38,7 +38,6 @@ def get_table_headers(table_headers: List[PageElement]) -> dict:
     return element_index_dict
 
 
-
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
         date_obj = datetime.strptime(update_date, "%d %b %y %I:%M:%S %p")
@@ -68,12 +67,12 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     table_data_list = table_row.find_all('td')
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers,CURRENCY_CODE)
+        currency_code = get_element_text(table_data_list, table_headers, CURRENCY_CODE)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            buy_rate = get_element_text(table_data_list, table_headers,BUY_RATE)
-            sell_rate = get_element_text(table_data_list, table_headers,SELL_RATE)
+            buy_rate = get_element_text(table_data_list, table_headers, BUY_RATE)
+            sell_rate = get_element_text(table_data_list, table_headers, SELL_RATE)
 
             if buy_rate is not None and sell_rate is not None:
                 exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_rate),
@@ -138,7 +137,9 @@ def scrape_dubai_islamic_bank() -> ExchangeCompany | None:
 
     except Exception as err:
         # TODO log this
-       print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.DUBAI_ISLAMIC_BANK, err)
+
+
 # return None
 
 

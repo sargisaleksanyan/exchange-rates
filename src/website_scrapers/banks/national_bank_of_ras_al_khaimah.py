@@ -55,8 +55,8 @@ def get_rates_from_national_bank_of_ras_al_khaimah() -> CompanyExchangeRates | N
             'excludedCurrencies': excluded_currencies
         }
 
-    content = make_post_request_with_proxy(BankExchangeRateApiUrl.NATIONAL_BANK_OF_RAS_AL_KHAIMAH, body=body,
-                                           is_url_encoded=False)
+    content = make_post_request_with_proxy(BankExchangeRateApiUrl.NATIONAL_BANK_OF_RAS_AL_KHAIMAH, body,
+                                           False)
     if content is not None:
         forex_json = parse_string_to_json(content)
         if forex_json is not None and 'responseContent' in forex_json:
@@ -104,6 +104,8 @@ def scrape_national_bank_of_ras_al_khaimah() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.NATIONAL_BANK_OF_RAS_AL_KHAIMAH, err)
     return None
 
+
+# TODO seems api to be down at this moment

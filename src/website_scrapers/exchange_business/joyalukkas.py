@@ -1,22 +1,24 @@
 import random
 import time
+from typing import List
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
     ExchangeBusinessApiUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeCompanyType, \
-    Currency, ExchangeRate
+    Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
 from src.util.tool.string_util import convert_to_float
 
 CURRENCY_CODE_HEADER = 'CURRENCY_CODE'
+CURRENCY_TRANSFER_HEADER = 'TTRATE'
 CURRENCY_BUY_HEADER = 'FXBUYRATE'
 CURRENCY_SELL_HEADER = 'FXSELLRATE'
 
 
 # AFA ARS
 def get_sell_rate(currency_code):
-    sell_rate_url = "https://admin.joyalukkasexchange.com/api/currency-converter?region=2&amount=1&currency_code=" + currency_code + "&rate_type=FXS&amount_type=FCY"
+    sell_rate_url = ExchangeBusinessApiUrl.JOYALUKKAS_EXCHANGE_ROOT_API + "/currency-converter?region=2&amount=1&currency_code=" + currency_code + "&rate_type=FXS&amount_type=FCY"
     content = make_get_request_with_proxy(sell_rate_url)
     if content is None:
         return None
@@ -35,28 +37,24 @@ def sleep_random_time():
     time.sleep(sleep_time)
 
 
-def extract_exchange_rates(json_data):
-    currency_code = get_value_from_json(json_data, CURRENCY_CODE_HEADER)
-    sell_rate = get_value_from_json(json_data, CURRENCY_SELL_HEADER)
-    buy_rate = get_value_from_json(json_data, CURRENCY_BUY_HEADER)
-    currency = Currency.get_currency(currency_code)
-    if currency is not None:
-        sell = convert_to_float(sell_rate)
-        buy = convert_to_float(buy_rate)
-        if sell > 0 and buy > 0 and sell >= buy:
-            return ExchangeRate(currency.code, buy_rate=buy, sell_rate=sell)
+def extract_exchange_rates(json_data, currency: Currency):
+    sell = convert_to_float(get_value_from_json(json_data, CURRENCY_SELL_HEADER))
+    buy = convert_to_float(get_value_from_json(json_data, CURRENCY_BUY_HEADER))
+    if sell > 0 and buy > 0 and sell >= buy:
+        return ExchangeRate(currency.code, buy_rate=buy, sell_rate=sell)
 
     return None
 
 
-def get_rates_from_joyalukkas() -> CompanyExchangeRates | None:
+def get_rates_from_joyalukkas() -> List[CompanyExchangeRates] | None:
     content = make_get_request_with_proxy(ExchangeBusinessApiUrl.JOYALUKKAS_EXCHANGE)
     if content is None:
         return None
 
     json_data = parse_string_to_json(content)
     contents = get_value_from_json(json_data, 'contents')
-    exchange_rates = []
+    cash_exchange_rates = []
+    transfer_exchange_rates = []
 
     if (contents is None):
         return
@@ -76,14 +74,30 @@ def get_rates_from_joyalukkas() -> CompanyExchangeRates | None:
                 if individual_sell_rate is None:
                     continue
                 data[CURRENCY_SELL_HEADER] = individual_sell_rate
-            exchange_rate = extract_exchange_rates(data)
-            if exchange_rate is not None:
-                exchange_rates.append(exchange_rate)
 
-    print('Length ', len(exchange_rates))
-    company_exchange_rates = CompanyExchangeRates(exchange_rates)
-    company_exchange_rates.set_current_scrape_date()
-    return company_exchange_rates
+            currency_code = get_value_from_json(data, CURRENCY_CODE_HEADER)
+            currency = Currency.get_currency(currency_code)
+
+            if currency is not None:
+                exchange_rate = extract_exchange_rates(data, currency)
+
+                if exchange_rate is not None:
+                    cash_exchange_rates.append(exchange_rate)
+
+                transfer_rate_value = convert_to_float(get_value_from_json(data, CURRENCY_TRANSFER_HEADER))
+                if transfer_rate_value is not None:
+                    transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_value)
+                    transfer_exchange_rates.append(transfer_rate)
+
+    cash_company_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
+    cash_company_exchange_rates.set_current_scrape_date()
+    cash_company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
+    transfer_company_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
+    transfer_company_exchange_rates.set_current_scrape_date()
+    transfer_company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+
+    return [transfer_company_exchange_rates, cash_company_exchange_rates]
 
 
 def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
@@ -93,11 +107,9 @@ def scrape_joyalukkas_exchange() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
                                            ExchangeBusinessUrl.JOYALUKKAS_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-        exchange_company.add_exchange_rate(company_exchange_rates)
+        exchange_company.set_exchange_rates(company_exchange_rates)
         return exchange_company
     except Exception as err:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.JOYALUKKAS_EXCHANGE, err)
     return None
-
-

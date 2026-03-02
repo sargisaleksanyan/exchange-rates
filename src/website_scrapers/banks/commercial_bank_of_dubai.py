@@ -14,13 +14,13 @@ BUY_RATE = 'Buy Rate'
 SELL_RATE = 'Sell Rate'
 UPDATED_AT_STRING = 'Updated at:'
 
+
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
         date_obj = datetime.strptime(update_date, "%Y-%m-%d %H:%M:%S")
         return date_obj
 
     return None
-
 
 
 def get_table_headers(table_headers: List[PageElement]) -> dict:
@@ -52,12 +52,12 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     table_data_list = table_row.find_all('td')
 
     if (table_data_list is not None):
-        currency_code = get_element_text(table_data_list, table_headers,CURRENCY_CODE)
+        currency_code = get_element_text(table_data_list, table_headers, CURRENCY_CODE)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
-            buy_rate = get_element_text(table_data_list, table_headers,BUY_RATE)
-            sell_rate = get_element_text(table_data_list, table_headers,SELL_RATE)
+            buy_rate = get_element_text(table_data_list, table_headers, BUY_RATE)
+            sell_rate = get_element_text(table_data_list, table_headers, SELL_RATE)
 
             if buy_rate is not None and sell_rate is not None:
                 exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_rate),
@@ -125,5 +125,5 @@ def scrape_commercial_bank_of_dubai() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping emirates islamic bank data', err)
+        print('Error while scraping ', BankName.COMMERCIAL_BANK_OF_DUBAI, err)
     return None

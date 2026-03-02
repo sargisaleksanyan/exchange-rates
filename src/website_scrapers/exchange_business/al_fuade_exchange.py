@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, get_element_text, get_element_text_by_index
+from src.util.tool.string_util import convert_to_float, get_element_text_by_index
 
 CURRENCY = 'Currency'
 TRANSFER_RATE = 'Transfer'
@@ -44,6 +44,10 @@ def get_table_headers(page_element: PageElement) -> dict:
 
     return element_index_dict
 
+def clean_rate(rate:str):
+    if rate is not None:
+        return rate.replace("AED",'').replace('aed','').strip()
+    return None
 
 def extract_exchange_from_row_element(table_row: PageElement, table_headers: dict) -> dict | None:
     if (table_row is None):
@@ -56,7 +60,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
     }
 
     if (table_data_list is not None and table_currency_header is not None):
-        currency_code = get_element_text(table_currency_header, 0)
+        currency_code = get_element_text_by_index(table_currency_header, 0)
         currency = Currency.get_currency(currency_code)
 
         if (currency is not None):
@@ -66,8 +70,8 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
             transfer_rate = get_element_text_by_index(table_data_list, table_headers[TRANSFER_RATE] - 1)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
-                cash_buy_rate = convert_to_float(cash_buy_rate)
-                cash_sell_rate = convert_to_float(cash_sell_rate)
+                cash_buy_rate = convert_to_float(clean_rate(cash_buy_rate))
+                cash_sell_rate = convert_to_float(clean_rate(cash_sell_rate))
                 if cash_sell_rate <= 0:
                     cash_sell_rate = None
 
@@ -79,7 +83,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                 exchange_dict[CASH] = cash_exchange_rate
 
             if transfer_rate is not None:
-                transfer_rate_float = convert_to_float(transfer_rate)
+                transfer_rate_float = convert_to_float(clean_rate(transfer_rate))
                 if (transfer_rate_float > 0):
                     exchange_rate = ExchangeRate(currency.code, rate=transfer_rate_float)
                     exchange_dict[TRANSFER] = exchange_rate
@@ -148,7 +152,7 @@ def scrape_al_fuade() -> ExchangeCompany | None:
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE, err)
+        print('Error while scraping ', ExchangeBusinessNames.AL_FUAD_EXCHANGE, err)
     return None
 
 

@@ -79,8 +79,6 @@ def parse_currency_data(currency_json_data) -> List[ExchangeRate]:
                         exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                         exchangerates.append(exchangerate)
 
-            else:
-                print(currency_code)
 
     return exchangerates
     # TODO write to log file

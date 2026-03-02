@@ -6,7 +6,7 @@ from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, 
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
     ExchangeCompanyType, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, get_element_text
 
 CURRENCY_CODE = 'Currency Code'
 CURRENCY_SELL = 'Sell'
