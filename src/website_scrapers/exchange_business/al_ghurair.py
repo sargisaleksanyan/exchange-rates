@@ -18,7 +18,7 @@ headers = {
 CURRENCY_HEADER = 'Currency'
 FOREX_SALE_HEADER = 'FCSale'
 FOREX_BUY_HEADER = 'FCPurchase'
-TRANSFER_RATE_HEADER = 'FCPurchase'
+TRANSFER_RATE_HEADER = 'TTSale'
 
 
 def get_exchange_rates(url):
@@ -40,11 +40,12 @@ def get_exchange_rates(url):
                 if currency is not None:
                     sell = get_value_from_json(rate, FOREX_SALE_HEADER)
                     buy = get_value_from_json(rate, FOREX_BUY_HEADER)
+                    transfer_rate = get_value_from_json(rate, TRANSFER_RATE_HEADER)
 
                     if sell is not None and buy is not None:
                         exchange_data = ExchangeRate(currency.code, convert_to_float(sell), convert_to_float(buy))
                         exchange_rates.append(exchange_data)
-                    elif transfer_rate := get_value_from_json(rate, TRANSFER_RATE_HEADER) is not None:
+                    elif transfer_rate is not None:
                         exchange_data = ExchangeRate(currency.code, rate=convert_to_float(transfer_rate))
                         exchange_rates.append(exchange_data)
     return exchange_rates
@@ -52,18 +53,14 @@ def get_exchange_rates(url):
 
 def get_rates_from_al_ghurair() -> List[CompanyExchangeRates] | None:
     # From API I can see that it is getting response but in website I do not see anything
-    #cash_exchange_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_CASH_RATES)
-    transfer_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_TRANSFER_RATES)
 
-    #cash_exchange_rate = CompanyExchangeRates(cash_exchange_rates)
-    #cash_exchange_rate.set_exchange_type(ExchangeType.CASH)
-    #cash_exchange_rate.set_current_scrape_date()
+    transfer_rates = get_exchange_rates(ExchangeBusinessApiUrl.AL_GHURAIR_EXCHANGE_TRANSFER_RATES)
 
     transfer_exchange_rate = CompanyExchangeRates(transfer_rates)
     transfer_exchange_rate.set_exchange_type(ExchangeType.TRANSFER)
     transfer_exchange_rate.set_current_scrape_date()
 
-    return [ transfer_exchange_rate]
+    return [transfer_exchange_rate]
 
 
 def scrape_al_ghurair() -> ExchangeCompany | None:
@@ -80,5 +77,3 @@ def scrape_al_ghurair() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_GHURAIR_EXCHANGE, err)
     return None
-
-

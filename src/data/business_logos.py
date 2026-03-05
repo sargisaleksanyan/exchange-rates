@@ -137,6 +137,10 @@ business_logos = [
         "url": ExchangeBusinessUrl.MULTINET_TRUST_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/multinettrust_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.AL_FUAD_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alfuadexchange_com.svg"
     }
-
 ]

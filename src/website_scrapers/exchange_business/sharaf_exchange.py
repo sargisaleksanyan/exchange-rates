@@ -52,12 +52,13 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
                     currency = Currency.get_currency(currency_code)
 
                     if currency is not None:
-                        last_update = get_value_from_json(exchange_rate_data, 'last_update')
-                        if (last_update is None):
-                            continue
-                        last_update = convert_update_date(last_update)
-                        if (is_update_date_fresh(last_update) == False):
-                            continue
+                        last_update = convert_update_date(get_value_from_json(exchange_rate_data, 'last_update'))
+
+                        # if (last_update is None):
+                        #    continue
+                        # last_update = convert_update_date(last_update)
+                        # if (is_update_date_fresh(last_update) == False):
+                        #    continue
 
                         buy = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_buy'))
                         sell = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_sell'))
@@ -68,10 +69,12 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
                                                          sell)
                             exchange_rate.set_original_sell_rate(get_value_from_json(exchange_rate_data, 'fc_sell'))
                             exchange_rate.set_original_buy_rate(get_value_from_json(exchange_rate_data, 'fc_buy'))
+                            exchange_rate.set_update_date(update_date=last_update)
                             cash_exchange_rates.append(exchange_rate)
 
                         if (transfer_rate is not None):
                             exchange_rate = ExchangeRate(currency.code, rate=transfer_rate)
+                            exchange_rate.set_update_date(update_date=last_update)
                             exchange_rate.set_original_rate(get_value_from_json(exchange_rate_data, 'dd_tt'))
                             transfer_exchange_rates.append(exchange_rate)
 
@@ -104,5 +107,3 @@ def scrape_sharaf_exchange() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.SHARAF_EXCHANGE, err)
     return None
-
-scrape_sharaf_exchange()

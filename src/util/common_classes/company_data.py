@@ -79,13 +79,15 @@ class BankExchangeRateApiUrl:
 
 # https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
+    AL_JARWAN_MONEY_EXCHANGE = 'aljarwanexchange.com'
+    AL_DAHAB_EXCHANGE = 'aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'ahaliaexchange.com'
-    MULTINET_TRUST_EXCHANGE = 'multinettrust.com'
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
     AL_FARDAN_EXCHANGE = 'alfardanexchange.com'
     AL_ROSTAMANI_EXCHANGE = 'alrostamaniexchange.com'  # ?
-    JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'
     AL_FUAD_EXCHANGE = 'alfuadexchange.com'
+    MULTINET_TRUST_EXCHANGE = 'multinettrust.com'
+    JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'
     LULU_EXCHANGE = 'luluexchange.com'  # Does not work
     WALL_STREET_EXCHANGE = 'wallstreet.ae'
     ORIENT_EXCHANGE = 'orientexchange.com'
@@ -97,7 +99,6 @@ class ExchangeBusinessUrl:
     REDHA_AL_ANSARI_EXCHANGE = 'redhaalansari.com'
     NATIONAL_EXCHANGE_CO = 'nationalexc.com'
     INDEX_EXCHANGE = 'indexexchange.ae'
-    AL_JARWAN_MONEY_EXCHANGE = 'aljarwanexchange.com'
     LARI_EXCHANGE = 'lariexchange.com'
     MESRKANLOO_INTERNATIONAL_EXCHANGE = 'mesrkanlooexchange.com'
     DINAR_EXCHANGE = 'dinarexchange.ae'
@@ -105,15 +106,19 @@ class ExchangeBusinessUrl:
     DESERT_EXCHANGE = 'desert-exchange.com'
     ONYX_EXCHANGE = 'onyx-exchange.com'  # Onyx Exchange
     DAR_EXCHANGE = 'darexchange.com'
+    HADI_EXCHANGE = 'hadiexchange.ae'
     OMDA_EXCHANGE = 'Omda Exchange'  # No longer is active  https://www.centralbank.ae/media/hy2pknz3/cbuae-revokes-the-licence-of-omda-exchange-en.pdf
-    SEND_EXCHANGE = 'sendexchange.com'
+    SEND_EXCHANGE = 'sendexchange.com',
+    FEDERAL_EXCHANGE= 'federalexchange.ae'
 
 
 # https://capitalexchange.ae/
 
 
 class ExchangeBusinessNames:
-    MULTINET_TRUST_EXCHANGE = 'Multinet Trust Exchange'
+    AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
+
+    AL_DAHAB_EXCHANGE ='Al Dahab Exchange'
     AL_FUAD_EXCHANGE = 'Al Fuad Exchange'
     AL_ANSARI_EXCHANGE = 'Al Ansari Exchange'  # Diffcult have to scrape each currency one by one https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  https://alfardanexchange.com/foreign-exchange
@@ -132,7 +137,6 @@ class ExchangeBusinessNames:
     REDHA_AL_ANSARI_EXCHANGE = 'Redha Al-Ansari Exchange'  # Does not have any data
     NATIONAL_EXCHANGE_CO = 'National Exchange Co'  # 'https://nationalexc.com/how-it-works/' have only send money data
     INDEX_EXCHANGE = 'Index Exchange'  # https://www.indexexchange.ae/exchange_rates
-    AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
     LARI_EXCHANGE = 'Lari Exchange'  # https://www.lariexchange.com/Forex not easy to scrape , Only provides transfer rates in bulk
     MESRKANLOO_INTERNATIONAL_EXCHANGE = 'Mesrkanloo International Exchange'  # https://mesrkanlooexchange.com/exchange-rate/ takes rates from https://efastlive.com Do not think need it
     DINAR_EXCHANGE = 'Dinar Exchange'  # https: // dinarexchange.ae /
@@ -141,8 +145,10 @@ class ExchangeBusinessNames:
     ##################################
     ONYX_EXCHANGE = 'Onyx Exchange'
     DAR_EXCHANGE = 'Dar Exchange'
-    OMDA_EXCHANGE = 'Omda exchange'
+    OMDA_EXCHANGE = 'Omda Exchange' # inactive
     SEND_EXCHANGE = 'Send Exchange'
+    HADI_EXCHANGE = 'Hadi Exchange'
+    MULTINET_TRUST_EXCHANGE = 'Multinet Trust Exchange'
 
 
 # 'https://sendexchange.com/'
@@ -155,13 +161,20 @@ class ExchangeBusinessNames:
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
-    MULTINET_TRUST_EXCHANGE = 'https://www.multinettrust.com'
+    FEDERAL_EXCHANGE= 'https://www.federalexchange.ae'
+    AL_DAHAB_EXCHANGE = 'https://aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'https://ahaliaexchange.com'
     AL_FUAD_EXCHANGE = 'https://alfuadexchange.com/rates'
+    AL_ANSARI_EXCHANGE = 'https://alansariexchange.com/service/foreign-exchange'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
+    AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE = 'https://alansariexchange.com'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
+    AL_FARDAN_EXCHANGE = 'https://alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
+    AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # + 5 https://3-214-76-133.nip.io/fc/0
+
+    HADI_EXCHANGE = 'https://hadiexchange.ae' #
+    MULTINET_TRUST_EXCHANGE = 'https://www.multinettrust.com'
     JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1 +
     WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2 +
     ORIENT_EXCHANGE = 'orientexchange.com/Orient/CurrencyRates'  # 3  +
-    AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # + 5 https://3-214-76-133.nip.io/fc/0
     DESERT_EXCHANGE = 'https://desert-exchange.com/currency-buy-sell'  # 8 +
     DESERT_EXCHANGE_TRANSFER = 'https://desert-exchange.com/exchange-rates'  # 8 +
     DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange'  # + 6 but transfer seems to show incorrect info
@@ -171,11 +184,8 @@ class ExchangeBusinessExchangeUrl:
     GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
     OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
     # AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
-    AL_FARDAN_EXCHANGE = 'https://alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
     INDEX_EXCHANGE = 'https://www.indexexchange.ae/exchange_rates'  # 6 shows both sell and buy but seems to show transfer incorrectly +
     # AL_ANSARI_EXCHANGE = 'https://app.eexchange.ae/eExchange/login/loadChargesAndRatePage.action'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
-    AL_ANSARI_EXCHANGE = 'https://alansariexchange.com/service/foreign-exchange'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
-    AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE = 'https://alansariexchange.com'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
 
 
 class ExchangeBusinessApiUrl:

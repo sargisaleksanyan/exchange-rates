@@ -103,14 +103,14 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
                     if (transfer_rate_object is not None):
                         transfer_rates.append(transfer_rate_object)
 
-                company_exchange_rates = CompanyExchangeRates(exchange_rates)
-                company_exchange_rates.set_current_scrape_date()
-                company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+    company_exchange_rates = CompanyExchangeRates(exchange_rates)
+    company_exchange_rates.set_current_scrape_date()
+    company_exchange_rates.set_exchange_type(ExchangeType.CASH)
 
-                company_transfer_rates = CompanyExchangeRates(transfer_rates)
-                company_transfer_rates.set_current_scrape_date()
-                company_transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
-                return [company_exchange_rates, company_transfer_rates]
+    company_transfer_rates = CompanyExchangeRates(transfer_rates)
+    company_transfer_rates.set_current_scrape_date()
+    company_transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
+    return [company_exchange_rates, company_transfer_rates]
 
 
 def scrape_dar_exchange() -> ExchangeCompany | None:
@@ -125,4 +125,5 @@ def scrape_dar_exchange() -> ExchangeCompany | None:
         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
     return None
 
+scrape_dar_exchange()
 # TODO need to handle reverse tranfer rates for currenies that does not have sell and buy rates
