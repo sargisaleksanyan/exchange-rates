@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup, PageElement
 from datetime import datetime
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl
+    ExchangeBusinessApiUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
@@ -174,7 +174,7 @@ def scrape_al_fardan() -> ExchangeCompany | None:
         if (company_exchange_rates is None):
             return None
         exchange_company = ExchangeCompany(ExchangeBusinessNames.AL_FARDAN_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.AL_FARDAN_EXCHANGE,
+                                           ExchangeBusinessUrl.AL_FARDAN_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
         exchange_company.set_exchange_rates(company_exchange_rates)

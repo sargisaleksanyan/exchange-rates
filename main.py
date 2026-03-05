@@ -68,4 +68,4 @@ def init_central_bank_update():
 init_central_bank_update()
 init_very_rare_data_update()
 init_non_frequent_data_update()
-#init_frequent_data_update()
+init_frequent_data_update()

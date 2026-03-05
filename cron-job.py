@@ -1,6 +1,6 @@
 import schedule
 import time
-from datetime import  time as date_time
+from datetime import time as date_time
 from zoneinfo import ZoneInfo
 import logging
 from datetime import datetime
@@ -14,9 +14,8 @@ from src.website_scrapers.exchange_business.index import frequent_currency_excha
 
 dbHandler = DatabaseHandler()
 
-#logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 logger = logging.getLogger()
-
 
 
 # UAE timezone
@@ -38,7 +37,6 @@ def is_working_hours() -> bool:
 
 def init_logger():
     logging.basicConfig(filename='logs/info.log', level=logging.INFO)
-
 
 
 def update_company_exchange_data(company_exchange_data: ExchangeCompany):
@@ -82,6 +80,7 @@ def init_frequent_data_update():
             print('Error while updating frequent data ', err)
     logger.info('Scraped frequent data update ' + datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
 
+
 def init_very_rare_data_update():
     if (is_working_hours() == False):
         return
@@ -96,8 +95,14 @@ def init_very_rare_data_update():
         except Exception as err:
             print('Error while updating very rear data ', err)
 
+
 def init_central_bank_update():
-    scrape_central_bank()
+    try:
+        central_bank_data = scrape_central_bank()
+        update_company_exchange_data(central_bank_data)
+    except Exception as err:
+        print('Error while updating central bank data ', err)
+
 
 init_logger()
 # schedule.every(5).hour.do(init_non_frequent_data_update())
@@ -106,7 +111,6 @@ schedule.every(5).hours.do(init_non_frequent_data_update)
 schedule.every(8).hours.do(init_very_rare_data_update)
 schedule.every(4).hours.do(init_central_bank_update)
 schedule.every(4).hours.do(init_frequent_data_update)
-
 
 while 1:
     # print('IIIII')

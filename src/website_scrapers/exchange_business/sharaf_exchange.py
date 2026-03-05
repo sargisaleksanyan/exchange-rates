@@ -104,3 +104,5 @@ def scrape_sharaf_exchange() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.SHARAF_EXCHANGE, err)
     return None
+
+scrape_sharaf_exchange()

@@ -1,3 +1,5 @@
+from src.util.common_classes.company_data import ExchangeBusinessUrl
+
 business_logos = [
     {
         "url": "adcb.com",
@@ -7,7 +9,7 @@ business_logos = [
     {
         "url": "adib.com",
         "business_type": "bank",
-        #"logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png"
+        # "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png"
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg"
     },
     {
@@ -114,5 +116,27 @@ business_logos = [
         "url": "desert-exchange.com",
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/desert-exchange_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.AL_FARDAN_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alfardanexchange_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.SHARAF_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/sharafexchange_ae.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.GCC_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/gccexchange_com.svg"
+    },
+
+    {
+        "url": ExchangeBusinessUrl.MULTINET_TRUST_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/multinettrust_com.svg"
     }
+
 ]

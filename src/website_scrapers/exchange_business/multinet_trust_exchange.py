@@ -3,7 +3,7 @@ from typing import List
 
 from bs4 import BeautifulSoup, PageElement
 
-from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl
+from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
@@ -146,7 +146,7 @@ def scrape_multinet_trust() -> ExchangeCompany | None:
         if (company_exchange_rates is None):
             return None
         exchange_company = ExchangeCompany(ExchangeBusinessNames.MULTINET_TRUST_EXCHANGE,
-                                           ExchangeBusinessExchangeUrl.MULTINET_TRUST_EXCHANGE,
+                                           ExchangeBusinessUrl.MULTINET_TRUST_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
         exchange_company.set_exchange_rates(company_exchange_rates)
