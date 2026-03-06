@@ -28,7 +28,7 @@ def scrape_al_dahab_exchange_rates() -> CompanyExchangeRates | None:
                     continue
                 rate = convert_to_float(values[1].strip())
                 if rate is not None:
-                    transfer_rate = ExchangeRate(currency.code, rate)
+                    transfer_rate = ExchangeRate(currency.code, rate=rate)
                     transfer_rates.append(transfer_rate)
 
     company_exchange_rates = CompanyExchangeRates(transfer_rates)
@@ -54,4 +54,3 @@ def scrape_al_dahab_exchange() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_DAHAB_EXCHANGE, err)
     return None
-

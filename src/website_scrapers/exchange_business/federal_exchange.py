@@ -28,7 +28,7 @@ def scrape_federal_exchange_rates() -> CompanyExchangeRates | None:
                     continue
                 rate = convert_to_float(values[0].strip())
                 if rate is not None:
-                    transfer_rate = ExchangeRate(currency.code, rate)
+                    transfer_rate = ExchangeRate(currency.code, rate=rate)
                     transfer_rates.append(transfer_rate)
 
     company_exchange_rates = CompanyExchangeRates(transfer_rates)

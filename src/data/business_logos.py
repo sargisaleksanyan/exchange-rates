@@ -142,5 +142,27 @@ business_logos = [
         "url": ExchangeBusinessUrl.AL_FUAD_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/alfuadexchange_com.svg"
+    },
+
+    {
+        "url": ExchangeBusinessUrl.AL_DAHAB_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/al_dahab_exchange.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.FEDERAL_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/federalexchange_ae.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.MESRKANLOO_INTERNATIONAL_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/mesrkanlooexchange_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.HADI_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/hadiexchange_ae.svg"
     }
+
 ]
