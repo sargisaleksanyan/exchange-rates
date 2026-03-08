@@ -94,3 +94,4 @@ def scrape_reems_exchange() -> ExchangeCompany | None:
     return None
 
 
+scrape_reems_exchange()

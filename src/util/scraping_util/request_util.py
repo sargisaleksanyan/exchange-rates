@@ -8,8 +8,9 @@ from src.util.tool.proxy import get_random_proxy_for_request
 MAX_REQUEST = 5
 
 
-def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=None) -> BeautifulSoup | None:
-    content = make_get_request_with_proxy(url, request_count, given_headers)
+def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=None,
+                                      verify=True) -> BeautifulSoup | None:
+    content = make_get_request_with_proxy(url, request_count, given_headers, verify)
     if (content != None):
         try:
             return BeautifulSoup(content, 'html.parser')
@@ -19,7 +20,7 @@ def make_get_request_with_parsed_html(url: str, request_count=0, given_headers=N
     return None
 
 
-def make_get_request_with_proxy(url: str, request_count=0, given_headers=None):
+def make_get_request_with_proxy(url: str, request_count=0, given_headers=None, verify=True):
     headers = {
         'user-agent': UserAgent().chrome,
         'timeout': '10',
@@ -32,7 +33,7 @@ def make_get_request_with_proxy(url: str, request_count=0, given_headers=None):
     try:
         proxies = get_random_proxy_for_request()
 
-        response = requests.get(url, headers=headers, proxies=proxies, timeout=20)
+        response = requests.get(url, headers=headers, proxies=proxies, timeout=20, verify=verify)
         content = response.content
         response.close()
         return content

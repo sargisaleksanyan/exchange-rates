@@ -150,7 +150,6 @@ currency_name_to_code = {
     'zambian kwacha': 'ZMW',
     'south africa rand': 'ZAR',
     'azerbaijan manat': 'AZN',
-    'azerbaijan manat': 'AZN',
     'bulgarian lev': 'BGN',
     'iraqi dinar': 'IQD',
     'israeli new shekel': 'ILS',

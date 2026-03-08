@@ -42,9 +42,12 @@ def get_table_headers(page_element: PageElement) -> dict:
 
 def extract_update_date(update_date_element):
     if update_date_element is not None:
-        value = update_date_element.get('value')
-        dt = datetime.strptime(value, "%d-%m-%Y %H:%M")
-        return dt
+        try :
+           value = update_date_element.get('value')
+           dt = datetime.strptime(value, "%d-%m-%Y %H:%M")
+           return dt
+        except Exception as err:
+            print('Error occurred while converting date for ', ExchangeBusinessNames.DESERT_EXCHANGE, err)
     return None
 
 

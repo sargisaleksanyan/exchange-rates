@@ -1,6 +1,7 @@
 from src.website_scrapers.exchange_business.al_ahalia_exchange import scrape_al_ahalia_exchange
 from src.website_scrapers.exchange_business.al_ansari_exchange import scrape_al_ansari_exchange
 from src.website_scrapers.exchange_business.al_dahab_exchange import scrape_al_dahab_exchange
+from src.website_scrapers.exchange_business.al_dhahery_exchange import scrape_al_dhahery_exchange
 from src.website_scrapers.exchange_business.al_fardan_exchange import scrape_al_fardan
 from src.website_scrapers.exchange_business.al_fuade_exchange import scrape_al_fuade
 from src.website_scrapers.exchange_business.al_ghurair import scrape_al_ghurair
@@ -11,6 +12,8 @@ from src.website_scrapers.exchange_business.gcc_exchange import scrape_gcc_excha
 from src.website_scrapers.exchange_business.hadi_exchange import scrape_hadi_exchange
 from src.website_scrapers.exchange_business.index_exchange import scrape_index_exchange
 from src.website_scrapers.exchange_business.joyalukkas import scrape_joyalukkas_exchange
+from src.website_scrapers.exchange_business.lari_exchange import scrape_lari_exchange
+from src.website_scrapers.exchange_business.lulu_exchange import scrape_lulu_exchange
 from src.website_scrapers.exchange_business.mesrkanloo_International_exchange import \
     scrape_mesrkanloo_international_exchange
 from src.website_scrapers.exchange_business.multinet_trust_exchange import scrape_multinet_trust
@@ -39,5 +42,8 @@ frequent_currency_exchange_update = [  # scrape_wall_street,removed wall street
     scrape_sharaf_exchange,
     scrape_reems_exchange,
     scrape_hadi_exchange,
-    scrape_federal_exchange
+    scrape_federal_exchange,
+    scrape_lari_exchange,
+    scrape_lulu_exchange,
+    scrape_al_dhahery_exchange
 ]

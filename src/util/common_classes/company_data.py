@@ -15,14 +15,13 @@ class BankName:
 
     BANK_OF_SHARJAH = 'Bank of Sharjah'  # can be scraped  Have anti scraping system
 
-    AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com
+    AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com No info was found
     AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
     RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank'  # Did not find any data
     EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank'  # investment bank , does mot have exchage data
     COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International'  # no info was found
     MASHREQ_BANK = 'Mashreq Bank'  # No currency data was found
     UNITED_ARAB_BANK = 'United Arab Bank'  # No information was found
-    AL_HILAL_BANK = 'AL_HILAL_BANK'  # No info was found
 
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'BNP Paribas Middle East and; Africa UAE'
@@ -80,6 +79,7 @@ class BankExchangeRateApiUrl:
 # https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
     AL_JARWAN_MONEY_EXCHANGE = 'aljarwanexchange.com'
+    AL_DHAHERY_EXCHANGE ='aldhaheryexchange.com'
     AL_DAHAB_EXCHANGE = 'aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'ahaliaexchange.com'
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
@@ -108,8 +108,7 @@ class ExchangeBusinessUrl:
     DAR_EXCHANGE = 'darexchange.com'
     HADI_EXCHANGE = 'hadiexchange.ae'
     OMDA_EXCHANGE = 'Omda Exchange'  # No longer is active  https://www.centralbank.ae/media/hy2pknz3/cbuae-revokes-the-licence-of-omda-exchange-en.pdf
-    SEND_EXCHANGE = 'sendexchange.com',
-    FEDERAL_EXCHANGE= 'federalexchange.ae'
+    SEND_EXCHANGE = 'sendexchange.com'
 
 
 # https://capitalexchange.ae/
@@ -117,22 +116,22 @@ class ExchangeBusinessUrl:
 
 class ExchangeBusinessNames:
     AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
-
+    AL_GHURAIR_EXCHANGE = 'Al Ghurair Exchange'  # https://3-214-76-133.nip.io/fc/0
     AL_DAHAB_EXCHANGE ='Al Dahab Exchange'
+    AL_DHAHERY_EXCHANGE ='Al Dhahery Exchange'
     AL_FUAD_EXCHANGE = 'Al Fuad Exchange'
     AL_ANSARI_EXCHANGE = 'Al Ansari Exchange'  # Diffcult have to scrape each currency one by one https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  https://alfardanexchange.com/foreign-exchange
     AL_ROSTAMANI_EXCHANGE = 'Al Rostamani Exchange'  # does not work at this moment
     JOYALUKKAS_EXCHANGE = 'Joyalukkas Exchange'  # Seems to be working https://admin.joyalukkasexchange.com/api/country-currency-code https://admin.joyalukkasexchange.com/api/country-currency-code
     #                     https://admin.joyalukkasexchange.com/api/currency-converter?region=2&amount=1&currency_code=USD&rate_type=TT&amount_type=LCY for more detailed need to request one by one
-    LULU_EXCHANGE = 'Lulu Exchange'  # Does not work
+    LULU_EXCHANGE = 'Lulu Exchange'  #
     WALL_STREET_EXCHANGE = 'Wall Street Exchange'  # https://www.wallstreet.ae/personal/foreign-exchange api https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true
     AL_AHALIA_EXCHANGE = 'Al Ahalia Exchange'
     ORIENT_EXCHANGE = 'Orient Exchange'  # https://www.orientexchange.com/Orient/GetSellRates                                 # https: // www.orientexchange.com / Orient / CurrencyRates
-    AL_GHURAIR_EXCHANGE = 'Al Ghurair Exchange'  # https://3-214-76-133.nip.io/fc/0
     SHARAF_EXCHANGE = 'Sharaf Exchange'  # https://sharafexchange.ae/engine/wp-json/v1/currency-exchange-table-rates?lang=en
     GCC_EXCHANGE = 'GCC Exchange'  # https://www.gccexchange.com/media/index.php/exchangerate/getexchangerate - tansfers only
-    FEDERAL_EXCHANGE = 'Federal Exchange',  # 'https://www.federalexchange.ae' shows tranfers rates
+    FEDERAL_EXCHANGE = 'Federal Exchange'  # 'https://www.federalexchange.ae' shows tranfers rates
     TRAVELEXAE = 'Travelexae'  # https://api.travelex.net/salt/config/multi?callback=jQuery111008147785010350708_1758883151347&key=Travelex&site=%2Fae&options=abhikzl&_=1758883151348 only sell rates
     REDHA_AL_ANSARI_EXCHANGE = 'Redha Al-Ansari Exchange'  # Does not have any data
     NATIONAL_EXCHANGE_CO = 'National Exchange Co'  # 'https://nationalexc.com/how-it-works/' have only send money data
@@ -161,10 +160,10 @@ class ExchangeBusinessNames:
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
-    FEDERAL_EXCHANGE= 'https://www.federalexchange.ae'
     AL_DAHAB_EXCHANGE = 'https://aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'https://ahaliaexchange.com'
     AL_FUAD_EXCHANGE = 'https://alfuadexchange.com/rates'
+    AL_DHAHERY_EXCHANGE = 'https://aldhaheryexchange.com'
     AL_ANSARI_EXCHANGE = 'https://alansariexchange.com/service/foreign-exchange'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
     AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE = 'https://alansariexchange.com'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'https://alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
@@ -180,7 +179,8 @@ class ExchangeBusinessExchangeUrl:
     DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange'  # + 6 but transfer seems to show incorrect info
     REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7 +
     SEND_EXCHANGE = 'https://sendexchange.com'  # +
-
+    FEDERAL_EXCHANGE= 'https://www.federalexchange.ae'
+    LARI_EXCHANGE = 'https://lariexchange.com' # https://lariexchange.com/ExchangeRates
     GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
     OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
     # AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
@@ -204,3 +204,4 @@ class ExchangeBusinessApiUrl:
     AL_FARDANE_EXCHANGE = 'https://alfardanexchange.com/currency_rate_list'
     # MESRKANLOO_INTERNATIONAL_EXCHANGE https://efastlive.com/members/WebRatesV3.aspx?uid=mesrkanloo&cur=AED&manual=1&mode=0&take=28&hidett=1
     MESRKANLOO_INTERNATIONAL_EXCHANGE = 'https://efastlive.com/members/WebRatesV3.aspx?uid=mesrkanloo&cur=AED&manual=1&mode=0&hidett=1'
+    AL_DHAHERY_EXCHANGE = 'https://www.efastlive.com/Members/WebRatesV3.aspx?uid=aldhaherydxb1&cur=AED&hidett=1'
