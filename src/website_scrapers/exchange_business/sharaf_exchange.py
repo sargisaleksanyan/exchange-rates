@@ -54,7 +54,7 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
                     if currency is not None:
                         last_update = convert_update_date(get_value_from_json(exchange_rate_data, 'last_update'))
 
-                        # if (last_update is None):
+                       # if (last_update is None):
                         #    continue
                         # last_update = convert_update_date(last_update)
                         # if (is_update_date_fresh(last_update) == False):
@@ -62,7 +62,7 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
 
                         buy = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_buy'))
                         sell = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'fc_sell'))
-                        transfer_rate = convert_to_reverse_float(get_value_from_json(exchange_rate_data, 'dd_tt'))
+                        transfer_rate = convert_to_float(get_value_from_json(exchange_rate_data, 'dd_tt'))
 
                         if (buy is not None and sell is not None):
                             exchange_rate = ExchangeRate(currency.code, buy,
@@ -75,7 +75,7 @@ def get_rates_from_sharaf_exchange() -> List[CompanyExchangeRates] | None:
                         if (transfer_rate is not None):
                             exchange_rate = ExchangeRate(currency.code, rate=transfer_rate)
                             exchange_rate.set_update_date(update_date=last_update)
-                            exchange_rate.set_original_rate(get_value_from_json(exchange_rate_data, 'dd_tt'))
+                            #exchange_rate.set_original_rate(get_value_from_json(exchange_rate_data, 'dd_tt'))
                             transfer_exchange_rates.append(exchange_rate)
 
                 company_cash_exchange_rate = CompanyExchangeRates(cash_exchange_rates)

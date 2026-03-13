@@ -8,23 +8,23 @@ from src.util.tool.string_util import convert_to_float
 
 
 #
-def scrape_lulu_exchange_rates() -> CompanyExchangeRates | None:
+def scrape_universal_exchange_rates() -> CompanyExchangeRates | None:
     header = {
-        'referer': ExchangeBusinessExchangeUrl.LULU_EXCHANGE
+        'referer': ExchangeBusinessExchangeUrl.UNIVERSAL_EXCHANGE
     }
 
-    response = make_get_request_with_proxy(ExchangeBusinessApiUrl.LULU_EXCHANGE, given_headers=header)
+    response = make_get_request_with_proxy(ExchangeBusinessApiUrl.UNIVERSAL_EXCHANGE, given_headers=header)
 
     if response is None:
         return None
     json = parse_string_to_json(response)
-    rates = get_value_from_json_by_queue(json, 'rates')
+    rates = get_value_from_json(json, 'result')
     transfer_rates = []
 
     if rates is not None and len(rates) > 0:
         for rate in rates:
-            currency_value = get_value_from_json(rate, 'toccy')
-            rate_value = get_value_from_json(rate, 'rate')
+            currency_value = get_value_from_json(rate, 'currency')
+            rate_value = get_value_from_json(rate, 'transferRate')
 
             if (currency_value is not None and rate_value is not None):
                 currency = Currency.get_currency(currency_value)
@@ -44,19 +44,19 @@ def scrape_lulu_exchange_rates() -> CompanyExchangeRates | None:
 
 
 # Currently scraped only transfer rates but it also has sell and buy rates
-def scrape_lulu_exchange() -> ExchangeCompany | None:
+def scrape_universal_exchange() -> ExchangeCompany | None:
     try:
-        company_exchange_rates = scrape_lulu_exchange_rates()
+        company_exchange_rates = scrape_universal_exchange_rates()
 
         if company_exchange_rates is None:
             return None
 
-        exchange_company = ExchangeCompany(ExchangeBusinessNames.LULU_EXCHANGE,
-                                           ExchangeBusinessUrl.LULU_EXCHANGE,
+        exchange_company = ExchangeCompany(ExchangeBusinessNames.UNIVERSAL_EXCHANGE,
+                                           ExchangeBusinessUrl.UNIVERSAL_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
         exchange_company.add_exchange_rate(company_exchange_rates)
         return exchange_company
     except Exception as err:
         # TODO log this
-        print('Error while scraping ', ExchangeBusinessNames.LULU_EXCHANGE, err)
+        print('Error while scraping ', ExchangeBusinessNames.UNIVERSAL_EXCHANGE, err)
     return None

@@ -101,8 +101,8 @@ def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
                     if (transfer_rate is not None):
                         transfer_rate_number = convert_to_float(transfer_rate)
                         if transfer_rate_number is not None and transfer_rate_number > 0:
-                            exchange_rate = ExchangeRate(currency.code, rate=convert_to_reverse_float(transfer_rate))
-                            exchange_rate.set_original_rate(transfer_rate_number)
+                            exchange_rate = ExchangeRate(currency.code, rate=transfer_rate_number)
+                            #exchange_rate.set_original_rate(transfer_rate_number)
                             exchange_rates.append(exchange_rate)
 
                 elif BUY_RATE_HEAD in table_headers:

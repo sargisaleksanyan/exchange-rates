@@ -140,9 +140,10 @@ def get_transfer_rate(currency_name, currency_code_number, aed_to_code, request_
     if transfer_rate_text is None:
         return None
 
-    reverse_rate = convert_to_reverse_float(transfer_rate_text)
-    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, rate=reverse_rate)
-    exchange_rate.set_original_rate(convert_to_float(transfer_rate_text))
+    # reverse_rate = convert_to_reverse_float(transfer_rate_text)
+    rate = convert_to_float(transfer_rate_text)
+    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, rate=rate)
+    # exchange_rate.set_original_rate(convert_to_float(transfer_rate_text))
     return exchange_rate
 
 

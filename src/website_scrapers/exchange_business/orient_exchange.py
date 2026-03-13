@@ -89,8 +89,8 @@ def get_rates_from_orient_exchange() -> List[CompanyExchangeRates]:
         currency_code = get_value_from_json(transfer_rate_raw_data, 'CurrencyCode')
         if currency_code is not None and Currency.get_currency(currency_code) is not None:
             currency = Currency.get_currency(currency_code)
-            exchange_rate = ExchangeRate(currency.code, rate=get_rate_from_string(transfer_rate_raw_data))
-            exchange_rate.set_original_rate(get_original_rate_from_string(transfer_rate_raw_data))
+            exchange_rate = ExchangeRate(currency.code, rate=get_original_rate_from_string(transfer_rate_raw_data))
+            # exchange_rate.set_original_rate(get_original_rate_from_string(transfer_rate_raw_data))
             exchange_rate.set_update_date(get_update_date(transfer_rate_raw_data))
             transfer_rates.append(exchange_rate)
 

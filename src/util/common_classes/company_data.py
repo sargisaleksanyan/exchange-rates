@@ -1,4 +1,5 @@
 class BankName:
+    INVEST_BANK = 'Invest Bank'
     FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank'  # +
     EMIRATES_BANK = 'Emirates NBD'  # +
     ABU_DHABI_COMMERCIAL_BANK = 'Abu Dhabi Commercial Bank'  # +
@@ -43,8 +44,8 @@ class BankUrl:
     COMMERCIAL_BANK_OF_DUBAI = 'cbd.ae'  # +
     SHARJAH_ISLAMIC_BANK = 'sib.ae'
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'nbq.ae'
-    CENTRAL_BANK = 'https://www.centralbank.ae'
-    # International
+    INVEST_BANK = 'inb.ae'
+    CENTRAL_BANK = 'centralbank.ae'
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'bnpparibas.com'
 
 
@@ -64,7 +65,7 @@ class BankExchangeRateUrl:
     SHARJAH_ISLAMIC_BANK = 'https://www.sib.ae/en/exchange-rate-list'
     AJMAN_BANK = 'https://digitalbanking.ajmanbank.ae/ib-retail-web/user/exchangeRatesAndCurrencyConverter'
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'https://nbq.ae/general/fcy-rate-list'
-
+    INVEST_BANK = 'https://www.inb.ae/rates/fx'
     # International
     BNP_PARIBAS_MIDDLE_EAST_AND_AFRICA_AUE = 'https://mea.bnpparibas.com/en/live-fx-rates/live-fx-rates-auh'
 
@@ -78,8 +79,9 @@ class BankExchangeRateApiUrl:
 
 # https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
+    UNIVERSAL_EXCHANGE = 'universalexchange.net'
     AL_JARWAN_MONEY_EXCHANGE = 'aljarwanexchange.com'
-    AL_DHAHERY_EXCHANGE ='aldhaheryexchange.com'
+    AL_DHAHERY_EXCHANGE = 'aldhaheryexchange.com'
     AL_DAHAB_EXCHANGE = 'aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'ahaliaexchange.com'
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
@@ -117,8 +119,8 @@ class ExchangeBusinessUrl:
 class ExchangeBusinessNames:
     AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
     AL_GHURAIR_EXCHANGE = 'Al Ghurair Exchange'  # https://3-214-76-133.nip.io/fc/0
-    AL_DAHAB_EXCHANGE ='Al Dahab Exchange'
-    AL_DHAHERY_EXCHANGE ='Al Dhahery Exchange'
+    AL_DAHAB_EXCHANGE = 'Al Dahab Exchange'
+    AL_DHAHERY_EXCHANGE = 'Al Dhahery Exchange'
     AL_FUAD_EXCHANGE = 'Al Fuad Exchange'
     AL_ANSARI_EXCHANGE = 'Al Ansari Exchange'  # Diffcult have to scrape each currency one by one https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'Al Fardan Exchange'  # https://alfardanexchange.com/  https://alfardanexchange.com/foreign-exchange
@@ -126,6 +128,7 @@ class ExchangeBusinessNames:
     JOYALUKKAS_EXCHANGE = 'Joyalukkas Exchange'  # Seems to be working https://admin.joyalukkasexchange.com/api/country-currency-code https://admin.joyalukkasexchange.com/api/country-currency-code
     #                     https://admin.joyalukkasexchange.com/api/currency-converter?region=2&amount=1&currency_code=USD&rate_type=TT&amount_type=LCY for more detailed need to request one by one
     LULU_EXCHANGE = 'Lulu Exchange'  #
+    UNIVERSAL_EXCHANGE = 'Universal Exchange'  #
     WALL_STREET_EXCHANGE = 'Wall Street Exchange'  # https://www.wallstreet.ae/personal/foreign-exchange api https://www.wallstreet.ae/index.php/buy-sell?mode=buy_rate&isAjax=true
     AL_AHALIA_EXCHANGE = 'Al Ahalia Exchange'
     ORIENT_EXCHANGE = 'Orient Exchange'  # https://www.orientexchange.com/Orient/GetSellRates                                 # https: // www.orientexchange.com / Orient / CurrencyRates
@@ -144,7 +147,7 @@ class ExchangeBusinessNames:
     ##################################
     ONYX_EXCHANGE = 'Onyx Exchange'
     DAR_EXCHANGE = 'Dar Exchange'
-    OMDA_EXCHANGE = 'Omda Exchange' # inactive
+    OMDA_EXCHANGE = 'Omda Exchange'  # inactive
     SEND_EXCHANGE = 'Send Exchange'
     HADI_EXCHANGE = 'Hadi Exchange'
     MULTINET_TRUST_EXCHANGE = 'Multinet Trust Exchange'
@@ -160,6 +163,7 @@ class ExchangeBusinessNames:
 
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
+    LULU_EXCHANGE = 'https://luluexchange.com'
     AL_DAHAB_EXCHANGE = 'https://aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'https://ahaliaexchange.com'
     AL_FUAD_EXCHANGE = 'https://alfuadexchange.com/rates'
@@ -168,8 +172,8 @@ class ExchangeBusinessExchangeUrl:
     AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE = 'https://alansariexchange.com'  # ? 5 Transfer Rates only for each currency have to get once by once https://alansariexchange.com/service/foreign-exchange/
     AL_FARDAN_EXCHANGE = 'https://alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
     AL_GHURAIR_EXCHANGE = 'alghurairexchange.com'  # + 5 https://3-214-76-133.nip.io/fc/0
-
-    HADI_EXCHANGE = 'https://hadiexchange.ae' #
+    UNIVERSAL_EXCHANGE = 'https://www.universalexchange.net/transfer-rates'
+    HADI_EXCHANGE = 'https://hadiexchange.ae'  #
     MULTINET_TRUST_EXCHANGE = 'https://www.multinettrust.com'
     JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'  # 1 +
     WALL_STREET_EXCHANGE = 'wallstreet.ae/personal/foreign-exchange'  # 2 +
@@ -179,8 +183,8 @@ class ExchangeBusinessExchangeUrl:
     DAR_EXCHANGE = 'https://darexchange.com/foreign-currencies-exchange'  # + 6 but transfer seems to show incorrect info
     REEMS_EXCHANGE = 'https://reems.ae/exchange-rates'  # 7 +
     SEND_EXCHANGE = 'https://sendexchange.com'  # +
-    FEDERAL_EXCHANGE= 'https://www.federalexchange.ae'
-    LARI_EXCHANGE = 'https://lariexchange.com' # https://lariexchange.com/ExchangeRates
+    FEDERAL_EXCHANGE = 'https://www.federalexchange.ae'
+    LARI_EXCHANGE = 'https://lariexchange.com'  # https://lariexchange.com/ExchangeRates
     GCC_EXCHANGE = 'https://www.gccexchange.com/uae-currency-exchange-rates'  # only tranfers
     OMDA_EXCHANGE = 'https://omdaexchange.com/service/foreign-currency-exchange/'  # shows very old data
     # AL_FARDAN_EXCHANGE = 'alfardanexchange.com/foreign-exchange'  # 4 Rates are in reverse order # seems to have bug shows incorrect or negative rates need to get one by one
@@ -189,6 +193,8 @@ class ExchangeBusinessExchangeUrl:
 
 
 class ExchangeBusinessApiUrl:
+    UNIVERSAL_EXCHANGE = 'https://zlkh0802.apicdn.sanity.io/v2021-10-21/data/query/production?query=*%5B_type+%3D%3D+%22exchange-rates%22%5D+%7B%0A++++id%2C%0A++country%2C%0A++currency%2C%0A++transferRate%7D&returnQuery=false'
+    LULU_EXCHANGE = 'https://lieservices.luluone.com:9443/liveccyrates?payload=%7B%22activityType%22%3A%22rates.get%22%2C%22aglcid%22%3A784278%2C%22instype%22%3A%22LR%22%7D'
     # JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'
     GCC_EXCHANGE = 'https://www.gccexchange.com/media/index.php/exchangerate/getexchangerate'
     JOYALUKKAS_EXCHANGE_ROOT_API = 'https://jaapi.shahidrafi.online/api'

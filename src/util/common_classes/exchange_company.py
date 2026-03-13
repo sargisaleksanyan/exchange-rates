@@ -145,6 +145,8 @@ def get_currency_code_by_name(currency_name):
 
         if currency is not None:
             return currency.code
+    if currency_name is not None and currency_name !='':
+       print('Currency name has not been found ', currency_name)
     return None
 
 

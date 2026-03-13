@@ -21,6 +21,7 @@ from src.website_scrapers.exchange_business.orient_exchange import scrape_orient
 from src.website_scrapers.exchange_business.reems import scrape_reems_exchange
 from src.website_scrapers.exchange_business.send_exchange import scrape_send_exchange
 from src.website_scrapers.exchange_business.sharaf_exchange import scrape_sharaf_exchange
+from src.website_scrapers.exchange_business.universal_exchange import scrape_universal_exchange
 
 very_rearly_exchange_update = [scrape_joyalukkas_exchange, scrape_al_ansari_exchange]
 non_frequent_currency_exchange_update = [scrape_orient_exchange, scrape_al_fardan
@@ -45,5 +46,6 @@ frequent_currency_exchange_update = [  # scrape_wall_street,removed wall street
     scrape_federal_exchange,
     scrape_lari_exchange,
     scrape_lulu_exchange,
+    scrape_universal_exchange,
     scrape_al_dhahery_exchange
 ]

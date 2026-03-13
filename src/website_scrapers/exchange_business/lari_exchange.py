@@ -1,7 +1,6 @@
 #
 from datetime import datetime
 
-# exchange-mny-tab-content
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessUrl, ExchangeBusinessExchangeUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, CompanyExchangeRates, \
     Currency, ExchangeRate, ExchangeType
@@ -12,6 +11,7 @@ from src.util.tool.string_util import convert_to_float
 def extract_update_date(update_date_text):
     if update_date_text is not None:
         try:
+            update_date_text = update_date_text.replace("\r", "").replace("\n", "").replace("\r\n", "").strip()
             dt = datetime.strptime(update_date_text, "%d/%m/%Y %H:%M")
             return dt
         except Exception as err:
@@ -61,7 +61,7 @@ def scrape_lari_exchange_rates() -> CompanyExchangeRates | None:
                             continue
                         rate = convert_to_float(rate_text.strip())
                         if rate is not None:
-                            transfer_rate = ExchangeRate(currency.code, rate)
+                            transfer_rate = ExchangeRate(currency.code, rate=rate)
                             transfer_rates.append(transfer_rate)
 
     company_exchange_rates = CompanyExchangeRates(transfer_rates)
@@ -89,3 +89,5 @@ def scrape_lari_exchange() -> ExchangeCompany | None:
         print('Error while scraping ', ExchangeBusinessNames.LARI_EXCHANGE, err)
     return None
 
+
+scrape_lari_exchange()

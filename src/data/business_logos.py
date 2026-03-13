@@ -1,4 +1,4 @@
-from src.util.common_classes.company_data import ExchangeBusinessUrl
+from src.util.common_classes.company_data import ExchangeBusinessUrl, BankUrl
 
 business_logos = [
     {
@@ -6,6 +6,12 @@ business_logos = [
         "business_type": "bank",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adcb_com.ico,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adcb_com.png"
     },
+    {
+        "url": BankUrl.INVEST_BANK,
+        "business_type": "bank",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/inb_ae.svg"
+    },
+
     {
         "url": "adib.com",
         "business_type": "bank",
@@ -163,6 +169,16 @@ business_logos = [
         "url": ExchangeBusinessUrl.HADI_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/hadiexchange_ae.svg"
-    }
+    },
 
+    {
+        "url": ExchangeBusinessUrl.LULU_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lulu_exchange.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.AL_AHALIA_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/ahaliaexchange_com.svg"
+    }
 ]

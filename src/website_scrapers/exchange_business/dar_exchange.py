@@ -94,8 +94,8 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
                     transfer_rate_object = None
 
                     if original_rate is not None and buy is not None and sell is not None and buy < 1 and sell < 1 and original_rate / sell > 2:
-                        transfer_rate_object = ExchangeRate(currency.code, rate=convert_to_reverse_float(transfer_rate))
-                        transfer_rate_object.set_original_rate(original_rate)
+                        transfer_rate_object = ExchangeRate(currency.code, rate=convert_to_float(transfer_rate))
+                        # transfer_rate_object.set_original_rate(original_rate)
 
                     elif original_rate is not None:
                         transfer_rate_object = ExchangeRate(currency.code, rate=original_rate)

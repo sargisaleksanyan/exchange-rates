@@ -97,7 +97,9 @@ currency_codes = [
   { "code":"UZS","name":"Uzbekistani Sum","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/uzs.svg","rank":96 },
   { "code":"VES","name":"Venezuelan Bolívar Soberano","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/ves.svg","rank":97 },
   { "code":"VND","name":"Vietnamese Dong","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/vnd.svg","rank":98 },
-  { "code":"AED","name":"United Arab Emirates Dirham","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/aed.svg","rank":100 }
+  { "code":"AED","name":"United Arab Emirates Dirham","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/aed.svg","rank":100 },
+  { "code":"YER","name":"Yemeni rial","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/yer.svg","rank":101 },
+  { "code":"SDG","name":"Sudanese pound","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/yer.sdg","rank":102 }
 ];
 
 
@@ -270,8 +272,13 @@ currency_codes_old = [
     },
     {
         "code": "CNY",
-        "name": "Chinese Yuan Renminbi",
+        "name": "Chinese Yuan",
         "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/cny.svg"
+    },
+    {
+        "code": "CNH",
+        "name": "Chinese Yuan Renminbi",
+        "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/cnh.svg"
     },
     {
         "code": "ETB",
