@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup, PageElement
 
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
-    CompanyExchangeRates
+    CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float, get_element_text
 
@@ -121,6 +121,8 @@ def get_rates_from_dubai_islamic_bank():
 
             if (update_date is not None):
                 company_exchange_rates.set_update_date(update_date)
+
+            company_exchange_rates.set_exchange_type(ExchangeType.CASH) #TODO from there website it is not clear if exchange rate is for transfer or cash
             return company_exchange_rates
 
     return None
@@ -143,4 +145,3 @@ def scrape_dubai_islamic_bank() -> ExchangeCompany | None:
 # return None
 
 
-scrape_dubai_islamic_bank()

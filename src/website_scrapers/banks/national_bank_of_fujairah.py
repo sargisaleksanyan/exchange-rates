@@ -4,13 +4,15 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, CompanyExchangeRates, \
-    ExchangeRate, Currency
+    ExchangeRate, Currency, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
 from src.util.tool.string_util import convert_to_float
 
 WINDOWS_CURRENCY_DATA = 'window.currencyData ='
 
+
+# TODO it has two rates and not clear which rate is who ?
 
 # TODO
 def parse_json_to_exchange_rates(json_string) -> List[ExchangeRate] | None:
@@ -39,6 +41,7 @@ def parse_json_to_exchange_rates(json_string) -> List[ExchangeRate] | None:
 
 
 def get_rates_from_national_bank_of_fujairah() -> CompanyExchangeRates | None:
+    # https://eidavg.nbf.ae/en/tools-and-support/foreign-exchange-rates
     content = get_website_content_by_browser(BankExchangeRateUrl.NATIONAL_BANK_OF_FUJARAH, wait_time=10)
 
     if content is not None:
@@ -59,6 +62,7 @@ def get_rates_from_national_bank_of_fujairah() -> CompanyExchangeRates | None:
                     if exchange_rates is not None:
                         company_exchange_rates = CompanyExchangeRates(exchange_rates)
                         company_exchange_rates.set_current_scrape_date()
+                        company_exchange_rates.set_exchange_type(ExchangeType.CASH)  #
                         return company_exchange_rates
                     # todo add update date
 

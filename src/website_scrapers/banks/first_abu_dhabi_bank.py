@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeRate, Currency, CompanyExchangeRates, ExchangeCompany, \
-    ExchangeCompanyType
+    ExchangeCompanyType, ExchangeType
 from src.util.tool.json_util import parse_string_to_json
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
@@ -79,12 +79,11 @@ def parse_currency_data(currency_json_data) -> List[ExchangeRate]:
                         exchangerate = ExchangeRate(currency.code, convert_to_float(buying), convert_to_float(selling))
                         exchangerates.append(exchangerate)
 
-
     return exchangerates
     # TODO write to log file
 
 
-# TODO
+# TODO need to find out which rate is accurate
 
 def extract_update_date(update_date: str):
     try:
@@ -101,6 +100,7 @@ def scrape_company_exchange_rates(json) -> CompanyExchangeRates:
     company_exchange_rates = CompanyExchangeRates(currency_data)
     company_exchange_rates.set_update_date(updated_date)
     company_exchange_rates.set_current_scrape_date()
+    company_exchange_rates.set_exchange_type(ExchangeType.CASH)
     return company_exchange_rates
 
 
@@ -118,5 +118,3 @@ def scrape_first_abu_dhabi_bank_data() -> ExchangeCompany:
         print('Error occured while scraping ', BankName.FIRST_ABU_DHABI_BANK, err)
 
     return None
-
-
