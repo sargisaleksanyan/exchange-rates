@@ -81,7 +81,7 @@ class Currency(Enum):
     KES = ('KES', "Kenyan Shilling")
     ISK = ('ISK', "Icelandic Króna")
     CLP = ('CLP', "Chilean Peso")
-    AFN = ("AFN", "Afghan Afghani")
+    AFA = ("AFN", "Afghan Afghani")
     ALL = ("ALL", "Albanian Lek")
     ANG = ("ANG", "Netherlands Antillean Guilder")
     AOA = ("AOA", "Angolan Kwanza")
@@ -166,8 +166,8 @@ class ExchangeType(Enum):
 class ExchangeRate:
     def __init__(self, currency: str, buy_rate=None, sell_rate=None, rate=None):
         self.currency = currency
-        self.buy_rate = buy_rate
-        self.sell_rate = sell_rate
+        self.buy = buy_rate
+        self.sell = sell_rate
         self.rate = rate
         self.exchange_type = None
         self.update_date = None

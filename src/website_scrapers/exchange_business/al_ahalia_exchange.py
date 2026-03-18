@@ -32,7 +32,7 @@ def get_rates_from_al_ahali() -> CompanyExchangeRates | None:
                             currency = Currency.get_currency(key)
                             rate = convert_to_float(value)
                             if currency is not None and rate > 0:
-                                transfer_rate = ExchangeRate(currency, rate=rate)
+                                transfer_rate = ExchangeRate(currency.code, rate=rate)
                                 transfer_rates.append(transfer_rate)
 
     company_exchange_rates = CompanyExchangeRates(transfer_rates)

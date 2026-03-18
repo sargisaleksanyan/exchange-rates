@@ -19,7 +19,7 @@ class BankName:
     AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com No info was found
     AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
     RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank'  # Did not find any data
-    EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank'  # investment bank , does mot have exchage data
+    EMIRATES_INVESTMENT_BANK = 'Emirates Investment Bank'  # investment bank  does mot have exchage data
     COMMERCIAL_BANK_INTERNATIONAL = 'Commercial Bank International'  # no info was found
     MASHREQ_BANK = 'Mashreq Bank'  # No currency data was found
     UNITED_ARAB_BANK = 'United Arab Bank'  # No information was found
@@ -139,7 +139,7 @@ class ExchangeBusinessNames:
     REDHA_AL_ANSARI_EXCHANGE = 'Redha Al-Ansari Exchange'  # Does not have any data
     NATIONAL_EXCHANGE_CO = 'National Exchange Co'  # 'https://nationalexc.com/how-it-works/' have only send money data
     INDEX_EXCHANGE = 'Index Exchange'  # https://www.indexexchange.ae/exchange_rates
-    LARI_EXCHANGE = 'Lari Exchange'  # https://www.lariexchange.com/Forex not easy to scrape , Only provides transfer rates in bulk
+    LARI_EXCHANGE = 'Lari Exchange'  # https://www.lariexchange.com/Forex not easy to scrape  Only provides transfer rates in bulk
     MESRKANLOO_INTERNATIONAL_EXCHANGE = 'Mesrkanloo International Exchange'  # https://mesrkanlooexchange.com/exchange-rate/ takes rates from https://efastlive.com Do not think need it
     DINAR_EXCHANGE = 'Dinar Exchange'  # https: // dinarexchange.ae /
     REEMS_EXCHANGE = 'Reems Exchange'  # https://reems.ae/exchange-rates/

@@ -87,7 +87,7 @@ def extract_transfer_rates(soup: BeautifulSoup) -> List[ExchangeRate]:
         if currency_code is not None and currency_code.code not in passed and rate is not None:
             passed.add(currency_code.code)
 
-            transfer = ExchangeRate(currency_code, convert_to_float(rate))
+            transfer = ExchangeRate(currency_code.code, convert_to_float(rate))
             transfer_rates.append(transfer)
 
     return transfer_rates

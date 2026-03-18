@@ -9,7 +9,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
-from src.util.tool.string_util import convert_to_float, get_element_text
+from src.util.tool.string_util import convert_to_float, get_element_text, is_float_ok, convert_to_reverse_float
 
 CURRENCY = 'CURRENCY'
 TRANSFER_RATE = 'TRANSFER'
@@ -87,22 +87,24 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
             transfer_rate = get_element_text(table_data_list, table_headers, header=TRANSFER_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
-                cash_buy_rate = convert_to_float(cash_buy_rate)
-                cash_sell_rate = convert_to_float(cash_sell_rate)
-                if cash_sell_rate <= 0:
-                    cash_sell_rate = None
+                cash_buy = convert_to_float(cash_buy_rate)
+                cash_sell = convert_to_float(cash_sell_rate)
+                if cash_sell <= 0:
+                    cash_sell = None
 
-                if cash_buy_rate <= 0:
-                    cash_buy_rate = None
+                if cash_buy <= 0:
+                    cash_buy = None
 
-                cash_exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
-                                                  convert_to_float(cash_sell_rate))
-                exchange_dict[CASH] = cash_exchange_rate
+                if is_float_ok(cash_buy) == True or is_float_ok(cash_sell) == True:
+                    cash_exchange_rate = ExchangeRate(currency.code, cash_buy,
+                                                      cash_sell)
+                    exchange_dict[CASH] = cash_exchange_rate
 
             if transfer_rate is not None:
-                transfer_rate_float = convert_to_float(transfer_rate)
-                if (transfer_rate_float > 0):
+                transfer_rate_float = convert_to_reverse_float(transfer_rate)
+                if is_float_ok(transfer_rate_float):
                     exchange_rate = ExchangeRate(currency.code, rate=transfer_rate_float)
+                    exchange_rate.set_original_rate(convert_to_float(transfer_rate))
                     exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
@@ -183,4 +185,5 @@ def scrape_al_fardan() -> ExchangeCompany | None:
     except Exception as err:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE, err)
+
     return None

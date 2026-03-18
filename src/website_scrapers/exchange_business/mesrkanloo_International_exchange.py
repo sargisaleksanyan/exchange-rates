@@ -96,7 +96,8 @@ def get_rates_from_mesrkanloo_international() -> CompanyExchangeRates | None:
     if (trs is not None):
         for tr in trs:
             exchange_rate = extract_exchange_from_row_element(tr, headers)
-            cash_exchange_rates.append(exchange_rate)
+            if exchange_rate is not None:
+               cash_exchange_rates.append(exchange_rate)
 
     cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)

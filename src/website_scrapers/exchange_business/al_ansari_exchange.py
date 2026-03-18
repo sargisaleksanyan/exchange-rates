@@ -95,7 +95,11 @@ def get_currency_rate_text(currency_request_data: CurrencyRequestData,
     result = make_post_request_with_proxy(api_request_parameters.url, body, is_url_encoded=True)
     if result is not None:
         json_result = parse_string_to_json(result)
-        return get_value_from_json(json_result, 'rate')
+        rate = get_value_from_json(json_result, 'rate')
+
+        if rate is None:
+            rate = get_value_from_json(json_result, 'get_rate')
+        return rate
 
     return None
 
@@ -120,11 +124,12 @@ def get_sell_and_buy_rate(currency_name, currency_code_number, aed_to_code, requ
 
     buy_rate = get_currency_rate(request_buy_data, request_parameters)
 
-    if buy_rate is None and sell_rate is None or (sell_rate > buy_rate):
+    if buy_rate is None and sell_rate is None or (buy_rate > sell_rate):
         return None
 
-    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, sell_rate=sell_rate,
-                                 buy_rate=buy_rate)
+    # here sell and buy rates are from there perspective and reverse , So I reversed it as well.
+    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, sell_rate=buy_rate,
+                                 buy_rate=sell_rate)
     return exchange_rate
 
 
@@ -197,13 +202,13 @@ def get_rates_from_al_ansari(url, is_cash_request=True):
 
 
 def scrape_all_type_of_rates() -> list[CompanyExchangeRates]:
-    cash_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
-    cash_rates.set_current_scrape_date()
-    cash_rates.set_exchange_type(ExchangeType.CASH)
-
     transfer_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE, False)
     transfer_rates.set_current_scrape_date()
     transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
+
+    cash_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
+    cash_rates.set_current_scrape_date()
+    cash_rates.set_exchange_type(ExchangeType.CASH)
 
     return [cash_rates, transfer_rates]
 
@@ -225,5 +230,3 @@ def scrape_al_ansari_exchange() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_ANSARI_EXCHANGE, err)
     return None
-
-# scrape_al_ansari_exchange()

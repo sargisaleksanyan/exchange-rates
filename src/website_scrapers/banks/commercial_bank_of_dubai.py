@@ -85,6 +85,7 @@ def get_rates_from_commercial_bank_of_dubai():
     soup = BeautifulSoup(content, 'html.parser')
     tables = soup.find_all(class_='custom-table')
     exchange_rates = []
+    passed_rates = set()
 
     if tables is not None and len(tables) > 0:
         for table in tables:
@@ -101,8 +102,10 @@ def get_rates_from_commercial_bank_of_dubai():
                     for table_row in table_rows:
                         if (table_row is not None):
                             exchange_rate = extract_exchange_from_row_element(table_row, table_headers)
-                            if exchange_rate is not None:
-                                exchange_rates.append(exchange_rate)
+
+                            if exchange_rate is not None and exchange_rate.currency not in passed_rates:
+                                  exchange_rates.append(exchange_rate)
+                                  passed_rates.add(exchange_rate.currency)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
     company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
@@ -127,3 +130,5 @@ def scrape_commercial_bank_of_dubai() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', BankName.COMMERCIAL_BANK_OF_DUBAI, err)
     return None
+
+scrape_commercial_bank_of_dubai()

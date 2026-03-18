@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, get_element_text_by_index
+from src.util.tool.string_util import convert_to_float, get_element_text_by_index, convert_to_reverse_float
 
 CURRENCY = 'Currency'
 TRANSFER_RATE = 'Transfer'
@@ -16,7 +16,6 @@ CASH_BUY_RATE = 'Buying'
 CASH_SELL_RATE = 'Selling'
 CASH = 'Cash'
 TRANSFER = 'Transfer'
-
 
 
 def get_table_headers(page_element: PageElement) -> dict:
@@ -44,10 +43,12 @@ def get_table_headers(page_element: PageElement) -> dict:
 
     return element_index_dict
 
-def clean_rate(rate:str):
+
+def clean_rate(rate: str):
     if rate is not None:
-        return rate.replace("AED",'').replace('aed','').strip()
+        return rate.replace("AED", '').replace('aed', '').strip()
     return None
+
 
 def extract_exchange_from_row_element(table_row: PageElement, table_headers: dict) -> dict | None:
     if (table_row is None):
@@ -82,10 +83,15 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                                                   convert_to_float(cash_sell_rate))
                 exchange_dict[CASH] = cash_exchange_rate
 
+            # reverse
             if transfer_rate is not None:
-                transfer_rate_float = convert_to_float(clean_rate(transfer_rate))
+                transfer_rate = clean_rate(transfer_rate)
+                transfer_rate_float = convert_to_reverse_float(transfer_rate)
+
                 if (transfer_rate_float > 0):
+
                     exchange_rate = ExchangeRate(currency.code, rate=transfer_rate_float)
+                    exchange_rate.set_original_rate(convert_to_float(transfer_rate))
                     exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
@@ -154,5 +160,3 @@ def scrape_al_fuade() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.AL_FUAD_EXCHANGE, err)
     return None
-
-

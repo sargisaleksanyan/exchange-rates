@@ -31,6 +31,9 @@ def get_table_headers(page_element: PageElement) -> dict:
                 if (CURRENCY_HEAD.lower() in th_text):
                     element_index_dict[CURRENCY_HEAD] = i
 
+                if (BANK_TRANSFER.lower() in th_text):
+                    element_index_dict[BANK_TRANSFER] = i
+
                 elif (BUY_RATE_HEAD.lower() in th_text):
                     element_index_dict[BUY_RATE_HEAD] = i
 
@@ -122,13 +125,13 @@ def extract_desert_exchange_rates(url) -> CompanyExchangeRates:
 
 
 def extract_desert_exchange_all_rates() -> List[CompanyExchangeRates]:
+    transfer_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE_TRANSFER)
+    transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+
     cash_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE)
-    cash_exchange_rates.set_current_scrape_date()
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
 
-    transfer_exchange_rates = extract_desert_exchange_rates(ExchangeBusinessExchangeUrl.DESERT_EXCHANGE_TRANSFER)
-    cash_exchange_rates.set_current_scrape_date()
-    transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
+
     return [cash_exchange_rates, transfer_exchange_rates]
 
 
@@ -143,3 +146,4 @@ def scrape_desert_exchange() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.DESERT_EXCHANGE, err)
     return None
+

@@ -7,7 +7,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCo
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import get_value_from_json, parse_string_to_json
-from src.util.tool.string_util import convert_to_reverse_float, convert_to_float
+from src.util.tool.string_util import convert_to_reverse_float, convert_to_float, is_float_ok
 
 
 def get_rate_from_string(rate_data):
@@ -74,25 +74,31 @@ def get_rates_from_orient_exchange() -> List[CompanyExchangeRates]:
             cash_sell_data = get_value_from_json(cash_sell_rates, key)
 
             if (cash_sell_data is not None and cash_buy_data is not None):
-                exchange_rate = ExchangeRate(currency.code, get_rate_from_string(cash_buy_data),
-                                             get_rate_from_string(cash_sell_data))
-                exchange_rate.set_original_sell_rate(get_original_rate_from_string(cash_sell_data))
-                exchange_rate.set_original_buy_rate(get_original_rate_from_string(cash_buy_data))
-                exchange_rate.set_update_date(get_update_date(cash_buy_data))
-                cash_exchange_rates.append(exchange_rate)
+                buy = get_rate_from_string(cash_buy_data)
+                sell = get_rate_from_string(cash_sell_data)
+                if (is_float_ok(sell) == True or is_float_ok(buy) == True):
+                    exchange_rate = ExchangeRate(currency.code, buy,
+                                                 sell)
+                    exchange_rate.set_original_sell_rate(get_original_rate_from_string(cash_sell_data))
+                    exchange_rate.set_original_buy_rate(get_original_rate_from_string(cash_buy_data))
+                    exchange_rate.set_update_date(get_update_date(cash_buy_data))
+                    cash_exchange_rates.append(exchange_rate)
 
     # tranfer_rates = get_currency_data(ExchangeBusinessApiUrl.ORIENT_EXCHANGE_TRANSFER)
     transfer_rates_content = make_get_request_with_proxy(ExchangeBusinessApiUrl.ORIENT_EXCHANGE_TRANSFER)
     transfer_rates_raw_data_json = parse_string_to_json(transfer_rates_content)
     transfer_rates_raw_data = get_value_from_json(transfer_rates_raw_data_json, 'rateList')
+
     for transfer_rate_raw_data in transfer_rates_raw_data:
         currency_code = get_value_from_json(transfer_rate_raw_data, 'CurrencyCode')
         if currency_code is not None and Currency.get_currency(currency_code) is not None:
+            rate = convert_to_float(get_original_rate_from_string(transfer_rate_raw_data))
             currency = Currency.get_currency(currency_code)
-            exchange_rate = ExchangeRate(currency.code, rate=get_original_rate_from_string(transfer_rate_raw_data))
-            # exchange_rate.set_original_rate(get_original_rate_from_string(transfer_rate_raw_data))
-            exchange_rate.set_update_date(get_update_date(transfer_rate_raw_data))
-            transfer_rates.append(exchange_rate)
+            if (is_float_ok(rate) == True):
+                exchange_rate = ExchangeRate(currency.code, rate=rate)
+                # exchange_rate.set_original_rate(get_original_rate_from_string(transfer_rate_raw_data))
+                exchange_rate.set_update_date(get_update_date(transfer_rate_raw_data))
+                transfer_rates.append(exchange_rate)
 
     cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)

@@ -5,7 +5,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCo
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, is_float_ok, convert_to_reverse_float
 
 headers = {
     'client-id': 'agex@rate01',
@@ -38,16 +38,20 @@ def get_exchange_rates(url):
                 currency = Currency.get_currency(currency_code)
 
                 if currency is not None:
-                    sell = get_value_from_json(rate, FOREX_SALE_HEADER)
-                    buy = get_value_from_json(rate, FOREX_BUY_HEADER)
+                    sell = convert_to_float(get_value_from_json(rate, FOREX_SALE_HEADER))
+                    buy = convert_to_float(get_value_from_json(rate, FOREX_BUY_HEADER))
                     transfer_rate = get_value_from_json(rate, TRANSFER_RATE_HEADER)
 
-                    if sell is not None and buy is not None:
-                        exchange_data = ExchangeRate(currency.code, convert_to_float(sell), convert_to_float(buy))
+                    if is_float_ok(sell) == True and is_float_ok(buy) == True:
+                        exchange_data = ExchangeRate(currency.code, buy_rate=buy, sell_rate=sell)
                         exchange_rates.append(exchange_data)
+                        
                     elif transfer_rate is not None:
-                        exchange_data = ExchangeRate(currency.code, rate=convert_to_float(transfer_rate))
-                        exchange_rates.append(exchange_data)
+                        transfer_rate_value = convert_to_reverse_float(transfer_rate)
+                        if is_float_ok(transfer_rate_value):
+                           exchange_data = ExchangeRate(currency.code, rate=transfer_rate_value)
+                           exchange_data.set_original_rate(convert_to_float(transfer_rate))
+                           exchange_rates.append(exchange_data)
     return exchange_rates
 
 

@@ -180,5 +180,15 @@ business_logos = [
         "url": ExchangeBusinessUrl.AL_AHALIA_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/ahaliaexchange_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.LARI_EXCHANGE,
+        "business_type": "exchange business",
+        "logos":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lariexchange_com.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.UNIVERSAL_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/universalexchange_net.svg"
     }
 ]

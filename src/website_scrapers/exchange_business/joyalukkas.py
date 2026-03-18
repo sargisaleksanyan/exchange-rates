@@ -8,7 +8,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExc
     Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
 
 CURRENCY_CODE_HEADER = 'CURRENCY_CODE'
 CURRENCY_TRANSFER_HEADER = 'TTRATE'
@@ -84,9 +84,13 @@ def get_rates_from_joyalukkas() -> List[CompanyExchangeRates] | None:
                 if exchange_rate is not None:
                     cash_exchange_rates.append(exchange_rate)
 
-                transfer_rate_value = convert_to_float(get_value_from_json(data, CURRENCY_TRANSFER_HEADER))
-                if transfer_rate_value is not None:
-                    transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_value)
+                transfer_rate_text = get_value_from_json(data, CURRENCY_TRANSFER_HEADER)
+                transfer_rate_reverse_value = convert_to_reverse_float(transfer_rate_text)
+
+                if transfer_rate_reverse_value is not None:
+
+                    transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_reverse_value)
+                    transfer_rate.set_original_rate(convert_to_float(transfer_rate_text))
                     transfer_exchange_rates.append(transfer_rate)
 
     cash_company_exchange_rates = CompanyExchangeRates(cash_exchange_rates)

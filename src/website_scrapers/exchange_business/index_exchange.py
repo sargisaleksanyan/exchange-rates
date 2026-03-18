@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, get_element_text
+from src.util.tool.string_util import convert_to_float, get_element_text, convert_to_reverse_float, is_float_ok
 
 TRANSFER_HEAD = 'Remittances'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_HEAD = 'Code'
@@ -108,18 +108,22 @@ def extract_index_exchange_rates() -> List[CompanyExchangeRates] | None:
             if (currency is None):
                 continue
 
-            transfer_rate_value = convert_to_float(
-                    get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD))
-            if (transfer_rate_value is not None and transfer_rate_value > 0):
+            transfer_rate_text = get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD)
+
+            if (transfer_rate_text is not None):
+                transfer_rate_value = convert_to_reverse_float(transfer_rate_text)
+
+                if is_float_ok(transfer_rate_value) == True:
                     transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_value)
+                    transfer_rate.set_original_rate(convert_to_float(transfer_rate_value))
                     transfer_exchange_rates.append(transfer_rate)
 
             buy = convert_to_float(get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD))
             sell = convert_to_float(get_element_text(table_data_elements, table_headers, SELL_RATE_HEAD))
 
-            if buy is not None and sell is not None and buy > 0 and sell > 0: # TODO if buy is non but sell has value might accept it
-                    exchange_rate = ExchangeRate(currency.code, buy, sell)
-                    cash_exchange_rates.append(exchange_rate)
+            if buy is not None and sell is not None and buy > 0 and sell > 0:  # TODO if buy is non but sell has value might accept it
+                exchange_rate = ExchangeRate(currency.code, buy, sell)
+                cash_exchange_rates.append(exchange_rate)
 
     company_cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
     company_cash_exchange_rates.set_current_scrape_date()
@@ -134,7 +138,7 @@ def extract_index_exchange_rates() -> List[CompanyExchangeRates] | None:
     if update_date is not None:
         company_cash_exchange_rates.set_update_date(update_date)
         company_transfer_exchange_rates.set_update_date(update_date)
-    return [company_cash_exchange_rates,company_transfer_exchange_rates]
+    return [company_cash_exchange_rates, company_transfer_exchange_rates]
 
 
 def scrape_index_exchange() -> ExchangeCompany | None:
@@ -148,4 +152,3 @@ def scrape_index_exchange() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.INDEX_EXCHANGE, err)
     return None
-

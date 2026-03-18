@@ -8,6 +8,15 @@ def find_substring_index(text: str, substring: str):
         return text.index(substring)
     return -1
 
+
+def is_float_ok(float_value: None | float):
+    try:
+        return float_value is not None and float_value > 0
+    except Exception as err:
+        print('Error while checking float ', float_value)
+    return False
+
+
 def convert_to_float(value: str) -> float | str | None:
     if value is None:
         return None

@@ -7,7 +7,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExc
     Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, is_float_ok
 
 CURRENCY_CODE_HEADER = 'CurrencyCode'
 CURRENCY_TRANSFER_HEADER = 'ExchangeRate'
@@ -23,9 +23,11 @@ def extract_exchange_rates(json_data):
     if currency is not None:
         transfer_rate = get_value_from_json(json_data, CURRENCY_TRANSFER_HEADER)
         if transfer_rate is not None:
-            rate = convert_to_float(transfer_rate)
-            return ExchangeRate(currency.code, rate=rate)
-
+            rate = convert_to_reverse_float(transfer_rate)
+            if (is_float_ok(rate) == True):
+                exchangerate = ExchangeRate(currency.code, rate=rate)
+                exchangerate.set_original_rate(convert_to_float(rate))
+                return exchangerate
     return None
 
 
@@ -68,4 +70,3 @@ def scrape_gcc_exchange() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.GCC_EXCHANGE, err)
     return None
-

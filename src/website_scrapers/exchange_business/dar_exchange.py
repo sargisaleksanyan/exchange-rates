@@ -8,7 +8,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, \
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, \
     ExchangeCompanyType, Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, get_element_text
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, get_element_text, is_float_ok
 
 TRANSFER_RATE = 'Remittance Transfer Rate'  # TODO Remittances is not taken as it contains incorrect data
 CURRENCY_CODE_HEAD = 'Currency code'
@@ -33,6 +33,7 @@ def get_table_headers(page_element: PageElement) -> dict:
         SELL_RATE_HEAD: 4,
         TRANSFER_RATE: 5
     }
+
 
 def get_update_date(update_date: str) -> datetime | None:
     if update_date != None:
@@ -67,10 +68,10 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
     for table_row in table_rows:
         table_data_elements = table_row.find_all('td')
         if table_data_elements is not None and len(table_data_elements) > 0:
-            currency_code = get_element_text(table_data_elements, table_headers,CURRENCY_CODE_HEAD)
-            buy_rate = get_element_text(table_data_elements, table_headers,BUY_RATE_HEAD)
-            sell_rate = get_element_text(table_data_elements, table_headers,SELL_RATE_HEAD)
-            transfer_rate = get_element_text(table_data_elements, table_headers,TRANSFER_RATE)
+            currency_code = get_element_text(table_data_elements, table_headers, CURRENCY_CODE_HEAD)
+            buy_rate = get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD)
+            sell_rate = get_element_text(table_data_elements, table_headers, SELL_RATE_HEAD)
+            transfer_rate = get_element_text(table_data_elements, table_headers, TRANSFER_RATE)
 
             if currency_code is not None and Currency.get_currency(
                     currency_code) is not None:
@@ -88,25 +89,27 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
                     except Exception as err:
                         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
 
-                if transfer_rate is not None and transfer_rate  != '-':
+                if transfer_rate is not None and transfer_rate != '-':
 
                     original_rate = convert_to_float(transfer_rate)
-                    transfer_rate_object = None
 
-                    if original_rate is not None and buy is not None and sell is not None and buy < 1 and sell < 1 and original_rate / sell > 2:
-                        transfer_rate_object = ExchangeRate(currency.code, rate=convert_to_float(transfer_rate))
-                        # transfer_rate_object.set_original_rate(original_rate)
+                    if is_float_ok(original_rate) == True:
+                        is_original = True
 
-                    elif original_rate is not None:
+                        if buy is not None and buy >= 1 and original_rate > 1:
+                            original_rate = convert_to_reverse_float(transfer_rate)
+                            is_original = False
+
                         transfer_rate_object = ExchangeRate(currency.code, rate=original_rate)
 
-                    if (transfer_rate_object is not None):
+                        if is_original == False:
+                            transfer_rate_object.set_original_rate(convert_to_float(transfer_rate))
+
                         transfer_rates.append(transfer_rate_object)
 
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
     company_exchange_rates.set_current_scrape_date()
     company_exchange_rates.set_exchange_type(ExchangeType.CASH)
-
     company_transfer_rates = CompanyExchangeRates(transfer_rates)
     company_transfer_rates.set_current_scrape_date()
     company_transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
@@ -125,5 +128,4 @@ def scrape_dar_exchange() -> ExchangeCompany | None:
         print('Error occurred while scraping ', ExchangeBusinessNames.DAR_EXCHANGE, err)
     return None
 
-scrape_dar_exchange()
-# TODO need to handle reverse tranfer rates for currenies that does not have sell and buy rates
+#TODO need to handle reverse tranfer rates for currenies that does not have sell and buy rates

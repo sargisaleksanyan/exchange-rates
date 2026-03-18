@@ -7,7 +7,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_proxy
-from src.util.tool.string_util import convert_to_float, get_element_text
+from src.util.tool.string_util import convert_to_float, get_element_text, convert_to_reverse_float, is_float_ok
 
 CURRENCY = 'CODE'
 TRANSFER_RATE = 'T.T RATE'
@@ -59,7 +59,8 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
         currency_code = get_element_text(table_data_list, table_headers, CURRENCY)
         currency = Currency.get_currency(currency_code)
 
-        if (currency is not None):
+        if (
+                currency is not None and currency.code != currency.CHF.code):  # TODO in future need to check if in future as for now swiss frank is incorrect
             cash_buy_rate = get_element_text(table_data_list, table_headers, CASH_BUY_RATE)
             cash_sell_rate = get_element_text(table_data_list, table_headers, CASH_SELL_RATE)
 
@@ -74,14 +75,25 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
                 if cash_buy_rate <= 0:
                     cash_buy_rate = None
 
-                cash_exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
+                if is_float_ok(cash_sell_rate) or is_float_ok(cash_buy_rate):
+                     cash_exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
                                                   convert_to_float(cash_sell_rate))
-                exchange_dict[CASH] = cash_exchange_rate
+                     exchange_dict[CASH] = cash_exchange_rate
 
             if transfer_rate is not None:
                 transfer_rate_float = convert_to_float(transfer_rate)
+
                 if (transfer_rate_float > 0):
+                    is_original_rate = True
+
+                    if currency.code == Currency.USD.code and transfer_rate_float > 3:
+                        transfer_rate_float = convert_to_reverse_float(transfer_rate)
+                        is_original_rate = False
+
                     exchange_rate = ExchangeRate(currency.code, rate=transfer_rate_float)
+                    if is_original_rate == False:
+                        exchange_rate.set_original_rate(convert_to_float(transfer_rate))
+
                     exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
@@ -136,6 +148,7 @@ def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
 
     exchange_rates = []
     exchange_rates.append(cash_exchange_rates)
+    exchange_rates.append(transfer_exchange_rates)
     #  exchange_rates.append(transfer_exchange_rates) TODO need to fix tranfer rates
     return exchange_rates
 
@@ -156,4 +169,3 @@ def scrape_multinet_trust() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', ExchangeBusinessNames.MULTINET_TRUST_EXCHANGE, err)
     return None
-

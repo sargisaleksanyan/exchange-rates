@@ -3,7 +3,7 @@ from src.util.common_classes.company_data import ExchangeBusinessNames, Exchange
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, CompanyExchangeRates, \
     Currency, ExchangeRate, ExchangeType
 from src.util.scraping_util.request_util import make_get_request_with_parsed_html
-from src.util.tool.string_util import convert_to_float
+from src.util.tool.string_util import convert_to_float, is_float_ok, convert_to_reverse_float
 
 
 def scrape_federal_exchange_rates() -> CompanyExchangeRates | None:
@@ -26,10 +26,20 @@ def scrape_federal_exchange_rates() -> CompanyExchangeRates | None:
                 currency = Currency.get_currency(currency_name)
                 if currency is None:
                     continue
-                rate = convert_to_float(values[0].strip())
-                if rate is not None:
-                    transfer_rate = ExchangeRate(currency.code, rate=rate)
-                    transfer_rates.append(transfer_rate)
+                code = currency.code
+
+                rate_text = values[0].strip()
+                rate = convert_to_float(rate_text)
+
+                if is_float_ok(rate) == True:
+
+                    if (code == 'USD' and rate > 1):
+                        transfer_rate = ExchangeRate(code, rate=convert_to_reverse_float(rate_text))
+                        transfer_rate.set_original_rate(rate)
+                        transfer_rates.append(transfer_rate)
+                    else:
+                        transfer_rate = ExchangeRate(code, rate=rate)
+                        transfer_rates.append(transfer_rate)
 
     company_exchange_rates = CompanyExchangeRates(transfer_rates)
     company_exchange_rates.set_current_scrape_date()
