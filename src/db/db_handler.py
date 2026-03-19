@@ -61,6 +61,14 @@ class DatabaseHandler:
         except Exception as e:
             print(f"Error: while updating exchange data {e}")
 
+    def upsert_company_data(self, company_exchange_data: ExchangeCompany):
+        try:
+
+            dict = to_dict(company_exchange_data)
+            self.collection.update_one(filter={'url': dict['url']}, update={"$set": dict}, upsert=True)
+        except Exception as e:
+            print(f"Error: while updating exchange data {e}")
+
     def remove_by_id(self, id):
         try:
             # self.collection.insert_one(data)

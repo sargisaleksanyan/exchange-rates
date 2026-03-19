@@ -5,6 +5,7 @@ from typing import List
 import requests
 
 from src.util.common_classes.currency import currency_name_to_code
+from src.util.tool.string_util import is_float_ok
 
 
 class Currency(Enum):
@@ -163,6 +164,7 @@ class ExchangeType(Enum):
     ONLINE = 'Online'
 
 
+
 class ExchangeRate:
     def __init__(self, currency: str, buy_rate=None, sell_rate=None, rate=None):
         self.currency = currency
@@ -243,3 +245,16 @@ class ExchangeCompany:
             self.company_exchange_rates = []
 
         self.company_exchange_rates.append(company_exchange_rate)
+
+
+def create_exchange_rate(currency: str, buy_rate=None, sell_rate=None) -> ExchangeRate |None:
+    if is_float_ok(buy_rate) == False:
+        buy_rate = None
+
+    if is_float_ok(sell_rate) == False:
+        sell_rate = None
+
+    if buy_rate == None and sell_rate == None:
+       return None
+
+    return ExchangeRate(currency,buy_rate=buy_rate,sell_rate=sell_rate)

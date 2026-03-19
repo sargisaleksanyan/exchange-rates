@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
-    CompanyExchangeRates, ExchangeType
+    CompanyExchangeRates, ExchangeType, create_exchange_rate
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json
-from src.util.tool.string_util import convert_to_float, convert_to_reverse_float
+from src.util.tool.string_util import convert_to_float, convert_to_reverse_float, is_float_ok
 
 security_key = '7be9f96be0'
 currency_request_url = 'https://alansariexchange.com/wp-admin/admin-ajax.php'
@@ -124,13 +124,11 @@ def get_sell_and_buy_rate(currency_name, currency_code_number, aed_to_code, requ
 
     buy_rate = get_currency_rate(request_buy_data, request_parameters)
 
-    if buy_rate is None and sell_rate is None or (buy_rate > sell_rate):
-        return None
-
-    # here sell and buy rates are from there perspective and reverse , So I reversed it as well.
-    exchange_rate = ExchangeRate(Currency.get_currency(currency_name).code, sell_rate=buy_rate,
+    if is_float_ok(buy_rate) or is_float_ok(sell_rate):
+       exchange_rate =  create_exchange_rate (Currency.get_currency(currency_name).code, sell_rate=buy_rate,
                                  buy_rate=sell_rate)
-    return exchange_rate
+       return exchange_rate
+    return None
 
 
 def get_transfer_rate(currency_name, currency_code_number, aed_to_code, request_parameters):
@@ -202,13 +200,15 @@ def get_rates_from_al_ansari(url, is_cash_request=True):
 
 
 def scrape_all_type_of_rates() -> list[CompanyExchangeRates]:
-    transfer_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE, False)
-    transfer_rates.set_current_scrape_date()
-    transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
 
     cash_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE)
     cash_rates.set_current_scrape_date()
     cash_rates.set_exchange_type(ExchangeType.CASH)
+
+    transfer_rates = get_rates_from_al_ansari(ExchangeBusinessExchangeUrl.AL_ANSARI_EXCHANGE_TRANSFER_RATE_PAGE, False)
+    transfer_rates.set_current_scrape_date()
+    transfer_rates.set_exchange_type(ExchangeType.TRANSFER)
+
 
     return [cash_rates, transfer_rates]
 

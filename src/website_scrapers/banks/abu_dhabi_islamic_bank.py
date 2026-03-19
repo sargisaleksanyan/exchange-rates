@@ -4,7 +4,7 @@ from typing import List
 from bs4 import BeautifulSoup, PageElement
 from src.util.common_classes.company_data import BankExchangeRateUrl, BankName, BankUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, CompanyExchangeRates, ExchangeRate, Currency, \
-    ExchangeCompanyType, ExchangeType
+    ExchangeCompanyType, ExchangeType, create_exchange_rate
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float, get_element_text
 
@@ -93,14 +93,16 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
             transfer_sell_rate = get_element_text(table_data_list, table_headers, TRANSFER_SELL_RATE)
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
-                exchange_rate = ExchangeRate(currency.code, convert_to_float(cash_buy_rate),
+                exchange_rate = create_exchange_rate(currency.code, convert_to_float(cash_buy_rate),
                                              convert_to_float(cash_sell_rate))
-                exchange_dict[CASH] = exchange_rate
+                if (exchange_rate is not None):
+                   exchange_dict[CASH] = exchange_rate
 
             if transfer_sell_rate is not None and transfer_buy_rate is not None:
-                exchange_rate = ExchangeRate(currency.code, convert_to_float(transfer_buy_rate),
+                exchange_rate = create_exchange_rate(currency.code, convert_to_float(transfer_buy_rate),
                                              convert_to_float(transfer_sell_rate))
-                exchange_dict[TRANSFER] = exchange_rate
+                if exchange_rate is not None:
+                   exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
 

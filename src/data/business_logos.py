@@ -190,5 +190,10 @@ business_logos = [
         "url": ExchangeBusinessUrl.UNIVERSAL_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/universalexchange_net.svg"
+    },
+    {
+        "url":ExchangeBusinessUrl.AL_DHAHERY_EXCHANGE,
+        "business_type": "exchange business",
+        "logos":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/aldhaheryexchange_com.svg"
     }
 ]
