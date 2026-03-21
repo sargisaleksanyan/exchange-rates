@@ -65,7 +65,7 @@ def init_central_bank_update():
     except Exception as err:
         print('Error while updating central bank data ', err)
 
+init_frequent_data_update()
 init_central_bank_update()
 init_very_rare_data_update()
 init_non_frequent_data_update()
-init_frequent_data_update()

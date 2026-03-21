@@ -11,8 +11,11 @@ from src.util.tool.string_util import is_float_ok
 class Currency(Enum):
     AUD = ("AUD", "Australian Dollar")
     BHD = ("BHD", "Bahraini Dinar")
+    BWP = ("BWP", "Botswana Pula")
+    BYN = ("BYN", "Belarus Rouble")
     CAD = ("CAD", "Canadian Dollar")
     CYP = ("CYP", "Cyprus Pound")
+    COP = ("COP", "Colombian Peso")
     CHF = ("CHF", "Swiss Franc")
     DKK = ("DKK", "Danish Kroner")
     EGP = ("EGP", "Egypt Pounds")
@@ -64,6 +67,7 @@ class Currency(Enum):
     UZS = ("UZS", "Uzbekistani Sum")
     AED = ("AED", "United Arab Emirates Dirham")
     UGX = ("UGX", "Ugandan Shilling")
+    TTD = ("TTD", "Trin Tob Dollar")
     TND = ("TND", "Tunisian Dinar")
     TZS = ("TZS", "Tanzanian Shilling")
     TJS = ("TJS", "Tajikistani Somoni")
@@ -117,6 +121,8 @@ class Currency(Enum):
     XOF = ("XOF", "West African CFA Franc")
     XPF = ("XPF", "CFP Franc")
     GBP = ("GBP", "British Pound Sterling")
+    ZMW = ("ZMW", "Zambian Kwacha")
+    TMT = ("TMT", "Turkmen manat")
 
     def __init__(self, code, fullname):
         self.code = code
