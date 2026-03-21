@@ -56,7 +56,6 @@ def get_table_headers(page_element: PageElement) -> dict:
     return element_index_dict
 
 
-
 def extract_update_date(update_date_element):
     if update_date_element is not None:
         value = update_date_element.get('value')
@@ -94,15 +93,15 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
 
             if cash_buy_rate is not None and cash_sell_rate is not None:
                 exchange_rate = create_exchange_rate(currency.code, convert_to_float(cash_buy_rate),
-                                             convert_to_float(cash_sell_rate))
+                                                     convert_to_float(cash_sell_rate))
                 if (exchange_rate is not None):
-                   exchange_dict[CASH] = exchange_rate
+                    exchange_dict[CASH] = exchange_rate
 
             if transfer_sell_rate is not None and transfer_buy_rate is not None:
                 exchange_rate = create_exchange_rate(currency.code, convert_to_float(transfer_buy_rate),
-                                             convert_to_float(transfer_sell_rate))
+                                                     convert_to_float(transfer_sell_rate))
                 if exchange_rate is not None:
-                   exchange_dict[TRANSFER] = exchange_rate
+                    exchange_dict[TRANSFER] = exchange_rate
 
     return exchange_dict
 
@@ -137,14 +136,12 @@ def extract_company_exchange_rates() -> List[CompanyExchangeRates] | None:
         if (trs is not None):
             for tr in trs:
                 exchange_rates_dict = extract_exchange_from_row_element(tr, table_headers)
-                cash_exchange_rate = exchange_rates_dict[CASH]
-                transfer_exchange_rate = exchange_rates_dict[TRANSFER]
 
-                if cash_exchange_rate is not None:
-                    cash_exchange_rates.append(cash_exchange_rate)
+                if CASH in exchange_rates_dict and exchange_rates_dict[CASH] is not None:
+                    cash_exchange_rates.append(exchange_rates_dict[CASH])
 
-                if transfer_exchange_rate is not None:
-                    transfer_exchange_rates.append(transfer_exchange_rate)
+                if TRANSFER in exchange_rates_dict and exchange_rates_dict[TRANSFER] is not None:
+                    transfer_exchange_rates.append(exchange_rates_dict[TRANSFER])
 
     cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
     cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
@@ -167,15 +164,16 @@ def extract_company_exchange_rates() -> List[CompanyExchangeRates] | None:
 
 
 def scrape_abu_dhabi_islamic_bank() -> ExchangeCompany | None:
-    try:
-        company_exchange_rates = extract_company_exchange_rates()
-        exchange_company = ExchangeCompany(BankName.ABU_DHABI_ISLAMIC_BANK, BankUrl.ABU_DHABI_ISLAMIC_BANK,
-                                           ExchangeCompanyType.NATIONAL_BANK)
-        exchange_company.set_exchange_rates(company_exchange_rates)
+    # try:
+    company_exchange_rates = extract_company_exchange_rates()
+    exchange_company = ExchangeCompany(BankName.ABU_DHABI_ISLAMIC_BANK, BankUrl.ABU_DHABI_ISLAMIC_BANK,
+                                       ExchangeCompanyType.NATIONAL_BANK)
+    exchange_company.set_exchange_rates(company_exchange_rates)
 
-        return exchange_company
+    return exchange_company
 
 
-    except Exception as err:
-        print('Error occured while scraping ', BankName.ABU_DHABI_ISLAMIC_BANK, err)
-    return None
+# except Exception as err:
+#  print('Error occured while scraping ', BankName.ABU_DHABI_ISLAMIC_BANK, err)
+# return None
+

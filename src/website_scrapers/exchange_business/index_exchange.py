@@ -108,7 +108,7 @@ def extract_index_exchange_rates() -> List[CompanyExchangeRates] | None:
             if (currency is None):
                 continue
 
-            transfer_rate_text = get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD)
+            transfer_rate_text = get_element_text(table_data_elements, table_headers, TRANSFER_HEAD)
 
             if (transfer_rate_text is not None):
                 transfer_rate_value = convert_to_reverse_float(transfer_rate_text)
@@ -152,3 +152,5 @@ def scrape_index_exchange() -> ExchangeCompany | None:
     except Exception as err:
         print('Error occurred while scraping ', ExchangeBusinessNames.INDEX_EXCHANGE, err)
     return None
+
+scrape_index_exchange()
