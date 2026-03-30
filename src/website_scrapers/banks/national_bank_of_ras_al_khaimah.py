@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateUrl, BankExchangeRateApiUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
-    CompanyExchangeRates
+    CompanyExchangeRates, ExchangeType
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json, get_value_from_json_by_array
 from src.util.scraping_util.request_util import make_get_request_with_proxy, make_post_request_with_proxy
 from src.util.tool.string_util import convert_to_float
@@ -84,6 +84,7 @@ def get_rates_from_national_bank_of_ras_al_khaimah() -> CompanyExchangeRates | N
                     if update_date != None:
                         company_exchange_rates.set_update_date(update_date)
                     company_exchange_rates.set_current_scrape_date()
+                    company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
                     return company_exchange_rates
 
         return None
@@ -108,4 +109,4 @@ def scrape_national_bank_of_ras_al_khaimah() -> ExchangeCompany | None:
     return None
 
 
-# TODO seems api to be down at this moment
+# TODO cash or transfer

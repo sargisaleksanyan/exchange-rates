@@ -111,11 +111,11 @@ def extract_index_exchange_rates() -> List[CompanyExchangeRates] | None:
             transfer_rate_text = get_element_text(table_data_elements, table_headers, TRANSFER_HEAD)
 
             if (transfer_rate_text is not None):
-                transfer_rate_value = convert_to_reverse_float(transfer_rate_text)
+                transfer_rate_value = convert_to_float(transfer_rate_text)
 
                 if is_float_ok(transfer_rate_value) == True:
                     transfer_rate = ExchangeRate(currency.code, rate=transfer_rate_value)
-                    transfer_rate.set_original_rate(convert_to_float(transfer_rate_text))
+                    #transfer_rate.set_original_rate(convert_to_float(transfer_rate_text))
                     transfer_exchange_rates.append(transfer_rate)
 
             buy = convert_to_float(get_element_text(table_data_elements, table_headers, BUY_RATE_HEAD))

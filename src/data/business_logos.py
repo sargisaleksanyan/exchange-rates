@@ -7,6 +7,11 @@ business_logos = [
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adcb_com.ico,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adcb_com.png"
     },
     {
+        "url": BankUrl.NATIONAL_BANK_OF_RAS_AL_KHAIMAH,
+        "business_type": "bank",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.svg",
+    },
+    {
         "url": BankUrl.INVEST_BANK,
         "business_type": "bank",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/inb_ae.svg"
@@ -184,7 +189,7 @@ business_logos = [
     {
         "url": ExchangeBusinessUrl.LARI_EXCHANGE,
         "business_type": "exchange business",
-        "logos":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lariexchange_com.svg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lariexchange_com.svg"
     },
     {
         "url": ExchangeBusinessUrl.UNIVERSAL_EXCHANGE,
@@ -192,8 +197,13 @@ business_logos = [
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/universalexchange_net.svg"
     },
     {
-        "url":ExchangeBusinessUrl.AL_DHAHERY_EXCHANGE,
+        "url": ExchangeBusinessUrl.AL_DHAHERY_EXCHANGE,
         "business_type": "exchange business",
-        "logos":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/aldhaheryexchange_com.svg"
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/aldhaheryexchange_com.svg"
+    },
+    {
+        "url": BankUrl.CENTRAL_BANK,
+        "business_type": "central bank",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/centralbank_ae.svg"
     }
 ]
