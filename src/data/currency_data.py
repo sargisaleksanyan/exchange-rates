@@ -99,10 +99,10 @@ currency_codes = [
   { "code":"VND","name":"Vietnamese Dong","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/vnd.svg","rank":98 },
   { "code":"AED","name":"United Arab Emirates Dirham","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/aed.svg","rank":100 },
   { "code":"YER","name":"Yemeni rial","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/yer.svg","rank":101 },
-  { "code":"SDG","name":"Sudanese pound","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/yer.svg","rank":102 },
+  { "code":"SDG","name":"Sudanese pound","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/sdg.svg","rank":102 },
   { "code":"BWP","name":"Botswana pula","url":"https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/bwp.svg","rank":103 },
     {"code": "ZMW", "name": "Zambian kwacha",
-     "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/zmw.sdg", "rank": 104}
+     "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/zmw.svg", "rank": 104}
 
 ]
 

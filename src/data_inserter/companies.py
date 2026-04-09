@@ -37,5 +37,5 @@ def insert_companies():
         except Exception as e:
             print(f"Error: while inserting data {e}")
 
-    print('Inserted business logos successfully')
+    print('Inserted company data successfully')
     db_handler.close_connection()
