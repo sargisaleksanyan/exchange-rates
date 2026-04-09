@@ -18,7 +18,7 @@ business_logos = [
     },
 
     {
-        "url": "adib.com",
+        "url": "adib.ae",
         "business_type": "bank",
         # "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.png"
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/adib_ae.svg"

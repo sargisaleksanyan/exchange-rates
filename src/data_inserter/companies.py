@@ -1,5 +1,5 @@
 from src.data.business_logos import business_logos
-from src.data.company_data import exchange_companies_data
+from src.data.company_data import exchange_companies_data, exchange_companies_whole_data
 from src.db.db_handler import DatabaseHandler
 from src.util.common_classes.common_name import DbCollectionNames
 
@@ -26,7 +26,7 @@ def insert_companies():
 
     # db_handler.make_unique_index('url')
 
-    for exchange_company in exchange_companies_data:
+    for exchange_company in exchange_companies_whole_data:
         try:
             url = exchange_company['url']
             if url in company_logos:

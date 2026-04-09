@@ -31,7 +31,7 @@ class BankName:
 
 class BankUrl:
     ABU_DHABI_COMMERCIAL_BANK = 'adcb.com'  # +
-    ABU_DHABI_ISLAMIC_BANK = 'adib.com'  # +
+    ABU_DHABI_ISLAMIC_BANK = 'adib.ae'  # +
     AJMAN_BANK = 'ajmanbank.ae'  # +
     BANK_OF_SHARJAH = 'bankofsharjah.com'
     AL_MARYAH_COMMUNITY_BANK = 'mbank.ae'  # No data is shown

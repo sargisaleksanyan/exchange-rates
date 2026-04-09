@@ -108,5 +108,5 @@ def scrape_national_bank_of_ras_al_khaimah() -> ExchangeCompany | None:
         print('Error while scraping ', BankName.NATIONAL_BANK_OF_RAS_AL_KHAIMAH, err)
     return None
 
-
+scrape_national_bank_of_ras_al_khaimah()
 # TODO cash or transfer
