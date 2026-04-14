@@ -632,7 +632,7 @@ exchange_companies_whole_data = [
 
     {
         "name": ExchangeBusinessNames.AL_ROSTAMANI_EXCHANGE,
-        "url":  ExchangeBusinessUrl.AL_ROSTAMANI_EXCHANGE,
+        "url": ExchangeBusinessUrl.AL_ROSTAMANI_EXCHANGE,
         "company_type": "Exchange business",
         "id": "al-rostamani-exchange",
         "head_office_address": "Al Rostamani Building, Mezzanine Floor,Khalid Bin Al Waleed Street, Bur Dubai",
@@ -640,5 +640,14 @@ exchange_companies_whole_data = [
         "email": "ariecrd@alrostamanigroup.ae",
         "number_of_branches": 31,
         "branch_locator": "https://alrostamaniexchange.com/branch-locator/"
+    },
+    {
+        "name": BankName.BANK_OF_BARODAUAE,
+        "url": BankUrl.BANK_OF_BARODAUAE,
+        "company_type": "National bank",
+        "id": "bank-of-baroda",
+        "phone": "971.4.4041100",
+        "email": "difc@bankofbaroda.com ",
     }
+
 ]

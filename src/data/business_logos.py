@@ -65,6 +65,11 @@ business_logos = [
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbf_ae.png"
     },
     {
+        'url': BankUrl.BANK_OF_BARODAUAE,
+        "business_type": "bank",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/bankofbarodauae_ae.svg"
+    },
+    {
         "url": "cbd.ae",
         "business_type": "bank",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae2.png,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/cbd_ae.png"
@@ -184,7 +189,7 @@ business_logos = [
     },
     {
         "url": ExchangeBusinessUrl.AL_ROSTAMANI_EXCHANGE,
-         "business_type": "exchange business",
+        "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/alrostamaniexchange_com.svg",
     },
     {
