@@ -15,7 +15,7 @@ CURRENCY_TRANSFER_HEADER = 'TTRATE'
 CURRENCY_BUY_HEADER = 'FXBUYRATE'
 CURRENCY_SELL_HEADER = 'FXSELLRATE'
 
-
+#Joyalukkas updates cash exchange rates very rarely so going to exclude it
 # AFA ARS
 def get_sell_rate(currency_code):
     sell_rate_url = ExchangeBusinessApiUrl.JOYALUKKAS_EXCHANGE_ROOT_API + "/currency-converter?region=2&amount=1&currency_code=" + currency_code + "&rate_type=FXS&amount_type=FCY"
@@ -93,15 +93,15 @@ def get_rates_from_joyalukkas() -> List[CompanyExchangeRates] | None:
                     transfer_rate.set_original_rate(convert_to_float(transfer_rate_text))
                     transfer_exchange_rates.append(transfer_rate)
 
-    cash_company_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
-    cash_company_exchange_rates.set_current_scrape_date()
-    cash_company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+    #cash_company_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
+    #cash_company_exchange_rates.set_current_scrape_date()
+    #cash_company_exchange_rates.set_exchange_type(ExchangeType.CASH)
 
     transfer_company_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
     transfer_company_exchange_rates.set_current_scrape_date()
     transfer_company_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
 
-    return [transfer_company_exchange_rates, cash_company_exchange_rates]
+    return [transfer_company_exchange_rates]
 
 
 def scrape_joyalukkas_exchange() -> ExchangeCompany | None:

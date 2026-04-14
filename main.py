@@ -1,28 +1,37 @@
 import time
-from datetime import datetime
 
 from src.db.db_handler import DatabaseHandler
 from src.util.common_classes.exchange_company import ExchangeCompany
-from src.website_scrapers.banks.index import frequent_banks_update, non_frequent_banks_update
+from src.website_scrapers.banks.index import frequent_banks_update, non_frequent_banks_update, very_rear_banks_update
 from src.website_scrapers.cb.uae_central_bank import scrape_central_bank
 from src.website_scrapers.exchange_business.index import frequent_currency_exchange_update, \
-    non_frequent_currency_exchange_update, very_rearly_exchange_update
+    non_frequent_currency_exchange_update, very_rear_exchange_update
 
 dbHandler = DatabaseHandler()
 
 
+def is_company_exchange_rates_data_ok(company_exchange_data: ExchangeCompany):
+    company_exchange_rates =  company_exchange_data.company_exchange_rates
+    is_ok = False
+    if company_exchange_rates is None or len(company_exchange_rates) == 0:
+        return False
+    for company_exchange_rate in company_exchange_rates:
+        if company_exchange_rate is not None and company_exchange_rate.exchange_rates is not None and len(company_exchange_rate.exchange_rates)>0:
+            return True
+    return is_ok
 
 
 def update_company_exchange_data(company_exchange_data: ExchangeCompany):
-    company = dbHandler.find_company_by_url(company_exchange_data.url)
-    if company == None:
-        dbHandler.insert_data(company_exchange_data)
-    else:
-        dbHandler.update_exchange_rate(company_exchange_data)
+    if is_company_exchange_rates_data_ok(company_exchange_data) == True:
+       company = dbHandler.find_company_by_url(company_exchange_data.url)
+       if company == None:
+           dbHandler.insert_data(company_exchange_data)
+       else:
+           dbHandler.update_exchange_rate(company_exchange_data)
         # update
 
 def init_very_rare_data_update():
-    very_rear_updates = very_rearly_exchange_update
+    very_rear_updates = very_rear_exchange_update + very_rear_banks_update
 
     for update in very_rear_updates:
         try:

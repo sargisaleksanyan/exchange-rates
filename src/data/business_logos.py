@@ -11,6 +11,7 @@ business_logos = [
         "business_type": "bank",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/rakbank_ae.svg",
     },
+
     {
         "url": BankUrl.INVEST_BANK,
         "business_type": "bank",
@@ -180,6 +181,11 @@ business_logos = [
         "url": ExchangeBusinessUrl.LULU_EXCHANGE,
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lulu_exchange.svg"
+    },
+    {
+        "url": ExchangeBusinessUrl.AL_ROSTAMANI_EXCHANGE,
+         "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/alrostamaniexchange_com.svg",
     },
     {
         "url": ExchangeBusinessUrl.AL_AHALIA_EXCHANGE,

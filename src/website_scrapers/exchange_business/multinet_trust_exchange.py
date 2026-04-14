@@ -126,8 +126,8 @@ def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
             for tr in trs:
                 exchange_rates_dict = extract_exchange_from_row_element(tr, headers)
 
-                if CASH in exchange_rates_dict:
-                    cash_exchange_rates.append(exchange_rates_dict[CASH])
+                #if CASH in exchange_rates_dict:
+                    # cash_exchange_rates.append(exchange_rates_dict[CASH])
 
                 if TRANSFER in exchange_rates_dict:
                     transfer_exchange_rates.append(exchange_rates_dict[TRANSFER])
@@ -138,16 +138,16 @@ def get_rates_from_multinet_trust() -> List[CompanyExchangeRates] | None:
                 #    cash_exchange_rates.set_scrape_date(update_date)
                 #    transfer_exchange_rates.set_scrape_date(update_date)
 
-    cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
-    cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
-    cash_exchange_rates.set_current_scrape_date()
+    #cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
+    #cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
+    #cash_exchange_rates.set_current_scrape_date()
 
     transfer_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
     transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
     transfer_exchange_rates.set_current_scrape_date()
 
     exchange_rates = []
-    exchange_rates.append(cash_exchange_rates)
+    #exchange_rates.append(cash_exchange_rates)
     exchange_rates.append(transfer_exchange_rates)
     #  exchange_rates.append(transfer_exchange_rates) TODO need to fix tranfer rates
     return exchange_rates
@@ -161,7 +161,6 @@ def scrape_multinet_trust() -> ExchangeCompany | None:
         exchange_company = ExchangeCompany(ExchangeBusinessNames.MULTINET_TRUST_EXCHANGE,
                                            ExchangeBusinessUrl.MULTINET_TRUST_EXCHANGE,
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
-
         exchange_company.set_exchange_rates(company_exchange_rates)
 
         return exchange_company

@@ -10,7 +10,7 @@ CURRENCY_HEAD = 'Currency'
 BUY_RATE_HEAD = 'Buy'
 SELL_RATE_HEAD = 'Sell'
 
-
+# Reems exchange updates data rarely , it causes the problem as rates are very outdated for this reason going to disable an application
 def get_table_headers(page_element: PageElement) -> dict:
     element_index_dict = {
 
@@ -93,4 +93,3 @@ def scrape_reems_exchange() -> ExchangeCompany | None:
     return None
 
 
-scrape_reems_exchange()

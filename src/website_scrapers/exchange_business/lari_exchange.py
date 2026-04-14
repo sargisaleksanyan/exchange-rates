@@ -90,4 +90,3 @@ def scrape_lari_exchange() -> ExchangeCompany | None:
     return None
 
 
-scrape_lari_exchange()

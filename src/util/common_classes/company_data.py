@@ -1,4 +1,5 @@
 class BankName:
+    BANK_OF_BARODAUAE = 'Bank of Baroda'
     INVEST_BANK = 'Invest Bank'
     FIRST_ABU_DHABI_BANK = 'First Abu Dhabi Bank'  # +
     EMIRATES_BANK = 'Emirates NBD'  # +
@@ -13,9 +14,7 @@ class BankName:
     NATIONAL_BANK_OF_FUJARAH = 'National Bank of Fujairah'  # +
     ABU_DHABI_ISLAMIC_BANK = 'Abu Dhabi Islamic Bank (ADIB)'  # + https://www.adib.com/en/pages/currency-rates.aspx
     NATIONAL_BANK_OF_UMM_AL_QAIWAIN = 'National Bank of Umm Al-Qaiwain'  # + https://nbq.ae/general/fcy-rate-list can scrape it
-
     BANK_OF_SHARJAH = 'Bank of Sharjah'  # can be scraped  Have anti scraping system
-
     AL_HILAL_BANK = 'Al Hilal Bank'  # ? this seems to be part of adcb.com No info was found
     AL_MARYAH_COMMUNITY_BANK = 'Al Maryah Community Bank'  # No data is shown
     RUYA_COMMUNITY_ISLAMIC_BANK = 'Ruya Community Islamic Bank'  # Did not find any data
@@ -30,6 +29,7 @@ class BankName:
 
 
 class BankUrl:
+    BANK_OF_BARODAUAE = 'bankofbarodauae.ae'
     ABU_DHABI_COMMERCIAL_BANK = 'adcb.com'  # +
     ABU_DHABI_ISLAMIC_BANK = 'adib.ae'  # +
     AJMAN_BANK = 'ajmanbank.ae'  # +
@@ -50,6 +50,7 @@ class BankUrl:
 
 
 class BankExchangeRateUrl:
+    BANK_OF_BARODAUAE = 'https://www.bankofbarodauae.ae/indicative-forex-exchange'
     CENTRAL_BANK = 'https://www.centralbank.ae/en/forex-eibor/exchange-rates'
     ABU_DHABI_ISLAMIC_BANK = 'https://www.adib.com/en/pages/currency-rates.aspx'
     FIRST_ABU_DHABI_BANK = 'https://www.bankfab.com/en-ae/personal/fx-rate'
@@ -86,7 +87,7 @@ class ExchangeBusinessUrl:
     AL_AHALIA_EXCHANGE = 'ahaliaexchange.com'
     AL_ANSARI_EXCHANGE = 'alansariexchange.com'
     AL_FARDAN_EXCHANGE = 'alfardanexchange.com'
-    AL_ROSTAMANI_EXCHANGE = 'alrostamaniexchange.com'  # ?
+    AL_ROSTAMANI_EXCHANGE = 'alrostamaniexchange.com'
     AL_FUAD_EXCHANGE = 'alfuadexchange.com'
     MULTINET_TRUST_EXCHANGE = 'multinettrust.com'
     JOYALUKKAS_EXCHANGE = 'joyalukkasexchange.com'
@@ -164,6 +165,7 @@ class ExchangeBusinessNames:
 # ExchangeBusinessNames
 class ExchangeBusinessExchangeUrl:
     LULU_EXCHANGE = 'https://luluexchange.com'
+    AL_ROSTAMANI_EXCHANGE = 'https://alrostamaniexchange.com'
     AL_DAHAB_EXCHANGE = 'https://aldahabexchange.ae'
     AL_AHALIA_EXCHANGE = 'https://ahaliaexchange.com'
     AL_FUAD_EXCHANGE = 'https://alfuadexchange.com/rates'

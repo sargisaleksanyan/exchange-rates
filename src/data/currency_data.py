@@ -170,6 +170,11 @@ currency_codes_old = [
         "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/jpy.svg"
     },
     {
+        "code": "YEN",
+        "name": "Japanese Yen",
+        "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/jpy.svg"
+    },
+    {
         "code": "KWD",
         "name": "Kuwaiti Dinar",
         "url": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/currency-logo/kwd.svg"

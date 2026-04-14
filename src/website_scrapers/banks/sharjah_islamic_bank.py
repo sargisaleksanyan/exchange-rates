@@ -1,8 +1,11 @@
 from typing import List
 
+from bs4 import BeautifulSoup
+
 from src.util.common_classes.company_data import BankName, BankUrl, BankExchangeRateApiUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, CompanyExchangeRates, \
-    Currency, ExchangeRate
+    Currency, ExchangeRate, ExchangeType
+from src.util.scraping_util.browser_util import get_website_content_by_browser
 from src.util.tool.json_util import parse_string_to_json, get_value_from_json, get_value_from_json_by_queue
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
@@ -30,9 +33,16 @@ def parse_exchange_date_data(exchange_rates_raw_data) -> List[ExchangeRate]:
 
 
 def get_rates_from_sharjah_islamic_bank() -> CompanyExchangeRates | None:
-    content = make_get_request_with_proxy(BankExchangeRateApiUrl.SHARJAH_ISLAMIC_BANK)
+    content = get_website_content_by_browser(BankExchangeRateApiUrl.SHARJAH_ISLAMIC_BANK)
     if content is not None:
-        json = parse_string_to_json(content)
+
+        soup = BeautifulSoup(content, "html.parser")
+        if soup is None:
+            return None
+
+        pre = soup.find("pre").text
+        json = parse_string_to_json(pre)
+
         if (json is not None):
             data_json_text = get_value_from_json(json, 'data')
             if data_json_text is not None:
@@ -42,10 +52,10 @@ def get_rates_from_sharjah_islamic_bank() -> CompanyExchangeRates | None:
                     exchange_rates = parse_exchange_date_data(exchange_rates_raw_data)
                     company_exchange_rates = CompanyExchangeRates(exchange_rates)
                     company_exchange_rates.set_current_scrape_date()
+                    company_exchange_rates.set_exchange_type(ExchangeType.CASH)
                     return company_exchange_rates
 
     return None
-
 
 # TODO This company uses cloudflare and has good antiscraping system, manual fix
 def scrape_sharjah_islamic_bank() -> ExchangeCompany | None:
@@ -62,3 +72,5 @@ def scrape_sharjah_islamic_bank() -> ExchangeCompany | None:
         # TODO log this
         print('Error while scraping ', BankName.SHARJAH_ISLAMIC_BANK, err)
     return None
+
+scrape_sharjah_islamic_bank()

@@ -8,7 +8,7 @@ from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCo
 from src.util.scraping_util.request_util import make_get_request_with_proxy
 from src.util.tool.string_util import convert_to_float
 
-
+#Ajman bank updates cash exchange rates very rarely so going to exclude it
 def get_currency_from_element(currency_element: PageElement | None) -> Currency | None:
     if currency_element is not None:
         parents = currency_element.parent()
@@ -22,7 +22,7 @@ def get_currency_from_element(currency_element: PageElement | None) -> Currency 
 
 def get_rates_from_ajman_bank() -> List[CompanyExchangeRates]:
     content = make_get_request_with_proxy(BankExchangeRateUrl.AJMAN_BANK)
-    cash_exchange_rates = []
+    # cash_exchange_rates = []
     transfer_exchange_rates = []
 
     if (content != None):
@@ -58,23 +58,24 @@ def get_rates_from_ajman_bank() -> List[CompanyExchangeRates]:
                                             buy_value = element_text.replace('Buy :', '').strip()
                                 exchange_rate = ExchangeRate(currency.code, convert_to_float(buy_value),
                                                              convert_to_float(sell_value))
-                                if transaction_type == 'Cash':
-                                    cash_exchange_rates.append(exchange_rate)
-                                elif transaction_type == 'Transfer':
+                                # if transaction_type == 'Cash':
+                                #  cash_exchange_rates.append(exchange_rate)
+                                if transaction_type == 'Transfer':
                                     transfer_exchange_rates.append(exchange_rate)
 
-    cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
-    cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
-    cash_exchange_rates.set_current_scrape_date()
+    # cash_exchange_rates = CompanyExchangeRates(cash_exchange_rates)
+    # cash_exchange_rates.set_exchange_type(ExchangeType.CASH)
+    # cash_exchange_rates.set_current_scrape_date()
 
     transfer_exchange_rates = CompanyExchangeRates(transfer_exchange_rates)
     transfer_exchange_rates.set_exchange_type(ExchangeType.TRANSFER)
     transfer_exchange_rates.set_current_scrape_date()
 
     exchange_rates = []
-    exchange_rates.append(cash_exchange_rates)
+    # exchange_rates.append(cash_exchange_rates)
     exchange_rates.append(transfer_exchange_rates)
     return exchange_rates
+
 
 
 def scrape_ajman_bank() -> ExchangeCompany | None:

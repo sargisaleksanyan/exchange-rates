@@ -53,7 +53,7 @@ class DatabaseHandler:
     def update_exchange_rate(self, company_exchange_data: ExchangeCompany):
         try:
             # self.collection.insert_one(data)
-            if company_exchange_data.company_exchange_rates is not None:
+            if company_exchange_data.company_exchange_rates is not None :
                 dict = to_dict(company_exchange_data)
                 if (dict is not None and 'company_exchange_rates' in dict):
                     self.collection.update_one({'url': dict['url']},

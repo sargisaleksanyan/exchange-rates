@@ -7,10 +7,11 @@ from datetime import datetime
 
 from src.db.db_handler import DatabaseHandler
 from src.util.common_classes.exchange_company import ExchangeCompany
-from src.website_scrapers.banks.index import frequent_banks_update, non_frequent_banks_update
+from src.website_scrapers.banks.index import frequent_banks_update, non_frequent_banks_update, very_rearly_banks_update, \
+    very_rear_banks_update
 from src.website_scrapers.cb.uae_central_bank import scrape_central_bank
 from src.website_scrapers.exchange_business.index import frequent_currency_exchange_update, \
-    non_frequent_currency_exchange_update, very_rearly_exchange_update
+    non_frequent_currency_exchange_update, very_rearly_exchange_update, very_rear_exchange_update
 
 dbHandler = DatabaseHandler()
 
@@ -84,7 +85,7 @@ def init_frequent_data_update():
 def init_very_rare_data_update():
     if (is_working_hours() == False):
         return
-    very_rear_updates = very_rearly_exchange_update
+    very_rear_updates = very_rear_exchange_update + very_rear_banks_update
 
     for update in very_rear_updates:
         try:
@@ -108,7 +109,7 @@ init_logger()
 # schedule.every(5).hour.do(init_non_frequent_data_update())
 schedule.every(2).hours.do(init_non_frequent_data_update)
 # schedule.every(3).hour.do(init_frequent_data_update())
-schedule.every(3).hours.do(init_very_rare_data_update)
+schedule.every(5).hours.do(init_very_rare_data_update)
 schedule.every(4).hours.do(init_central_bank_update)
 schedule.every(1).hours.do(init_frequent_data_update)
 
