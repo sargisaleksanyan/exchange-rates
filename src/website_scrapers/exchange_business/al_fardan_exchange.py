@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup, PageElement
 from datetime import datetime
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
-    ExchangeBusinessApiUrl, ExchangeBusinessUrl
+    ExchangeBusinessUrl
 from src.util.common_classes.exchange_company import ExchangeCompany, ExchangeCompanyType, ExchangeRate, Currency, \
     CompanyExchangeRates, ExchangeType
 from src.util.scraping_util.browser_util import get_website_content_by_browser
@@ -17,6 +17,10 @@ CASH_BUY_RATE = 'BUY'
 CASH_SELL_RATE = 'SELL'
 CASH = 'Cash'
 TRANSFER = 'Transfer'
+
+
+def read_excluded_currencies():
+    return set('BDT', 'CYP', 'DKK', 'IDR', 'MAD', 'NOK', 'PHP', 'SEK', 'TRY', 'YER')
 
 
 def extract_update_date(html):
@@ -76,11 +80,13 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
 
     }
 
+    excluded = read_excluded_currencies()
+
     if (table_data_list is not None):
         currency_code = get_element_text(table_data_list, table_headers, header=CURRENCY)
         currency = Currency.get_currency(currency_code)
 
-        if (currency is not None):
+        if (currency is not None and currency.code not in excluded):
             cash_buy_rate = get_element_text(table_data_list, table_headers, header=CASH_BUY_RATE)
             cash_sell_rate = get_element_text(table_data_list, table_headers, header=CASH_SELL_RATE)
 
@@ -180,7 +186,6 @@ def scrape_al_fardan() -> ExchangeCompany | None:
                                            ExchangeCompanyType.EXCHANGE_BUSINESS)
 
         exchange_company.set_exchange_rates(company_exchange_rates)
-
         return exchange_company
     except Exception as err:
         # TODO log this
