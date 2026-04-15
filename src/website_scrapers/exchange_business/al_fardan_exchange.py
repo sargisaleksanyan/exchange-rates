@@ -20,7 +20,7 @@ TRANSFER = 'Transfer'
 
 
 def read_excluded_currencies():
-    return set('BDT', 'CYP', 'DKK', 'IDR', 'MAD', 'NOK', 'PHP', 'SEK', 'TRY', 'YER')
+    return set(['BDT', 'CYP', 'DKK', 'IDR', 'MAD', 'NOK', 'PHP', 'SEK', 'TRY', 'YER'])
 
 
 def extract_update_date(html):
@@ -192,3 +192,4 @@ def scrape_al_fardan() -> ExchangeCompany | None:
         print('Error while scraping ', ExchangeBusinessNames.AL_FARDAN_EXCHANGE, err)
 
     return None
+
