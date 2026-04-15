@@ -25,11 +25,11 @@ from src.website_scrapers.exchange_business.universal_exchange import scrape_uni
 
 very_rear_exchange_update = [scrape_joyalukkas_exchange, scrape_al_ansari_exchange]
 non_frequent_currency_exchange_update = [scrape_orient_exchange,
-                                         scrape_al_fardan,
+
                                          scrape_al_rostamani_exchange_exchange
                                          ]
 frequent_currency_exchange_update = [
-
+    scrape_al_fardan,
     scrape_al_fuade,
     scrape_al_ghurair,
     scrape_al_ahalia_exchange,

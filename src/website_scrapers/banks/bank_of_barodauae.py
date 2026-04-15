@@ -124,7 +124,7 @@ def get_rates_from_bank_of_barodauae():
             if (update_date is not None):
                 company_exchange_rates.set_update_date(update_date)
             company_exchange_rates.set_exchange_type(
-                ExchangeType.CASH)  # TODO from there website it is not clear if exchange rate is for transfer or cash
+                ExchangeType.TRANSFER)  # TODO from there website it is not clear if exchange rate is for transfer or cash
             return company_exchange_rates
 
     return None
