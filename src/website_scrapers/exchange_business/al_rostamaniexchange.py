@@ -114,5 +114,3 @@ def scrape_al_rostamani_exchange_exchange() -> ExchangeCompany | None:
        print('Error while scraping ', ExchangeBusinessNames.AL_ROSTAMANI_EXCHANGE, err)
    return None
 
-
-scrape_al_rostamani_exchange_exchange()

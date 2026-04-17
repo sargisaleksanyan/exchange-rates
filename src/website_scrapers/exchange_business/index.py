@@ -25,9 +25,7 @@ from src.website_scrapers.exchange_business.sharaf_exchange import scrape_sharaf
 from src.website_scrapers.exchange_business.universal_exchange import scrape_universal_exchange
 
 very_rear_exchange_update = [scrape_joyalukkas_exchange, scrape_al_ansari_exchange]
-non_frequent_currency_exchange_update = [scrape_orient_exchange,
-
-                                         scrape_al_rostamani_exchange_exchange
+non_frequent_currency_exchange_update = [scrape_orient_exchange,scrape_al_rostamani_exchange_exchange
                                          ]
 frequent_currency_exchange_update = [
     scrape_al_fardan,
