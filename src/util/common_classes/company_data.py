@@ -80,6 +80,7 @@ class BankExchangeRateApiUrl:
 
 # https://alansariexchange.com/send-money-to-india-from-the-uae/ send money data
 class ExchangeBusinessUrl:
+    LM_EXCHANGE = 'lm-exchange.com'
     UNIVERSAL_EXCHANGE = 'universalexchange.net'
     AL_JARWAN_MONEY_EXCHANGE = 'aljarwanexchange.com'
     AL_DHAHERY_EXCHANGE = 'aldhaheryexchange.com'
@@ -118,6 +119,7 @@ class ExchangeBusinessUrl:
 
 
 class ExchangeBusinessNames:
+    LM_EXCHANGE = 'LM Exchange'
     AL_JARWAN_MONEY_EXCHANGE = 'AL JARWAN MONEY EXCHANGE'  # https://aljarwanexchange.com
     AL_GHURAIR_EXCHANGE = 'Al Ghurair Exchange'  # https://3-214-76-133.nip.io/fc/0
     AL_DAHAB_EXCHANGE = 'Al Dahab Exchange'
@@ -195,6 +197,7 @@ class ExchangeBusinessExchangeUrl:
 
 
 class ExchangeBusinessApiUrl:
+    LM_EXCHANGE = 'https://newgen.lmexch.com/rates/api/rates/GetRates'
     UNIVERSAL_EXCHANGE = 'https://zlkh0802.apicdn.sanity.io/v2021-10-21/data/query/production?query=*%5B_type+%3D%3D+%22exchange-rates%22%5D+%7B%0A++++id%2C%0A++country%2C%0A++currency%2C%0A++transferRate%7D&returnQuery=false'
     LULU_EXCHANGE = 'https://lieservices.luluone.com:9443/liveccyrates?payload=%7B%22activityType%22%3A%22rates.get%22%2C%22aglcid%22%3A784278%2C%22instype%22%3A%22LR%22%7D'
     # JOYALUKKAS_EXCHANGE = 'https://admin.joyalukkasexchange.com/api/country-currency-code'

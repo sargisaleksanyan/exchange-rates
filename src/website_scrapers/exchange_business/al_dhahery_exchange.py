@@ -1,4 +1,3 @@
-
 from bs4 import PageElement
 
 from src.util.common_classes.company_data import ExchangeBusinessNames, ExchangeBusinessExchangeUrl, \
@@ -12,6 +11,8 @@ CURRENCY = 'Code'
 CASH_BUY_RATE = 'Buy'
 CASH_SELL_RATE = 'Sell'
 
+
+excluded = set(['BDT', 'QAR', 'JPY', 'OMR', 'KWD', 'INR', 'NPR', 'BDT', 'CNY'])
 
 def get_table_headers(page_element: PageElement) -> dict:
     element_index_dict = {
@@ -49,7 +50,7 @@ def extract_exchange_from_row_element(table_row: PageElement, table_headers: dic
         currency_code = get_element_text(table_data_list, table_headers, CURRENCY)
         currency = Currency.get_currency(currency_code)
 
-        if (currency is not None):
+        if (currency is not None and currency.code not in excluded):
             cash_buy_rate = get_element_text(table_data_list, table_headers, CASH_BUY_RATE)
             cash_sell_rate = get_element_text(table_data_list, table_headers, CASH_SELL_RATE)
 

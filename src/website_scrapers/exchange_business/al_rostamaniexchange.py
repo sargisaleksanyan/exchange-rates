@@ -109,12 +109,10 @@ def scrape_al_rostamani_exchange_exchange() -> ExchangeCompany | None:
                                        ExchangeBusinessUrl.AL_ROSTAMANI_EXCHANGE,
                                        ExchangeCompanyType.EXCHANGE_BUSINESS)
      exchange_company.add_exchange_rate(company_exchange_rates)
+     return exchange_company
    except Exception as err:
        print('Error while scraping ', ExchangeBusinessNames.AL_ROSTAMANI_EXCHANGE, err)
    return None
 
 
-# except Exception as err:
-# TODO log this
-# print('Error while scraping ', ExchangeBusinessNames.UNIVERSAL_EXCHANGE, err)
-# return None
+scrape_al_rostamani_exchange_exchange()

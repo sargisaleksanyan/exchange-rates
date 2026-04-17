@@ -228,7 +228,23 @@ exchange_companies_data = [
 
 exchange_companies_whole_data = [
     {
-        "name": "Joyalukkas Exchange",
+        "name": 'Central Bank',
+        "url": 'centralbank.ae',
+        "company_type": 'Central bank',
+        "id": 'central-bank'
+    },
+    {
+        "name": ExchangeBusinessNames.LM_EXCHANGE,
+        "url": ExchangeBusinessUrl.LM_EXCHANGE,
+        "head_office_address":"LM Exchange 201, Al Sharafi Building,Near Al Fahidi Metro StationP.O Box 6309, Bur Dubai Dubai.",
+        "email":"customer.care@lm-exchange.com",
+        "company_type": "Exchange business",
+        "phone":"+971 43554555",
+        "id": 'lm-exchange',
+        "branch_locator" :"https://lm-exchange.com/branches"
+    },
+    {
+        "name": ExchangeBusinessNames.JOYALUKKAS_EXCHANGE,
         "url": "joyalukkasexchange.com",
         "company_type": "Exchange business",
         "id": "joyalukkas-exchange",
@@ -247,7 +263,7 @@ exchange_companies_whole_data = [
         "branch_locator": "https://www.rakbank.ae/en/branches-atms"
     },
     {
-        "name": "Al Ansari Exchange",
+        "name": ExchangeBusinessNames.AL_ANSARI_EXCHANGE,
         "url": "alansariexchange.com",
         "company_type": "Exchange business",
         "id": "al-ansari-exchange",

@@ -14,6 +14,7 @@ from src.website_scrapers.exchange_business.hadi_exchange import scrape_hadi_exc
 from src.website_scrapers.exchange_business.index_exchange import scrape_index_exchange
 from src.website_scrapers.exchange_business.joyalukkas import scrape_joyalukkas_exchange
 from src.website_scrapers.exchange_business.lari_exchange import scrape_lari_exchange
+from src.website_scrapers.exchange_business.lm_exchange import scrape_lm_exchange
 from src.website_scrapers.exchange_business.lulu_exchange import scrape_lulu_exchange
 from src.website_scrapers.exchange_business.mesrkanloo_International_exchange import \
     scrape_mesrkanloo_international_exchange
@@ -45,7 +46,8 @@ frequent_currency_exchange_update = [
     scrape_lari_exchange,
     scrape_lulu_exchange,
     scrape_universal_exchange,
-    scrape_al_dhahery_exchange
+    scrape_al_dhahery_exchange,
+    scrape_lm_exchange
     # scrape_dar_exchange, # changed website structure
     # scrape_desert_exchange, # updates data rarely has one branch
     # scrape_send_exchange, updates cash rarely but need to scrape transfer

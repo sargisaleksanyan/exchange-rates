@@ -109,13 +109,14 @@ def extract_exchange_rates_from_table(table: PageElement) -> List[ExchangeRate]:
 
 
 def get_rates_from_bank_of_sharjah():
-    content = get_website_content_by_browser('https://www.bankofsharjah.com')
+    content = make_get_request_with_proxy('https://www.bankofsharjah.com')
 
     if (content is not None):
         soup = BeautifulSoup(content, 'html.parser')
         if soup is None:
             return
-        table = soup.find(class_='rate-table')
+        #table = soup.find(class_='.rate-wrapper .rate-table')
+        table = soup.select_one('.rate-wrapper .rate-table')
 
         if table is not None:
             exchange_rates = extract_exchange_rates_from_table(table)
@@ -144,4 +145,3 @@ def scrape_bank_of_sharjah() -> ExchangeCompany | None:
     except Exception as err:
         # TODO log this
         print('Error while scraping ', BankName.BANK_OF_SHARJAH, err)
-

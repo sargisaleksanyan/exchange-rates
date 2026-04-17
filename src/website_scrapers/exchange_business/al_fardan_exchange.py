@@ -20,7 +20,7 @@ TRANSFER = 'Transfer'
 
 
 def read_excluded_currencies():
-    return set(['BDT', 'CYP', 'DKK', 'IDR', 'MAD', 'NOK', 'PHP', 'SEK', 'TRY', 'YER'])
+    return set(['BDT', 'CYP', 'DKK', 'IDR', 'MAD', 'NOK', 'PHP', 'SEK', 'TRY', 'YER','INR','PKR'])
 
 
 def extract_update_date(html):

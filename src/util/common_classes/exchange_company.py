@@ -1,11 +1,27 @@
-from datetime import datetime
+from datetime import datetime,timezone
 from enum import Enum
 from typing import List
-
-import requests
+from zoneinfo import ZoneInfo
 
 from src.util.common_classes.currency import currency_name_to_code
 from src.util.tool.string_util import is_float_ok
+
+
+UAE_TZ = ZoneInfo("Asia/Dubai")
+
+def convert_to_utc_time(dt: datetime) -> datetime:
+    try:
+        if dt.tzinfo is None:
+            # assign UAE timezone first
+            dt = dt.replace(tzinfo=UAE_TZ)
+
+        # convert to UTC
+        return dt.astimezone(timezone.utc)
+
+    except Exception as err:
+        print('Error occurred while converting timezone', err)
+
+    return dt
 
 
 class Currency(Enum):
@@ -187,6 +203,9 @@ class ExchangeRate:
         self.exchange_type = exchange_type
 
     def set_update_date(self, update_date):
+        #update_date = convert_to_uae_time(update_date)
+        update_date = convert_to_utc_time(update_date)
+
         self.update_date = update_date
 
     def set_original_rate(self, original_rate):
@@ -223,13 +242,15 @@ class CompanyExchangeRates:
         self.exchange_type = exchange_type
 
     def set_update_date(self, update_date):
-        self.update_date = update_date
+        converted_date = convert_to_utc_time(update_date)
+        self.update_date = converted_date
 
-    def set_scrape_date(self, scrape_date):
-        self.scrape_date = scrape_date
 
     def set_current_scrape_date(self):
-        self.scrape_date = datetime.now()
+
+        # uae_time = datetime.now(ZoneInfo("Asia/Dubai"))
+        # utc_time = uae_time.astimezone(timezone.utc)
+        self.scrape_date = datetime.now(timezone.utc)
 
 
 class ExchangeCompany:

@@ -110,6 +110,7 @@ def extract_dar_exchange_rates() -> List[CompanyExchangeRates] | None:
     company_exchange_rates = CompanyExchangeRates(exchange_rates)
     company_exchange_rates.set_current_scrape_date()
     company_exchange_rates.set_exchange_type(ExchangeType.CASH)
+
     company_transfer_rates = CompanyExchangeRates(transfer_rates)
     company_transfer_rates.set_current_scrape_date()
     company_transfer_rates.set_exchange_type(ExchangeType.TRANSFER)

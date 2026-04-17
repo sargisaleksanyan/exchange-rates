@@ -154,8 +154,8 @@ def extract_company_exchange_rates() -> List[CompanyExchangeRates] | None:
     update_date = extract_update_date(soup)
 
     if update_date is not None:
-        cash_exchange_rates.set_scrape_date(update_date)
-        transfer_exchange_rates.set_scrape_date(update_date)
+        cash_exchange_rates.set_update_date(update_date)
+        transfer_exchange_rates.set_update_date(update_date)
 
     exchange_rates = []
     exchange_rates.append(cash_exchange_rates)
@@ -164,16 +164,14 @@ def extract_company_exchange_rates() -> List[CompanyExchangeRates] | None:
 
 
 def scrape_abu_dhabi_islamic_bank() -> ExchangeCompany | None:
-    # try:
-    company_exchange_rates = extract_company_exchange_rates()
-    exchange_company = ExchangeCompany(BankName.ABU_DHABI_ISLAMIC_BANK, BankUrl.ABU_DHABI_ISLAMIC_BANK,
+   try:
+     company_exchange_rates = extract_company_exchange_rates()
+     exchange_company = ExchangeCompany(BankName.ABU_DHABI_ISLAMIC_BANK, BankUrl.ABU_DHABI_ISLAMIC_BANK,
                                        ExchangeCompanyType.NATIONAL_BANK)
-    exchange_company.set_exchange_rates(company_exchange_rates)
+     exchange_company.set_exchange_rates(company_exchange_rates)
 
-    return exchange_company
-
-
-# except Exception as err:
-#  print('Error occured while scraping ', BankName.ABU_DHABI_ISLAMIC_BANK, err)
-# return None
+     return exchange_company
+   except Exception as err:
+       print('Error occured while scraping ', BankName.ABU_DHABI_ISLAMIC_BANK, err)
+   return None
 
