@@ -85,6 +85,11 @@ business_logos = [
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.svg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.jpeg,https://s3.eu-central-1.amazonaws.com/exchangerates.ae/banks/nbq_ae.png"
     },
     {
+        "url": ExchangeBusinessUrl.LM_EXCHANGE,
+        "business_type": "exchange business",
+        "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/lm_exchange_com.svg"
+    },
+    {
         "url": "joyalukkasexchange.com",
         "business_type": "exchange business",
         "logos": "https://s3.eu-central-1.amazonaws.com/exchangerates.ae/exchange_business/joyalukkasexchange_com.svg"
